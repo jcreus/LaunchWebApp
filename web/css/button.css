@@ -1,0 +1,50 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 16-Dec-2014, 23:43:42
+    Author     : declan
+*/
+.launch_button {    
+    -moz-box-shadow:inset -3px -3px 0px 0px #f29c93;
+    -webkit-box-shadow:inset -3px -3px 0px 0px #f29c93;
+    box-shadow:inset -3px -3px 0px 0px #f29c93;
+    background-color:#fe1a00;
+    -webkit-border-top-left-radius:50px;
+    -moz-border-radius-topleft:50px;
+    border-top-left-radius:50px;
+    -webkit-border-top-right-radius:50px;
+    -moz-border-radius-topright:50px;
+    border-top-right-radius:50px;
+    -webkit-border-bottom-right-radius:50px;
+    -moz-border-radius-bottomright:50px;
+    border-bottom-right-radius:50px;
+    -webkit-border-bottom-left-radius:50px;
+    -moz-border-radius-bottomleft:50px;
+    border-bottom-left-radius:50px;
+    text-indent:-4px;
+    border:1px solid #d83526;
+    display:inline-block;
+    color:#ffffff;
+    font-family:Verdana;
+    font-size:15px;
+    font-weight:bold;
+    font-style:normal;
+    height:100px;
+    line-height:100px;
+    width:100px;
+    text-decoration:none;
+    text-align:center;
+    text-shadow:1px 1px 0px #b23e35;
+}.launch_button:hover {
+    background-color:#ce0100;
+}.launch_button:active {
+    -moz-box-shadow:inset 0px 0px 0px 0px #f29c93;
+    -webkit-box-shadow:inset 0px 0px 0px 0px #f29c93;
+    box-shadow:inset 0px 0px 0px 0px #f29c93;
+    position:relative;
+    top:1px;
+}
+/* This button was generated using CSSButtonGenerator.com */
