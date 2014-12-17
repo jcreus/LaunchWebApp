@@ -1,5 +1,6 @@
 package com.decmurphy.spx;
 
+import com.decmurphy.spx.physics.Globals;
 import static com.decmurphy.spx.physics.Globals.profile;
 import java.io.*;
 import javax.servlet.*;
@@ -10,7 +11,7 @@ import java.util.*;
  *
  * @author declan
  */
-public class ReadParams extends HttpServlet {
+public class InterfaceServlet extends HttpServlet {
 
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -59,6 +60,8 @@ public class ReadParams extends HttpServlet {
             try {
                 switch (paramName) {
 
+                    case "flight_code":
+                        Globals.flightCode = paramValues[0];
                     case "mei_time":
                         profile.setMEITime(Double.parseDouble(paramValues[0]));
                         break;
