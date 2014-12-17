@@ -18,34 +18,34 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class DisplayResults extends HttpServlet {
 
-    @Override
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+  @Override
+  public void doGet(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
 
-        response.setContentType("text/html");
+    response.setContentType("text/html");
 
-        GnuplotFileBuilder gfb = new GnuplotFileBuilder("newtest");
-        Process p = Runtime.getRuntime().exec("gnuplot " + gfb.getPath());
+    GnuplotFileBuilder gfb = new GnuplotFileBuilder("newtest");
+    Process p = Runtime.getRuntime().exec("gnuplot " + gfb.getPath());
 
-        PrintWriter out = response.getWriter();
-        String title = "Display Output";
-        String docType
-                = "<!doctype html public \"-//w3c//dtd html 4.0 "
-                + "transitional//en\">\n";
-        out.println(docType
-                + "<html>\n"
-                + "<head><title>" + title + "</title></head>\n"
-                + "<body bgcolor=\"#f0f0f0\">\n"
-                + "<h1 align=\"center\">" + title + "</h1>\n"
-                + "<br />"
-                + "<img src=\"" + gfb.getImagePath() + "\" alt=\"" + gfb.getImagePath() + "\">\n");
-        out.println("\n</body></html>");
-    }
+    PrintWriter out = response.getWriter();
+    String title = "Display Output";
+    String docType
+            = "<!doctype html public \"-//w3c//dtd html 4.0 "
+            + "transitional//en\">\n";
+    out.println(docType
+            + "<html>\n"
+            + "<head><title>" + title + "</title></head>\n"
+            + "<body bgcolor=\"#f0f0f0\">\n"
+            + "<h1 align=\"center\">" + title + "</h1>\n"
+            + "<br />"
+            + "<img src=\"" + gfb.getImagePath() + "\" alt=\"" + gfb.getImagePath() + "\">\n");
+    out.println("\n</body></html>");
+  }
 
-    @Override
-    public void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        doGet(request, response);
-    }
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response)
+          throws ServletException, IOException {
+    doGet(request, response);
+  }
 
 }
