@@ -1,6 +1,7 @@
 package com.decmurphy.spx;
 
 import static com.decmurphy.spx.physics.Globals.*;
+import com.decmurphy.spx.space.Earth;
 import com.decmurphy.spx.space.Planet;
 import com.decmurphy.spx.vehicle.Falcon9;
 import com.decmurphy.spx.vehicle.Payload;
@@ -9,7 +10,7 @@ import com.decmurphy.spx.vehicle.DragonV1;
 public class Launch {
 
     public static void main() {
-        Planet Earth = new Planet("Earth", 0, 0, 0, radiusOfEarth, massOfEarth);
+        Planet Earth = new Earth(0, 0, 0);
         Payload payload = new DragonV1();
         Falcon9 F9 = new Falcon9(payload);
 
