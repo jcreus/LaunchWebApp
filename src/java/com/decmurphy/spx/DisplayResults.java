@@ -24,7 +24,7 @@ public class DisplayResults extends HttpServlet {
 
     response.setContentType("text/html");
 
-    GnuplotFileBuilder gfb = new GnuplotFileBuilder("newtest");
+    GnuplotFileBuilder gfb = new GnuplotFileBuilder(String.valueOf(System.currentTimeMillis()));
     Process p = Runtime.getRuntime().exec("gnuplot " + gfb.getPath());
 
     PrintWriter out = response.getWriter();
