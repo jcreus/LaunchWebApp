@@ -1,6 +1,7 @@
 package com.decmurphy.spx;
 
 import static com.decmurphy.spx.InterfaceServlet.outputPath;
+import static com.decmurphy.spx.InterfaceServlet.resourcePath;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

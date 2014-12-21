@@ -1,5 +1,6 @@
 package com.decmurphy.spx.vehicle;
 
+import static com.decmurphy.spx.InterfaceServlet.outputPath;
 import java.io.*;
 import static com.decmurphy.spx.physics.Globals.*;
 import com.decmurphy.spx.engine.Engine;
@@ -290,9 +291,7 @@ public class Stage {
         PrintWriter pw = null;
 
         try {
-            File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
-            File tempFile = new File(catalinaBase, "/webapps/tmp");
-            File outputFile = new File(tempFile, "/" + name + ".dat");
+            File outputFile = new File(outputPath, "/" + name + ".dat");
             pw = new PrintWriter(new FileWriter(outputFile, true));
 
             pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",

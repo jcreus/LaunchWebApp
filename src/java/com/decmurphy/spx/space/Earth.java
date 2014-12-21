@@ -18,6 +18,7 @@ public class Earth extends Planet {
 
   public Earth(double x, double y, double z) {
     super("Earth", x, y, z, radiusOfEarth, massOfEarth);
+    drawHazard();
   }
 
   @Override
@@ -59,11 +60,10 @@ public class Earth extends Planet {
 
     try {
       String line;
-      File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
       File outputFile = new File(outputPath, "/coast.output.txt");
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
-      File earthFile = new File(resourcePath, "/coast3.txt");
+      File earthFile = new File(resourcePath, "/coast_fine.txt");
       br = new BufferedReader(new FileReader(earthFile));
 
       while ((line = br.readLine()) != null) {
@@ -83,6 +83,41 @@ public class Earth extends Planet {
         pw.close();
       }
       System.out.printf("Earth coast drawn.\n");
+    }
+  }
+
+  protected void drawHazard() {
+    PrintWriter pw = null;
+    BufferedReader br;
+
+    double theta, psi;
+    double R = radiusOfEarth * 1e-3;
+
+    try {
+      String line;
+      File outputFile = new File(outputPath, "/hazard.output.txt");
+      pw = new PrintWriter(new FileWriter(outputFile, false));
+
+      File hazardFile = new File(resourcePath, "/crs4.hazard.txt");
+      br = new BufferedReader(new FileReader(hazardFile));
+
+      while ((line = br.readLine()) != null) {
+        if (!line.isEmpty()) {
+          String[] parts = line.split("\\s+");
+
+          psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
+          theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
+          pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
+        } else {
+          pw.print("\n");
+        }
+      }
+    } catch (IOException e) {
+    } finally {
+      if (pw != null) {
+        pw.close();
+      }
+      System.out.printf("Hazard map drawn.\n");
     }
   }
 }
