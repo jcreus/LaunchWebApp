@@ -13,9 +13,17 @@ import java.util.*;
  */
 public class InterfaceServlet extends HttpServlet {
 
+  public static String resourcePath;
+  public static String outputPath;
+
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+
+    resourcePath = getServletContext().getRealPath("/resource");
+    outputPath = getServletContext().getRealPath("/output");
+    
+    System.out.println("Path: " + resourcePath);
     response.setContentType("text/html");
 
     PrintWriter out = response.getWriter();

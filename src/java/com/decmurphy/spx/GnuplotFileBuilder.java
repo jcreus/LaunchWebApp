@@ -1,5 +1,6 @@
 package com.decmurphy.spx;
 
+import static com.decmurphy.spx.InterfaceServlet.outputPath;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,9 +22,7 @@ public class GnuplotFileBuilder {
     PrintWriter pw = null;
 
     try {
-      File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
-      File tempFile = new File(catalinaBase, "/webapps/tmp");
-      File outputFile = new File(tempFile + "/" + this.name);
+      File outputFile = new File(outputPath + "/" + this.name);
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
       pw.printf("set key off\n");
@@ -37,11 +36,11 @@ public class GnuplotFileBuilder {
       pw.printf("set view 90,125\n");
       pw.printf("set term png\n");
       pw.printf("set output \"%s\"\n", getImagePath());
-      pw.printf("splot \"%s/BoosterStage.dat\" u 2:3:4 w l ls 8, ", tempFile.getPath());
-      pw.printf("\"%s/SecondStage.dat\" u 2:3:4 w l ls 9, ", tempFile.getPath());
-      pw.printf("\"%s/coast.output.txt\" u 1:2:3 w l ls 9, ", tempFile.getPath());
-      pw.printf("\"%s/Earth.output.txt\" u 1:2:3 w l ls 5, ", tempFile.getPath());
-      pw.printf("\"%s/hazard.output.txt\" u 1:2:3 w l ls 9\n", tempFile.getPath());
+      pw.printf("splot \"%s/BoosterStage.dat\" u 2:3:4 w l ls 8, ", outputPath);
+      pw.printf("\"%s/SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath);
+      pw.printf("\"%s/coast.output.txt\" u 1:2:3 w l ls 9, ", outputPath);
+      pw.printf("\"%s/Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath);
+      pw.printf("\"%s/hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath);
 
     } catch (IOException e) {
     } finally {
@@ -52,11 +51,11 @@ public class GnuplotFileBuilder {
   }
 
   public final String getImagePath() {
-    return System.getProperty("catalina.base") + "/webapps/tmp/" + this.imgPath;
+    return outputPath + "/" + this.imgPath;
   }
 
-  public final String getPath() {
-    return System.getProperty("catalina.base") + "/webapps/tmp/" + this.name;
+  public String getPath() {
+    return outputPath + "/" + this.name;
   }
-
+  
 }

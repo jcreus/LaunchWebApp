@@ -1,10 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.decmurphy.spx.space;
 
+import static com.decmurphy.spx.InterfaceServlet.outputPath;
+import static com.decmurphy.spx.InterfaceServlet.resourcePath;
 import static com.decmurphy.spx.physics.Globals.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -29,12 +26,9 @@ public class Earth extends Planet {
     PrintWriter pw = null;
 
     try {
+
       File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
-      File tempFile = new File(catalinaBase, "webapps/tmp");
-      if (!tempFile.exists()) {
-        tempFile.mkdirs();
-      }
-      File outputFile = new File(tempFile, "/" + name + ".output.txt");
+      File outputFile = new File(outputPath, "/" + name + ".output.txt");
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
       double x, y, z;
@@ -66,14 +60,10 @@ public class Earth extends Planet {
     try {
       String line;
       File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
-      File tempFile = new File(catalinaBase, "webapps/tmp");
-      if (!tempFile.exists()) {
-        tempFile.mkdirs();
-      }
-      File outputFile = new File(tempFile, "/coast.output.txt");
+      File outputFile = new File(outputPath, "/coast.output.txt");
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
-      File earthFile = new File(tempFile, "/coast3.txt");
+      File earthFile = new File(resourcePath, "/coast3.txt");
       br = new BufferedReader(new FileReader(earthFile));
 
       while ((line = br.readLine()) != null) {
