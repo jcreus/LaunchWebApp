@@ -1,215 +1,238 @@
 <!doctype html>
 
+
+<!--
+    This file is no longer used.
+    The Home.java servlet now costructs a 
+    dynamic homepage based on SQL data.
+    Keeping this here for a while as a
+    reminder to ALWAYS reuse code.
+-->
+
+
 <html>
   <head>
     <title>Launch Sim - WebApp development</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/style.css" type="text/css"/>
-    <link rel="stylesheet" href="./css/tabs.css" type="text/css"/>
-    <link rel="stylesheet" href="./css/button.css" type="text/css"/>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <link rel="stylesheet" href="css/tabs.css" type="text/css"/>
+    <link rel="stylesheet" href="css/button.css" type="text/css"/>
   </head>
   <body>
-    <ul class="tabs">
-      <li>
-        <input type="radio" name="tabs" id="tab1">
-        <label for="tab1">SES-8</label>
-        <div id="tab-content1" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value="ses8"/>
-            <table class="data_table">
-              <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
-              <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine"   />Fine <br /></td></tr>
-              <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
-              <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
-                                                         <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
-              <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
-              <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
-            </table>
-          </form>
-        </div>
-      </li>
-      <li>
-        <input type="radio" name="tabs" id="tab2">
-        <label for="tab2">TH-6</label>
-        <div id="tab-content2" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value="th6"/>
-            <table>
-              <tr><td>Payload Mass</td><td></td><td><input type="text" name="payload_mass" value="3325"/>kg</td><td rowspan="11"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Landing Legs</td><td></td><td><input type="text" name="legs" value="No"/></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T </td><td><input type="text" name="mei_time" value="-2.0"/>s</td></tr>
-              <tr><td>Launch</td><td> @ T </td><td><input type="text" name="launch_time" value="0.0"/>s</td></tr>
-              <tr><td>Pitck-Kick</td><td> @ T </td><td><input type="text" name="pitch_time" value="7.0"/>s</td></tr>
-              <tr><td></td><td></td><td><input type="text" name="pitch" value="0.065"/>rads x <input type="text" name="yaw" value="-0.78"/>rads</td></tr>
-              <tr><td>MECO</td><td> @ T </td><td><input type="text" name="meco_time" value="167.0"/>s</td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T </td><td><input type="text" name="fss_time" value="169.0"/>s</td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T </td><td><input type="text" name="sei_time" value="171.0"/>s</td></tr>
-              <tr><td>SECO</td><td> @ T </td><td><input type="text" name="seco_time" value=""/>s</td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T </td><td><input type="text" name="sss_time" value=""/>s</td></tr>
-            </table>
-          </form>
-        </div>
-      </li>     
-      <li>
-        <input type="radio" name="tabs" id="tab3">
-        <label for="tab3">CRS-3</label>
-        <div id="tab-content3" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value="crs3"/>
-            <table>
-              <tr><td>Payload Mass</td><td></td><td><input type="text" name="payload_mass" value="6600"/>kg</td><td rowspan="11"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Landing Legs</td><td></td><td><input type="text" name="legs" value="Yes"/></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T </td><td><input type="text" name="mei_time" value="-2.0"/>s</td></tr>
-              <tr><td>Launch</td><td> @ T </td><td><input type="text" name="launch_time" value="0.0"/>s</td></tr>
-              <tr><td>Pitck-Kick</td><td> @ T </td><td><input type="text" name="pitch_time" value="7.0"/>s</td></tr>
-              <tr><td></td><td></td><td><input type="text" name="pitch" value="0.065"/>rads x <input type="text" name="yaw" value="-0.78"/>rads</td></tr>
-              <tr><td>MECO</td><td> @ T </td><td><input type="text" name="meco_time" value="167.0"/>s</td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T </td><td><input type="text" name="fss_time" value="169.0"/>s</td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T </td><td><input type="text" name="sei_time" value="171.0"/>s</td></tr>
-              <tr><td>SECO</td><td> @ T </td><td><input type="text" name="seco_time" value=""/>s</td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T </td><td><input type="text" name="sss_time" value=""/>s</td></tr>
-            </table>
-          </form>
-        </div>
-      </li>
-      <li>
-        <input type="radio" name="tabs" id="tab4">
-        <label for="tab4">OG-2</label>
-        <div id="tab-content4" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value="og2"/>
-            <table>
-              <tr><td>Payload Mass</td><td></td><td><input type="text" name="payload_mass" value="1000"/>kg</td><td rowspan="11"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Landing Legs</td><td></td><td><input type="text" name="legs" value="Yes"/></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T </td><td><input type="text" name="mei_time" value="-2.0"/>s</td></tr>
-              <tr><td>Launch</td><td> @ T </td><td><input type="text" name="launch_time" value="0.0"/>s</td></tr>
-              <tr><td>Pitck-Kick</td><td> @ T </td><td><input type="text" name="pitch_time" value="7.0"/>s</td></tr>
-              <tr><td></td><td></td><td><input type="text" name="pitch" value="0.065"/>rads x <input type="text" name="yaw" value="-0.78"/>rads</td></tr>
-              <tr><td>MECO</td><td> @ T </td><td><input type="text" name="meco_time" value="167.0"/>s</td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T </td><td><input type="text" name="fss_time" value="169.0"/>s</td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T </td><td><input type="text" name="sei_time" value="171.0"/>s</td></tr>
-              <tr><td>SECO</td><td> @ T </td><td><input type="text" name="seco_time" value=""/>s</td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T </td><td><input type="text" name="sss_time" value=""/>s</td></tr>
-            </table>
-          </form>
-        </div>
-      </li>
-      <li>
-        <input type="radio" name="tabs" id="tab5">
-        <label for="tab5">AS-8</label>
-        <div id="tab-content5" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value="as8"/>
-            <table>
-              <tr><td>Payload Mass</td><td></td><td><input type="text" name="payload_mass" value="4535"/>kg</td><td rowspan="11"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Landing Legs</td><td></td><td><input type="text" name="legs" value="No"/></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T </td><td><input type="text" name="mei_time" value="-2.0"/>s</td></tr>
-              <tr><td>Launch</td><td> @ T </td><td><input type="text" name="launch_time" value="0.0"/>s</td></tr>
-              <tr><td>Pitck-Kick</td><td> @ T </td><td><input type="text" name="pitch_time" value="7.0"/>s</td></tr>
-              <tr><td></td><td></td><td><input type="text" name="pitch" value="0.065"/>rads x <input type="text" name="yaw" value="-0.78"/>rads</td></tr>
-              <tr><td>MECO</td><td> @ T </td><td><input type="text" name="meco_time" value="167.0"/>s</td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T </td><td><input type="text" name="fss_time" value="169.0"/>s</td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T </td><td><input type="text" name="sei_time" value="171.0"/>s</td></tr>
-              <tr><td>SECO</td><td> @ T </td><td><input type="text" name="seco_time" value=""/>s</td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T </td><td><input type="text" name="sss_time" value=""/>s</td></tr>
-            </table>
-          </form>
-        </div>
-      </li>
-      <li>
-        <input type="radio" name="tabs" id="tab6">
-        <label for="tab6">AS-6</label>
-        <div id="tab-content6" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value="as6"/>
-            <table>
-              <tr><td>Payload Mass</td><td></td><td><input type="text" name="payload_mass" value="4428"/>kg</td><td rowspan="11"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Landing Legs</td><td></td><td><input type="text" name="legs" value="No"/></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T </td><td><input type="text" name="mei_time" value="-2.0"/>s</td></tr>
-              <tr><td>Launch</td><td> @ T </td><td><input type="text" name="launch_time" value="0.0"/>s</td></tr>
-              <tr><td>Pitck-Kick</td><td> @ T </td><td><input type="text" name="pitch_time" value="7.0"/>s</td></tr>
-              <tr><td></td><td></td><td><input type="text" name="pitch" value="0.065"/>rads x <input type="text" name="yaw" value="-0.78"/>rads</td></tr>
-              <tr><td>MECO</td><td> @ T </td><td><input type="text" name="meco_time" value="167.0"/>s</td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T </td><td><input type="text" name="fss_time" value="169.0"/>s</td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T </td><td><input type="text" name="sei_time" value="171.0"/>s</td></tr>
-              <tr><td>SECO</td><td> @ T </td><td><input type="text" name="seco_time" value=""/>s</td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T </td><td><input type="text" name="sss_time" value=""/>s</td></tr>
-            </table>
-          </form>
-        </div>
-      </li>
-      <li>
-        <input type="radio" name="tabs" id="tab7">
-        <label for="tab7">CRS-4</label>
-        <div id="tab-content7" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value="crs4"/>
-            <table>
-              <tr><td>Payload Mass</td><td></td><td><input type="text" name="payload_mass" value="6600"/>kg</td><td rowspan="11"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Landing Legs</td><td></td><td><input type="text" name="legs" value="No"/></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T </td><td><input type="text" name="mei_time" value="-2.0"/>s</td></tr>
-              <tr><td>Launch</td><td> @ T </td><td><input type="text" name="launch_time" value="0.0"/>s</td></tr>
-              <tr><td>Pitck-Kick</td><td> @ T </td><td><input type="text" name="pitch_time" value="7.0"/>s</td></tr>
-              <tr><td></td><td></td><td><input type="text" name="pitch" value="0.065"/>rads x <input type="text" name="yaw" value="-0.78"/>rads</td></tr>
-              <tr><td>MECO</td><td> @ T </td><td><input type="text" name="meco_time" value="167.0"/>s</td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T </td><td><input type="text" name="fss_time" value="169.0"/>s</td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T </td><td><input type="text" name="sei_time" value="171.0"/>s</td></tr>
-              <tr><td>SECO</td><td> @ T </td><td><input type="text" name="seco_time" value=""/>s</td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T </td><td><input type="text" name="sss_time" value=""/>s</td></tr>
-            </table>
-          </form>
-        </div>
-      </li>
-      <li>
-        <input type="radio" checked name="tabs" id="tab8">
-        <label for="tab8">CRS-5</label>
-        <div id="tab-content8" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value="crs5"/>
-            <table>
-              <tr><td>Payload Mass</td><td></td><td><input type="text" name="payload_mass" value="6600"/>kg</td><td rowspan="11"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Landing Legs</td><td></td><td><input type="text" name="legs" value="Yes"/></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T </td><td><input type="text" name="mei_time" value="-2.0"/>s</td></tr>
-              <tr><td>Launch</td><td> @ T </td><td><input type="text" name="launch_time" value="0.0"/>s</td></tr>
-              <tr><td>Pitck-Kick</td><td> @ T </td><td><input type="text" name="pitch_time" value="7.0"/>s</td></tr>
-              <tr><td></td><td></td><td><input type="text" name="pitch" value="0.065"/>rads x <input type="text" name="yaw" value="-0.78"/>rads</td></tr>
-              <tr><td>MECO</td><td> @ T </td><td><input type="text" name="meco_time" value="167.0"/>s</td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T </td><td><input type="text" name="fss_time" value="169.0"/>s</td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T </td><td><input type="text" name="sei_time" value="171.0"/>s</td></tr>
-              <tr><td>SECO</td><td> @ T </td><td><input type="text" name="seco_time" value=""/>s</td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T </td><td><input type="text" name="sss_time" value=""/>s</td></tr>
-            </table>
-          </form>
-        </div>
-      </li>
-      <li>
-        <input type="radio" name="tabs" id="tab9">
-        <label for="tab9">CUSTOM</label>
-        <div id="tab-content9" class="tab-content">
-          <form action="InterfaceServlet" method="POST">
-            <input type="hidden" name="flight_code" value=""/>
-            <table>
-              <tr><td>Payload Mass</td><td></td><td><input type="text" name="payload_mass" value="PAYLOAD MASS"/>kg</td><td rowspan="11"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
-              <tr><td>Landing Legs</td><td></td><td><input type="text" name="legs" value="LANDING LEGS (YES/NO)"/></td></tr>
-              <tr><td>1st Stage Ign</td><td> @ T </td><td><input type="text" name="mei_time" value="FIRST STAGE IGNITION"/>s</td></tr>
-              <tr><td>Launch</td><td> @ T </td><td><input type="text" name="launch_time" value="LAUNCH"/>s</td></tr>
-              <tr><td>Pitck-Kick</td><td> @ T </td><td><input type="text" name="pitch_time" value="PITCHKICK"/>s</td></tr>
-              <tr><td></td><td></td><td><input type="text" name="pitch" value="PITCH"/>rads x <input type="text" name="yaw" value="YAW"/>rads</td></tr>
-              <tr><td>MECO</td><td> @ T </td><td><input type="text" name="meco_time" value="MECO"/>s</td></tr>
-              <tr><td>1st Stage Sep</td><td> @ T </td><td><input type="text" name="fss_time" value="FIRST STAGE SEPARATION"/>s</td></tr>
-              <tr><td>2nd Stage Ign</td><td> @ T </td><td><input type="text" name="sei_time" value="SECOND STAGE IGNITION"/>s</td></tr>
-              <tr><td>SECO</td><td> @ T </td><td><input type="text" name="seco_time" value="SECO"/>s</td></tr>
-              <tr><td>2nd Stage Sep</td><td> @ T </td><td><input type="text" name="sss_time" value="SECOND STAGE SEPARATION"/>s</td></tr>
-            </table>
-          </form>
-        </div>
-      </li>
-    </ul>
+    <div class="bg">
+      <img src="images/background.jpg" alt="background" />
+    </div>
+    <div id="content">
+      <ul class="tabs">
+        <li>
+          <input type="radio" name="tabs" id="tab1">
+          <label for="tab1">SES-8</label>
+          <div id="tab-content1" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value="ses8"/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab2">
+          <label for="tab2">TH-6</label>
+          <div id="tab-content2" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value="th6"/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>     
+        <li>
+          <input type="radio" name="tabs" id="tab3">
+          <label for="tab3">CRS-3</label>
+          <div id="tab-content3" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value="crs3"/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab4">
+          <label for="tab4">OG-2</label>
+          <div id="tab-content4" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value="og2"/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab5">
+          <label for="tab5">AS-8</label>
+          <div id="tab-content5" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value="as8"/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab6">
+          <label for="tab6">AS-6</label>
+          <div id="tab-content6" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value="as6"/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab7">
+          <label for="tab7">CRS-4</label>
+          <div id="tab-content7" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value="crs4"/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>
+        <li>
+          <input type="radio" checked name="tabs" id="tab8">
+          <label for="tab8">CRS-5</label>
+          <div id="tab-content8" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value="crs5"/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>
+        <li>
+          <input type="radio" name="tabs" id="tab9">
+          <label for="tab9">CUSTOM</label>
+          <div id="tab-content9" class="tab-content">
+            <form action="InterfaceServlet" method="POST">
+              <input type="hidden" name="flight_code" value=""/>
+              <table>
+                <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3200"/>kg  </td><td><input type="radio" name="coast_level" value="coarse" />Coarse <br /></td></tr>
+                <tr><td>Landing Legs</td> <td>    </td><td><input type="text" name="legs" value="No"          />    </td><td><input type="radio" name="coast_level" value="medium" />Medium <br /></td></tr>
+                <tr><td>1st Stage Ign</td><td> @ T</td><td><input type="text" name="mei_time" value="-2.0"    />s   </td><td><input type="radio" name="coast_level" value="fine" checked/>Fine <br /></td></tr>
+                <tr><td>Launch</td>       <td> @ T</td><td><input type="text" name="launch_time" value="0.0"  />s   </td><td rowspan="8"><input class="launch_button" type="submit" value="LAUNCH"/></td></tr>
+                <tr><td>Pitck-Kick</td>   <td> @ T</td><td><input type="text" name="pitch_time" value="7.0"   />s   </td></tr>
+                <tr><td></td>             <td>    </td><td><input type="text" name="pitch" value="0.065"      />rads x
+                                                           <input type="text" name="yaw" value="-0.78"        />rads</td></tr>
+                <tr><td>MECO</td>         <td> @ T</td><td><input type="text" name="meco_time" value="167.0"  />s   </td></tr>
+                <tr><td>1st Stage Sep</td><td> @ T</td><td><input type="text" name="fss_time" value="169.0"   />s   </td></tr>
+                <tr><td>2nd Stage Ign</td><td> @ T</td><td><input type="text" name="sei_time" value="171.0"   />s   </td></tr>
+                <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
+                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
+              </table>
+            </form>
+          </div>
+        </li>
+      </ul>
+    </div>
   </body>
 </html>

@@ -5,6 +5,7 @@
  */
 package com.decmurphy.spx;
 
+import com.decmurphy.spx.physics.Globals;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -28,18 +29,28 @@ public class DisplayResults extends HttpServlet {
     Process p = Runtime.getRuntime().exec("gnuplot " + gfb.getPath());
 
     PrintWriter out = response.getWriter();
-    String title = "Display Output";
+    String title = Globals.flightCode;
     String docType
             = "<!doctype html public \"-//w3c//dtd html 4.0 "
             + "transitional//en\">\n";
     out.println(docType
             + "<html>\n"
-            + "<head><title>" + title + "</title></head>\n"
-            + "<body bgcolor=\"#f0f0f0\">\n"
-            + "<h1 align=\"center\">" + title + "</h1>\n"
-            + "<br />"
-            + "<img src=\"" + gfb.getImagePath() + "\" alt=\"" + gfb.getImagePath() + "\">\n");
-    out.println("\n</body></html>");
+            + "<head>\n"
+            + "<title>" + title + "</title>\n"
+            + "<meta charset=\"UTF-8\">\n"
+            + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+            + "<link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/style.css\" type=\"text/css\"/>\n"
+            + "<link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/tabs.css\" type=\"text/css\"/>\n"
+            + "<link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/button.css\" type=\"text/css\"/>\n"
+            + "</head>\n"
+            + "<body>\n"
+            + "<div class=\"bg\">\n"
+            + "<img src=\"images/background.jpg\" alt=\"background\" />\n"
+            + "</div>\n"
+            + "<div class=\"content\">\n"
+            + "<img src=\"" + gfb.getImagePath() + "\" alt=\"" + gfb.getImagePath() + "\">\n"
+            + "</div>\n");
+    out.println("</body>\n</html>");
   }
 
   @Override
