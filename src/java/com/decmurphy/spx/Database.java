@@ -5,9 +5,12 @@
  */
 package com.decmurphy.spx;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.Properties;
 
 /**
  *
@@ -16,23 +19,30 @@ import java.util.logging.Logger;
 public class Database {
 
   private Connection con = null;
+  private ResultSet rs, rs2 = null;
   private PreparedStatement pst = null;
-  private ResultSet rs = null, rs2 = null;
-
-  private final String url = "jdbc:mysql://localhost:3306/spacex";
-  private final String user = "root";
-  private final String password = "password";
 
   public Database() {
   }
 
-  public String buildProfilesList() {
+  public String buildProfilesList(String pathToPropertiesFile) {
 
     StringBuilder sb = new StringBuilder("<ul class=\"tabs\">\n");
 
     try {
+            
+      Properties props = new Properties();
+      FileInputStream in = new FileInputStream(pathToPropertiesFile);
+      props.load(in);
+      in.close();
+
+      String url = props.getProperty("dbUrl");
+      String user = props.getProperty("dbUser");
+      String password = props.getProperty("dbPass");
+            
       Class.forName("com.mysql.jdbc.Driver");
       con = DriverManager.getConnection(url, user, password);
+      
       pst = con.prepareStatement("select * from profiles");
       rs = pst.executeQuery();
       pst = con.prepareStatement(
@@ -69,7 +79,8 @@ public class Database {
         sb.append("  </div>\n");
         sb.append("</li>\n");
       }
-    } catch (SQLException | ClassNotFoundException ex) {
+    } catch (SQLException | ClassNotFoundException | FileNotFoundException ex) {
+    } catch (IOException ex) {
     } finally {
       sb.append("</ul>\n");
       try {
@@ -81,6 +92,9 @@ public class Database {
         }
         if (rs != null) {
           rs.close();
+        }
+        if (rs2 != null) {
+          rs2.close();
         }
       } catch (SQLException ex) {
       }

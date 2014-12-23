@@ -5,8 +5,11 @@
  */
 package com.decmurphy.spx;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +27,8 @@ public class Home extends HttpServlet {
 
     response.setContentType("text/html");
     Database db = new Database();
+    
+    String dbPropsFile = getServletContext().getRealPath("/db.properties");
 
     PrintWriter out = response.getWriter();
     String title = "Launch Sim - WebApp development";
@@ -45,7 +50,7 @@ public class Home extends HttpServlet {
             + "<img src=\"images/background.jpg\" alt=\"background\" />\n"
             + "</div>\n"
             + "<div id=\"content\">\n"
-            + db.buildProfilesList()
+            + db.buildProfilesList(dbPropsFile)
             + "</div>\n");
     out.println("</body>\n</html>");
   }
