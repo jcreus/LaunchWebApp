@@ -21,7 +21,7 @@ public class Database {
 
   private final String url = "jdbc:mysql://localhost:3306/spacex";
   private final String user = "root";
-  private final String password = "eezA1ahl7!";
+  private final String password = "password";
 
   public Database() {
   }
