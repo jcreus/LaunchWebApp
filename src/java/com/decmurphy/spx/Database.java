@@ -8,7 +8,6 @@ package com.decmurphy.spx;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.*;
 import java.util.Properties;
 
@@ -56,7 +55,7 @@ public class Database {
         int id = rs.getInt("launch_id");
 
         sb.append("<li>\n");
-        sb.append("  <input type=\"radio\" name=\"tabs\" id=\"tab").append(id).append("\">\n");
+        sb.append("  <input type=\"radio\" name=\"tabs\" id=\"tab").append(id).append("\" checked />\n");
         sb.append("  <label for=\"tab").append(id).append("\">").append(rs2.getString("code")).append("</label>\n");
         sb.append("  <div id=\"tab-content").append(id).append("\" class=\"tab-content\">\n");
         sb.append("    <form action=\"InterfaceServlet\" method=\"POST\">\n");

@@ -34,6 +34,9 @@ public class InterfaceServlet extends HttpServlet {
           case "flight_code":
             Globals.flightCode = paramValues[0];
             break;
+          case "coast_level":
+            Globals.coastMap = "/coast_" + paramValues[0] + ".txt";
+            break;
           case "mei_time":
             profile.setMEITime(Double.parseDouble(paramValues[0]));
             break;

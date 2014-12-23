@@ -2,6 +2,7 @@ package com.decmurphy.spx.space;
 
 import static com.decmurphy.spx.InterfaceServlet.outputPath;
 import static com.decmurphy.spx.InterfaceServlet.resourcePath;
+import com.decmurphy.spx.physics.Globals;
 import static com.decmurphy.spx.physics.Globals.*;
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +15,7 @@ import java.io.PrintWriter;
  *
  * @author declan
  */
-public class Earth extends Planet {
+public final class Earth extends Planet {
 
   public Earth(double x, double y, double z) {
     super("Earth", x, y, z, radiusOfEarth, massOfEarth);
@@ -28,7 +29,6 @@ public class Earth extends Planet {
 
     try {
 
-      File catalinaBase = new File(System.getProperty("catalina.base")).getAbsoluteFile();
       File outputFile = new File(outputPath, "/" + name + ".output.txt");
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
@@ -63,7 +63,7 @@ public class Earth extends Planet {
       File outputFile = new File(outputPath, "/coast.output.txt");
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
-      File earthFile = new File(resourcePath, "/coast_fine.txt");
+      File earthFile = new File(resourcePath, Globals.coastMap);
       br = new BufferedReader(new FileReader(earthFile));
 
       while ((line = br.readLine()) != null) {
@@ -98,7 +98,7 @@ public class Earth extends Planet {
       File outputFile = new File(outputPath, "/hazard.output.txt");
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
-      File hazardFile = new File(resourcePath, "/crs4.hazard.txt");
+      File hazardFile = new File(resourcePath, "/" + Globals.flightCode + ".hazard.txt");
       br = new BufferedReader(new FileReader(hazardFile));
 
       while ((line = br.readLine()) != null) {

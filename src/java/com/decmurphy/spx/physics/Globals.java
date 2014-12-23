@@ -12,7 +12,9 @@ public class Globals
 	public static final double massOfEarth = 5.972e24;
 	public static final double radiusOfEarth = 6378137;
 	public static final double earthVel = 0;//463.8312116;
-        public static String flightCode = "";
+    
+    public static String flightCode = "";
+    public static String coastMap = "";
 
 	public static double latitude = 28.49;
 	public static double longitude = 80.58;
