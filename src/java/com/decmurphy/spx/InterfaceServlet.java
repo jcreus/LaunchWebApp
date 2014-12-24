@@ -76,7 +76,7 @@ public class InterfaceServlet extends HttpServlet {
       } catch (NumberFormatException e) {
       }
     }
-
+    
     Launch.main();
 
     String site = "DisplayResults";
