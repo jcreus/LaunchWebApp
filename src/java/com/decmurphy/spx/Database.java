@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.decmurphy.spx;
 
 import java.io.FileInputStream;
@@ -42,12 +37,12 @@ public class Database {
       Class.forName("com.mysql.jdbc.Driver");
       con = DriverManager.getConnection(url, user, password);
       
-      pst = con.prepareStatement("select * from profiles");
+      pst = con.prepareStatement("SELECT * FROM profiles");
       rs = pst.executeQuery();
       pst = con.prepareStatement(
-              "select launches.code from launches "
-              + "inner join profiles "
-              + "on launches.launch_id=profiles.launch_id");
+              "SELECT launches.code FROM launches "
+              + "INNER JOIN profiles "
+              + "ON launches.launch_id=profiles.launch_id");
       rs2 = pst.executeQuery();
 
       while (rs.next() && rs2.next()) {

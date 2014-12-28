@@ -10,8 +10,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  *
  * @author declan
- * This page isn't used at all at the moment - but hopefully I can figure out how to
- * integrate it someday! It looks cool as fuck though
  */
 public class LoadingPage extends HttpServlet {
 
