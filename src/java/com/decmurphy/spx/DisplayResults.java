@@ -22,6 +22,8 @@ public class DisplayResults extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
+    
+    Launch.main();
 
     response.setContentType("text/html");
 
@@ -30,9 +32,7 @@ public class DisplayResults extends HttpServlet {
 
     PrintWriter out = response.getWriter();
     String title = Globals.flightCode;
-    String docType
-            = "<!doctype html public \"-//w3c//dtd html 4.0 "
-            + "transitional//en\">\n";
+    String docType = "<!doctype html>\n";
     out.println(docType
             + "<html>\n"
             + "<head>\n"

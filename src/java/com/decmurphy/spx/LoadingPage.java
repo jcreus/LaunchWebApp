@@ -22,26 +22,22 @@ public class LoadingPage extends HttpServlet {
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
     String title = "Calculating trajectory...";
-    String docType
-            = "<!doctype html public \"-//w3c//dtd html 4.0 "
-            + "transitional//en\">\n";
+    String docType = "<!doctype html>\n";
     out.println(docType
             + "<html>\n"
-            + "<head>\n"
-            + "<title>" + title + "</title>\n"
-            + "<meta charset=\"UTF-8\">\n"
-            + "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-            + "<link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/style.css\" type=\"text/css\"/>\n"
-            + "</head>\n"
-            + "<body>\n"
-            + "<video autoplay loop poster=\"" + request.getContextPath() + "/images/background.jpg\" id=\"bgvid\">\n"
-            + "<source src=\"" + request.getContextPath() + "/images/launch.webm\" type=\"video/webm\">\n"
-            + "</video>\n");
-    out.println("</body>\n</html>");
-
-    String site = "DisplayResults";
-    //response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-    //response.setHeader("Location", site);
+            + " <head>\n"
+            + "   <title>" + title + "</title>\n"
+            + "   <meta charset=\"UTF-8\">\n"
+            + "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+            + "   <meta http-equiv=\"refresh\" content=\"0;URL='DisplayResults'\" />"
+            + "   <link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/style.css\" type=\"text/css\"/>\n"
+            + " </head>\n"
+            + " <body>\n"
+            + "   <video autoplay loop poster=\"" + request.getContextPath() + "/images/background.jpg\" id=\"bgvid\">\n"
+            + "   <source src=\"" + request.getContextPath() + "/images/launch.webm\" type=\"video/webm\">\n"
+            + "   </video>\n"
+            + " </body>\n"
+            + "</html>");
   }
 
   @Override

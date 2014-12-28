@@ -5,11 +5,8 @@
  */
 package com.decmurphy.spx;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.nio.file.Paths;
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,9 +29,7 @@ public class Home extends HttpServlet {
 
     PrintWriter out = response.getWriter();
     String title = "Launch Sim - WebApp development";
-    String docType
-            = "<!doctype html public \"-//w3c//dtd html 4.0 "
-            + "transitional//en\">\n";
+    String docType = "<!doctype html>\n";
     out.println(docType
             + "<html>\n"
             + "<head>\n"

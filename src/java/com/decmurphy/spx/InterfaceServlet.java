@@ -77,9 +77,9 @@ public class InterfaceServlet extends HttpServlet {
       }
     }
     
-    Launch.main();
+    //Launch.main();
 
-    String site = "DisplayResults";
+    String site = "LoadingPage";
     response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
     response.setHeader("Location", site);
   }
