@@ -23,7 +23,7 @@ public class Database {
 
     StringBuilder sb = new StringBuilder("      <div class=\"tabbable tabs-left\">\n"
             + "        <ul class=\"nav nav-tabs\">\n");
-    StringBuilder sb2 = new StringBuilder("        <div id=\"tab-content\">\n");
+    StringBuilder sb2 = new StringBuilder("        <div class=\"tab-content\">\n");
 
     try {
 
@@ -77,9 +77,8 @@ public class Database {
     } catch (IOException ex) {
     } finally {
       sb.append("        </ul>\n");
-      sb2.append("       </div>\n");
       sb.append(sb2);
-      sb.append("     </div>\n");
+      sb.append("</div>\n</div>\n");
 
       try {
         if (con != null) {
