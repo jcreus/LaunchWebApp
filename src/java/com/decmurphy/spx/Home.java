@@ -38,6 +38,7 @@ public class Home extends HttpServlet {
             
             + "   <link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/style.css\" type=\"text/css\"/>\n"
             + "   <link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/tabs.css\" type=\"text/css\"/>\n"
+            + "   <link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/bstabs.css\" type=\"text/css\"/>\n"
             + "   <link rel=\"stylesheet\" href=\"" + request.getContextPath() + "/css/button.css\" type=\"text/css\"/>\n"
             + " </head>\n"
             + " <body>\n"
