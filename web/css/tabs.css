@@ -1,3 +1,21 @@
+/*
+.nav-tabs {
+  overflow-x: auto;
+  overflow-y: hidden;
+  width: 75%;
+  float: none;
+  list-style: none;
+  position: relative;
+  padding: 0;
+  margin: 75px auto;
+  
+  display: -webkit-box;  
+  display: -moz-box;   
+}
+.nav-tabs>li {
+  float: left;
+}
+*/
 body, html {
   -webkit-font-smoothing: antialiased;
   font-weight: 100;
@@ -15,6 +33,33 @@ body, html {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+}
+/*
+[id^=forms]:checked ~ [id^=tab-content] {
+  display: block;
+}
+
+.tab-content{
+  z-index: 2;
+  display: none;
+  text-align: left;
+  width: 100%;
+  height: auto;
+  font-size: 20px;
+  line-height: 140%;
+  padding-top: 10px;
+  background-image: url("../images/background3.jpg");
+  background-size: 100% 100%;
+  padding: 15px;
+  color: white;
+  position: absolute;
+  top: 53px;
+  left: 0;
+  box-sizing: border-box;
+  -webkit-animation-duration: 0.5s;
+  -o-animation-duration: 0.5s;
+  -moz-animation-duration: 0.5s;
+  animation-duration: 0.5s;
 }
 
 .tabs>li>input[type=radio] {
@@ -86,3 +131,4 @@ body, html {
   -moz-animation-duration: 0.5s;
   animation-duration: 0.5s;
 }
+*/
