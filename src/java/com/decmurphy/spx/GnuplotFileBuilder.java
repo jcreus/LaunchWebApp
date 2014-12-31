@@ -1,6 +1,8 @@
 package com.decmurphy.spx;
 
+import static com.decmurphy.spx.InterfaceServlet.URLPath;
 import static com.decmurphy.spx.InterfaceServlet.outputPath;
+import static com.decmurphy.spx.InterfaceServlet.imagePath;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,7 +24,7 @@ public class GnuplotFileBuilder {
     PrintWriter pw = null;
 
     try {
-      File outputFile = new File(outputPath + "/" + this.name);
+      File outputFile = new File(getPath());
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
       pw.printf("set key off\n");
@@ -49,13 +51,19 @@ public class GnuplotFileBuilder {
       }
     }
   }
-
+  
   public final String getImagePath() {
-    return outputPath + "/" + this.imgPath;
+    ///home/declan/NetBeansProjects/SpXDevelWeb/web/output/1419988961952.png
+    return imagePath + "/" + this.imgPath;
   }
 
-  public String getPath() {
+  public final String getPath() {
+    ///home/declan/NetBeansProjects/SpXDevelWeb/build/web/output/1419988961952.gp
     return outputPath + "/" + this.name;
+  }
+  
+  public String getImgPath() {
+    return "output/" + this.imgPath;
   }
   
 }

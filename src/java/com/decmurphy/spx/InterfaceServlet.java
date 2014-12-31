@@ -15,6 +15,8 @@ public class InterfaceServlet extends HttpServlet {
 
   public static String resourcePath;
   public static String outputPath;
+  public static String imagePath;
+  public static String URLPath;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -22,6 +24,7 @@ public class InterfaceServlet extends HttpServlet {
 
     resourcePath = getServletContext().getRealPath("/resource");
     outputPath = getServletContext().getRealPath("/output");
+    imagePath = "/home/declan/NetBeansProjects" + request.getContextPath() + "/web/output";
 
     Enumeration paramNames = request.getParameterNames();
     while (paramNames.hasMoreElements()) {
