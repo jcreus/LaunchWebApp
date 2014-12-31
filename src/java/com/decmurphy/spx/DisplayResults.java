@@ -56,7 +56,7 @@ public class DisplayResults extends HttpServlet {
             + "</html>");
     
     try {
-      sleep(800);
+      sleep(1000);
     } catch (InterruptedException ex) {
     }
   }

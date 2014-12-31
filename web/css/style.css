@@ -11,6 +11,7 @@ and open the template in the editor.
   margin-left: 60px;
 }
 .bg {
+  z-index: -2;
   position: fixed; 
   top: -50%; 
   left: -50%; 
