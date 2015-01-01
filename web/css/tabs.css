@@ -22,9 +22,13 @@ body, html {
   position: relative;
   padding: 0;
   margin: 75px auto;
+  white-space: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 .nav-tabs>li{
-  float: left;
+  display: inline-block;
+  float: none;
 }
 .nav-tabs>li>a {
   display: block;
@@ -44,7 +48,8 @@ body, html {
   transition: all 0.2s ease-in-out;
 }
 
-.nav-tabs>li>a:hover {
+.nav-tabs>li>a:hover,
+.nav-tabs>li>a:focus {
   background: #08C;
   color: white;
   top: 0;
