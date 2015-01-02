@@ -1,17 +1,27 @@
 
-$("#left-button").click(function () {
-  $('#tabs').animate({marginLeft: "+=100px"}, "fast");
+$(function () {
+  $("#left-button").click(function () {
+    
+    var style = window.getComputedStyle(document.getElementById("tabs"));
+    
+    if (parseInt(style.marginLeft) <= -600)
+      $('#tabs').animate({marginLeft: "+=600px"}, "1000");
+    else if (parseInt(style.marginLeft) < 0)
+      $('#tabs').animate({marginLeft: "+=" + -1*parseInt(style.marginLeft) + "px"}, "1000");
+  });
 });
 
-$('#right-button').click(function () {
-  $('#tabs').animate({marginLeft: "-=100px"}, "fast");
-});
-
-$(function() {
-   $("a").click(function() {
-      // remove classes from all
-      $("a").removeClass("active");
-      // add class to the one we clicked
-      $(this).addClass("active");
-   });
+$(function () {
+  $('#right-button').click(function () {
+    
+    var style = window.getComputedStyle(document.getElementById("tabs"));
+    var lw = document.getElementById("tabs").scrollWidth;
+    
+    var limit = lw - $(window).width() + parseInt(style.marginLeft);
+    
+    if (limit > 600)
+      $('#tabs').animate({marginLeft: "-=600px"}, "1000");
+    else if(limit > 0)
+      $('#tabs').animate({marginLeft: "-=" + limit + "px"}, "1000");
+  });
 });

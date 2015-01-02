@@ -46,7 +46,9 @@ public class Home extends HttpServlet {
             + "      <img src=\"images/background.jpg\" alt=\"background\" />\n"
             + "    </div>\n"
             + "    <div id=\"container\">\n"
-            +       db.buildProfilesList(dbPropsFile)
+            + "      <div class=\"tabbable\">\n"
+            +          db.buildProfilesList(dbPropsFile)
+            + "      </div>\n"
             + "    </div>\n"
             + "  </body>\n"
             + "</html>");

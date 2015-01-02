@@ -21,6 +21,7 @@ body, html {
   position: relative;
   padding: 0px;
   margin: 0px 0px 15px;
+  margin-left: 0px;
   white-space: nowrap;
   overflow: hidden;
 }
@@ -74,9 +75,9 @@ body, html {
   display: none;
   text-align: left;
   width: 75%;
-  color: #999;
+  color: #DDD;
   margin: auto;
-  margin-top: 5%;
+  margin-top: 7%;
   height: auto;
   font-size: 20px;
   line-height: 140%;
@@ -90,6 +91,10 @@ body, html {
   -o-animation-duration: 0.5s;
   -moz-animation-duration: 0.5s;
   animation-duration: 0.5s;
+}
+
+.tab-pane input[type=text] {
+  color: #000;
 }
 
 a i {
