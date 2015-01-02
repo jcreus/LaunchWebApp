@@ -22,7 +22,7 @@ public class Database {
   public String buildProfilesList(String pathToPropertiesFile) {
 
     StringBuilder sb = new StringBuilder("      <div class=\"tabbable\">\n"
-            + "        <ul class=\"nav nav-tabs\">\n");
+            + "        <ul id=\"tabs\" class=\"nav nav-tabs\">\n");
     StringBuilder sb2 = new StringBuilder("        <div class=\"tab-content\">\n");
 
     try {
@@ -77,6 +77,8 @@ public class Database {
     } catch (IOException ex) {
     } finally {
       sb.append("        </ul>\n");
+      sb.append("        <a id=\"left-button\" href=\"javascript: void(0);\"><i class=\"glyphicon glyphicon-chevron-left\"></i></a>\n");
+      sb.append("        <a id=\"right-button\" href=\"javascript: void(0);\"><i class=\"glyphicon glyphicon-chevron-right\"></i></a>\n");
       sb.append(sb2);
       sb.append("        </div>\n      </div>\n");
 

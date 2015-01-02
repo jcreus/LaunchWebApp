@@ -16,17 +16,31 @@ body, html {
 }
 
 .nav-tabs {
-  width: 75%;
-  float: none;
+  width: auto;
   list-style: none;
   position: relative;
-  padding: 0;
-  margin: 75px auto;
+  padding: 0px;
+  margin: 0px 0px 15px;
   white-space: nowrap;
-  overflow-x: auto;
-  overflow-y: hidden;
+  overflow: hidden;
 }
-.nav-tabs>li{
+
+#left-button {
+  color: white;
+  left: 5px;
+  position: fixed;
+  z-index: 100;
+
+}
+
+#right-button {
+  color: white;
+  right: 5px;
+  position: fixed;
+  z-index: 100;
+}
+
+.nav-tabs>li {
   display: inline-block;
   float: none;
 }
@@ -34,7 +48,7 @@ body, html {
   display: block;
   padding: 10px 20px;
   border-radius: 2px 2px 0 0;
-  color: #222;
+  color: #BBB;
   font-size: 24px;
   font-weight: normal;
   font-family: 'Lily Script One', helveti;
@@ -49,18 +63,20 @@ body, html {
 }
 
 .nav-tabs>li>a:hover,
-.nav-tabs>li>a:focus {
+.nav-tabs>li>a.active {
   background: #08C;
   color: white;
   top: 0;
 }
 
-.tab-pane{
+.tab-pane {
   z-index: 2;
   display: none;
   text-align: left;
   width: 75%;
+  color: #999;
   margin: auto;
+  margin-top: 5%;
   height: auto;
   font-size: 20px;
   line-height: 140%;
@@ -74,4 +90,8 @@ body, html {
   -o-animation-duration: 0.5s;
   -moz-animation-duration: 0.5s;
   animation-duration: 0.5s;
+}
+
+a i {
+  font-size: 2em;
 }

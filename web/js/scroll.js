@@ -1,13 +1,17 @@
 
-$("a.left").click(function () {
-  $(".images").each(function () {
-    $(this).animate({"margin-left": "+=500px"}, 500);
-  });
+$("#left-button").click(function () {
+  $('#tabs').animate({marginLeft: "+=100px"}, "fast");
 });
 
-$("a.right").click(function () {
-  $(".images").each(function () {
-    $(this).animate({"margin-left": "-=500px"}, 500);
-  });
+$('#right-button').click(function () {
+  $('#tabs').animate({marginLeft: "-=100px"}, "fast");
 });
 
+$(function() {
+   $("a").click(function() {
+      // remove classes from all
+      $("a").removeClass("active");
+      // add class to the one we clicked
+      $(this).addClass("active");
+   });
+});
