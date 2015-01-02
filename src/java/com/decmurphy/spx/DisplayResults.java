@@ -50,7 +50,7 @@ public class DisplayResults extends HttpServlet {
             + "     <img src=\"images/background.jpg\" alt=\"background\" />\n"
             + "   </div>\n"
             + "   <div class=\"container\">\n"
-            + "     <img src=\"" + gfb.getImagePath() + "\" alt=\"" + gfb.getImagePath() + "\">\n"
+            + "     <img src=\"" + gfb.getImgPath() + "\" alt=\"first-stage-trajectory\">\n"
             + "   </div>\n"
             + " </body>\n"
             + "</html>");
