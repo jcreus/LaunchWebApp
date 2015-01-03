@@ -40,6 +40,9 @@ public class Home extends HttpServlet {
             + "    <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>\n"
             + "    <link rel=\"stylesheet\" href=\"css/tabs.css\" type=\"text/css\"/>\n"
             + "    <link rel=\"stylesheet\" href=\"css/button.css\" type=\"text/css\"/>\n"
+
+			+ "	   <link rel=\"shortcut icon\" href=\"images/favicon.ico\" type=\"image/x-icon\">\n"
+			+ "    <link rel=\"icon\" href=\"images/favicon.ico\" type=\"image/x-icon\">\n"
             + "  </head>\n"
             + "  <body>\n"
             + "    <div class=\"bg\">\n"

@@ -21,7 +21,7 @@ public class Database {
 
   public String buildProfilesList(String pathToPropertiesFile) {
 
-    StringBuilder list = new StringBuilder("        <ul id=\"tabs\" class=\"nav-tabs\">\n");
+    StringBuilder list = new StringBuilder("        <ul id=\"tabs\" class=\"nav nav-tabs\">\n");
     StringBuilder tabs = new StringBuilder("        <div class=\"tab-content\">\n");
 
     try {
