@@ -33,7 +33,7 @@ public class DisplayResults extends HttpServlet {
     }
 
     PrintWriter out = response.getWriter();
-    String title = Globals.flightCode;
+    String title = Globals.flightCode + " Results";
     String docType = "<!doctype html>\n";
     out.println(docType
             + "<html>\n"
