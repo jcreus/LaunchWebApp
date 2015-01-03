@@ -1,5 +1,4 @@
 build/*
-dist/*
 web/db.properties
 web/output/*
 nbproject/private/*
