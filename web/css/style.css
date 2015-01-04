@@ -49,5 +49,5 @@ video#bgvid {
  padding-right: 10px;
  z-index: 10;
  height: 2em;
- margin-top: -2em;
+ bottom: 0;
 }
