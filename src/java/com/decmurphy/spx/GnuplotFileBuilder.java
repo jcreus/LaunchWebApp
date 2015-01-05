@@ -36,7 +36,7 @@ public class GnuplotFileBuilder {
         pw.printf("set xrange[5000:5880]\n");
         pw.printf("set yrange[800:1500]\n");
         pw.printf("set zrange[2900:3500]\n");
-        pw.printf("set view 85,75,1.7\n");
+        pw.printf("set view 98,107,1.7\n");
         pw.printf("set term png\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
