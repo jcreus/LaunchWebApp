@@ -1,6 +1,7 @@
 package com.decmurphy.spx;
 
 import com.decmurphy.spx.physics.Globals;
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Thread.sleep;
@@ -20,21 +21,37 @@ public class DisplayResults extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-    
+
     Launch.main();
 
-    response.setContentType("text/html");
+    GnuplotFileBuilder gp_landing = null, gp_globe = null, gp_launch = null;
 
-    GnuplotFileBuilder gfb = new GnuplotFileBuilder(String.valueOf(System.currentTimeMillis()));
     try {
-      Process p = Runtime.getRuntime().exec("gnuplot " + gfb.getPath());
-      p.waitFor();
-    } catch (InterruptedException ex) {
+      gp_landing = new GnuplotFileBuilder(String.valueOf(System.currentTimeMillis()), "landing");
+      Process p1 = Runtime.getRuntime().exec("gnuplot " + gp_landing.getPath());
+      p1.waitFor();
+
+      gp_globe = new GnuplotFileBuilder(String.valueOf(System.currentTimeMillis()), "globe");
+      Process p2 = Runtime.getRuntime().exec("gnuplot " + gp_globe.getPath());
+      p2.waitFor();
+
+      gp_launch = new GnuplotFileBuilder(String.valueOf(System.currentTimeMillis()), "launch");
+      Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_launch.getPath());
+      p3.waitFor();
+    }
+    catch(InterruptedException e) {
     }
 
+    response.setContentType("text/html");
     PrintWriter out = response.getWriter();
     String title = Globals.flightCode + " Results";
     String docType = "<!doctype html>\n";
+    
+    try {
+      sleep(1000);
+    } catch (InterruptedException ex) {
+    }
+    
     out.println(docType
             + "<html>\n"
             + " <head>\n"
@@ -50,15 +67,12 @@ public class DisplayResults extends HttpServlet {
             + "     <img src=\"images/background.jpg\" alt=\"background\" />\n"
             + "   </div>\n"
             + "   <div class=\"container\">\n"
-            + "     <img src=\"" + gfb.getImgPath() + "\" alt=\"first-stage-trajectory\">\n"
+            + "     <img class=\"first\" src=\"" + gp_landing.getImgPath() + "\" alt=\"first-stage-trajectory\"/>\n"
+            + "     <img class=\"second\" src=\"" + gp_globe.getImgPath() + "\" alt=\"wide-view\"/>\n"
+            + "     <img class=\"third\" src=\"" + gp_launch.getImgPath() + "\" alt=\"second-stage-trajectory\"/>\n"
             + "   </div>\n"
             + " </body>\n"
             + "</html>");
-    
-    try {
-      sleep(1000);
-    } catch (InterruptedException ex) {
-    }
   }
 
   @Override

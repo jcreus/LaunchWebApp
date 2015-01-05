@@ -16,12 +16,11 @@ public class InterfaceServlet extends HttpServlet {
   public static String resourcePath;
   public static String outputPath;
   public static String imagePath;
-  public static String URLPath;
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-
+    
     resourcePath = getServletContext().getRealPath("/resource");
     outputPath = getServletContext().getRealPath("/output");
     imagePath = "/var/lib/tomcat8/webapps/ROOT/output";

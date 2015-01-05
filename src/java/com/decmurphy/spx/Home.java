@@ -19,7 +19,7 @@ public class Home extends HttpServlet {
 
     response.setContentType("text/html");
     Database db = new Database();
-    
+        
     String dbPropsFile = getServletContext().getRealPath("/db.properties");
 
     PrintWriter out = response.getWriter();
