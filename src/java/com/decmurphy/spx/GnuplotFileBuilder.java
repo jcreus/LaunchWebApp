@@ -52,8 +52,8 @@ public class GnuplotFileBuilder {
         pw.printf("unset ztics\n");
         pw.printf("unset border\n");
         pw.printf("set xrange[5000:5880]\n");
-        pw.printf("set yrange[800:1800]\n");
-        pw.printf("set zrange[2600:3200]\n");
+        pw.printf("set yrange[800:1900]\n");
+        pw.printf("set zrange[2700:3400]\n");
         pw.printf("set view 85,75,1.7\n");
         pw.printf("set term png\n");
         pw.printf("set output \"%s\"\n", getImagePath());
