@@ -9,7 +9,7 @@ import com.decmurphy.spx.vehicle.DragonV1;
 
 public class Launch {
 
-  public static void main() {
+  public static void main(String[] args) {
     Planet Earth = new Earth(0, 0, 0);
     Payload payload = new DragonV1();
     Falcon9 F9 = new Falcon9(payload);
@@ -49,11 +49,11 @@ public class Launch {
 
       F9.leapfrogStep();
       if (mod(t, 5.0) < dt) {
-        F9.outputFile();
+        F9.outputFile(args[0]);
       }
 
       t += dt;
 
-    } while (t < 8000);
+    } while (t < 6000);
   }
 }

@@ -1,12 +1,9 @@
 package com.decmurphy.spx;
 
 import com.decmurphy.spx.physics.Globals;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,35 +19,32 @@ public class DisplayResults extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
 
-    Launch.main();
+    String id = request.getSession().getId();    
+    String[] args = {id};
+    Launch.main(args);
 
     GnuplotFileBuilder gp_landing = null, gp_globe = null, gp_launch = null;
 
     try {
-      gp_landing = new GnuplotFileBuilder(String.valueOf(System.currentTimeMillis()), "landing");
+      gp_landing = new GnuplotFileBuilder(id, "landing");
       Process p1 = Runtime.getRuntime().exec("gnuplot " + gp_landing.getPath());
       p1.waitFor();
 
-      gp_globe = new GnuplotFileBuilder(String.valueOf(System.currentTimeMillis()), "globe");
+      gp_globe = new GnuplotFileBuilder(id, "globe");
       Process p2 = Runtime.getRuntime().exec("gnuplot " + gp_globe.getPath());
       p2.waitFor();
 
-      gp_launch = new GnuplotFileBuilder(String.valueOf(System.currentTimeMillis()), "launch");
+      gp_launch = new GnuplotFileBuilder(id, "launch");
       Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_launch.getPath());
       p3.waitFor();
     }
     catch(InterruptedException e) {
     }
-
+    
     response.setContentType("text/html");
     PrintWriter out = response.getWriter();
     String title = Globals.flightCode + " Results";
     String docType = "<!doctype html>\n";
-    
-    try {
-      sleep(1000);
-    } catch (InterruptedException ex) {
-    }
     
     out.println(docType
             + "<html>\n"
@@ -73,6 +67,8 @@ public class DisplayResults extends HttpServlet {
             + "   </div>\n"
             + " </body>\n"
             + "</html>");
+    
+    request.getSession().invalidate();
   }
 
   @Override

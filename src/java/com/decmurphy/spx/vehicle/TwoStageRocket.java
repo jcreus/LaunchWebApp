@@ -92,10 +92,10 @@ public class TwoStageRocket {
         mStage[1].gravityTurn();
     }
 
-    public void outputFile() {
-        mStage[0].outputFile();
+    public void outputFile(String id) {
+        mStage[0].outputFile(id);
         if (!beforeSep) {
-            mStage[1].outputFile();
+            mStage[1].outputFile(id);
         }
     }
 

@@ -287,11 +287,11 @@ public class Stage {
     /*
      *	Output telemetry to file. Nothing interesting happens here.
      */
-    public void outputFile() {
+    public void outputFile(String id) {
         PrintWriter pw = null;
 
         try {
-            File outputFile = new File(outputPath, "/" + name + ".dat");
+            File outputFile = new File(outputPath, "/" + id + "_" + name + ".dat");
             pw = new PrintWriter(new FileWriter(outputFile, true));
 
             pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",
