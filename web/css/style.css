@@ -52,19 +52,22 @@ video#bgvid {
  bottom: 0;
 }
 
-img.first {
+img.first,
+img.fourth {
   top: 0;
   left: 0;
   width: 33%
 }
 
-img.second {
+img.second,
+img.fifth {
   top: 0%;
   right: 0;
   width: 33%;
 }
 
-img.third {
+img.third,
+img.sixth {
   top: 0;
   right: 0;
   width: 33%;

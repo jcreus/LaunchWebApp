@@ -32,7 +32,7 @@ public class LoadingPage extends HttpServlet {
             + " </head>\n"
             + " <body>\n"
             + "   <video autoplay loop poster=\"" + request.getContextPath() + "/images/background.jpg\" id=\"bgvid\">\n"
-            + "   <source src=\"" + request.getContextPath() + "/images/launch.webm\" type=\"video/webm\">\n"
+            + "     <source src=\"" + request.getContextPath() + "/images/launch.webm\" type=\"video/webm\">\n"
             + "   </video>\n"
             + " </body>\n"
             + "</html>");

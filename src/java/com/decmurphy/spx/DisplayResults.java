@@ -23,7 +23,12 @@ public class DisplayResults extends HttpServlet {
     String[] args = {id};
     Launch.main(args);
 
-    GnuplotFileBuilder gp_landing = null, gp_globe = null, gp_launch = null;
+    GnuplotFileBuilder gp_landing = null, 
+            gp_globe = null, 
+            gp_alt = null,
+            gp_landing2 = null,
+            gp_velocity = null,
+            gp_phase = null;
 
     try {
       gp_landing = new GnuplotFileBuilder(id, "landing");
@@ -34,9 +39,21 @@ public class DisplayResults extends HttpServlet {
       Process p2 = Runtime.getRuntime().exec("gnuplot " + gp_globe.getPath());
       p2.waitFor();
 
-      gp_launch = new GnuplotFileBuilder(id, "launch");
-      Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_launch.getPath());
+      gp_alt = new GnuplotFileBuilder(id, "altitude");
+      Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_alt.getPath());
       p3.waitFor();
+
+      gp_landing2 = new GnuplotFileBuilder(id, "landing2");
+      Process p4 = Runtime.getRuntime().exec("gnuplot " + gp_landing2.getPath());
+      p4.waitFor();
+
+      gp_velocity = new GnuplotFileBuilder(id, "velocity");
+      Process p5 = Runtime.getRuntime().exec("gnuplot " + gp_velocity.getPath());
+      p5.waitFor();
+
+      gp_phase = new GnuplotFileBuilder(id, "phase");
+      Process p6 = Runtime.getRuntime().exec("gnuplot " + gp_phase.getPath());
+      p6.waitFor();
     }
     catch(InterruptedException e) {
     }
@@ -61,9 +78,16 @@ public class DisplayResults extends HttpServlet {
             + "     <img src=\"images/background.jpg\" alt=\"background\" />\n"
             + "   </div>\n"
             + "   <div class=\"container\">\n"
-            + "     <img class=\"first\" src=\"" + gp_landing.getImgPath() + "\" alt=\"first-stage-trajectory\"/>\n"
-            + "     <img class=\"second\" src=\"" + gp_globe.getImgPath() + "\" alt=\"wide-view\"/>\n"
-            + "     <img class=\"third\" src=\"" + gp_launch.getImgPath() + "\" alt=\"second-stage-trajectory\"/>\n"
+            + "     <div id=\"row1\">\n"
+            + "       <img class=\"first\" src=\"" + gp_landing.getImgPath() + "\" alt=\"first-stage-trajectory\"/>\n"
+            + "       <img class=\"second\" src=\"" + gp_globe.getImgPath() + "\" alt=\"wide-view\"/>\n"
+            + "       <img class=\"third\" src=\"" + gp_alt.getImgPath() + "\" alt=\"altitude\"/>\n"
+            + "     </div>\n"
+            + "     <div id=\"row2\">\n"
+            + "       <img class=\"fourth\" src=\"" + gp_landing2.getImgPath() + "\" alt=\"alt-first-stage-trajectory\"/>\n"
+            + "       <img class=\"fifth\" src=\"" + gp_velocity.getImgPath() + "\" alt=\"velocity\"/>\n"
+            + "       <img class=\"sixth\" src=\"" + gp_phase.getImgPath() + "\" alt=\"phase-space\"/>\n"
+            + "     </div>\n"
             + "   </div>\n"
             + " </body>\n"
             + "</html>");
