@@ -52,10 +52,10 @@ public class Home extends HttpServlet {
             + "      <div class=\"tabbable\">\n"
             +          db.buildProfilesList(dbPropsFile)
             + "      </div>\n"
-            + "      <div id=\"footer\">\n"
-            + "        Created by <a href=\"http://www.decmurphy.com\">Declan</a>, a.k.a /u/TheVehicleDestroyer, for the community at /r/SpaceX.</br>\n"
-            + "        I have no affiliation with SpaceX whatsoever. This app is purely for entertainment purposes."
-            + "      </div>\n"
+            + "    </div>\n"
+            + "    <div id=\"footer\">\n"
+            + "      Created by <a href=\"http://www.decmurphy.com\">Declan</a>, a.k.a /u/TheVehicleDestroyer, for the community at /r/SpaceX.</br>\n"
+            + "      I have no affiliation with SpaceX whatsoever. This app is purely for entertainment purposes."
             + "    </div>\n"
             + "  </body>\n"
             + "</html>");

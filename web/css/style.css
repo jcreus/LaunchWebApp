@@ -39,7 +39,8 @@ video#bgvid {
 }
 
 #container {
-  padding-bottom: 2em;
+  min-height: 100%;
+  margin-bottom: -4em;
 }
 
 #footer {
@@ -48,8 +49,7 @@ video#bgvid {
  text-align: right;
  padding-right: 10px;
  z-index: 10;
- height: 2em;
- bottom: 0;
+ height: 4em;
 }
 
 img.first,
