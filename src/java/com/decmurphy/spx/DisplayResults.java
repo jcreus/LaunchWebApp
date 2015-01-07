@@ -90,7 +90,7 @@ public class DisplayResults extends HttpServlet {
 						+ " </body>\n"
 						+ "</html>");
 
-		//request.getSession().invalidate();
+		request.getSession().invalidate();
 	}
 
 	@Override
