@@ -13,7 +13,7 @@ public class SessionCounterListener implements HttpSessionListener {
 
 	@Override
 	public void sessionDestroyed(HttpSessionEvent se) {
-/*
+
 		System.out.println("Deleting files in " + imagePath);
 		for (File f : new File(imagePath).listFiles()) {
 			if (f.getName().startsWith(se.getSession().getId())) {
@@ -24,7 +24,7 @@ public class SessionCounterListener implements HttpSessionListener {
 				}
 			}
 		}
-*/
+
 	}
 	
 }
