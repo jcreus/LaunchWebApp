@@ -54,4 +54,7 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/ErrorHandler</location>
     </error-page>
+    <listener>
+		<listener-class>com.decmurphy.spx.SessionCounterListener</listener-class>
+	</listener>
 </web-app>
