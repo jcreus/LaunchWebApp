@@ -89,11 +89,8 @@ public class DisplayResults extends HttpServlet {
 						+ "   </div>\n"
 						+ " </body>\n"
 						+ "</html>");
-/*
-		System.out.println("Calling invalidate()\n");
-		request.getSession().invalidate();
-		System.out.println("Called invalidate()\n");
-*/
+
+		//request.getSession().invalidate();
 	}
 
 	@Override
