@@ -1,16 +1,12 @@
 package com.decmurphy.spx;
 
-import static com.decmurphy.spx.InterfaceServlet.imagePath;
 import com.decmurphy.spx.physics.Globals;
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSessionEvent;
-import javax.servlet.http.HttpSessionListener;
 
 /**
  *
@@ -93,10 +89,11 @@ public class DisplayResults extends HttpServlet {
 						+ "   </div>\n"
 						+ " </body>\n"
 						+ "</html>");
-
+/*
 		System.out.println("Calling invalidate()\n");
 		request.getSession().invalidate();
 		System.out.println("Called invalidate()\n");
+*/
 	}
 
 	@Override
