@@ -1,7 +1,8 @@
 package com.decmurphy.spx.physics;
 
+import com.decmurphy.spx.config.ProfileConfig;
 import java.math.*;
-import com.decmurphy.spx.physics.Profile;
+import com.decmurphy.spx.profile.Profile;
 
 public class Globals
 {
@@ -22,7 +23,7 @@ public class Globals
 	public static double incl = (90 - latitude)*Math.PI/180;
 	public static double lon = (longitude)*Math.PI/180;
         
-        public static Profile profile = Profile.getProfile();
+    public static final Profile profile = ProfileConfig.getProfile(flightCode);
         
 	public static double mod(double a, double b)
 	{

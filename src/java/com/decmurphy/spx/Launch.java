@@ -1,21 +1,25 @@
 package com.decmurphy.spx;
 
+import com.decmurphy.spx.physics.Globals;
 import static com.decmurphy.spx.physics.Globals.*;
-import com.decmurphy.spx.space.Earth;
 import com.decmurphy.spx.space.Planet;
-import com.decmurphy.spx.vehicle.Falcon9;
+import com.decmurphy.spx.space.Earth;
+import com.decmurphy.spx.config.PayloadConfig;
 import com.decmurphy.spx.vehicle.Payload;
-import com.decmurphy.spx.vehicle.DragonV1;
+import com.decmurphy.spx.config.LaunchVehicleConfig;
+import com.decmurphy.spx.vehicle.LaunchVehicle;
 
 public class Launch {
 
   public static void main(String[] args) {
-    Planet Earth = new Earth(0, 0, 0);
-    Payload payload = new DragonV1();
-    Falcon9 F9 = new Falcon9(payload);
+    
+	Planet Earth = new Earth(0, 0, 0);
+    
+	Payload payload = PayloadConfig.getPayload(Globals.flightCode);
+    LaunchVehicle LV = LaunchVehicleConfig.getLaunchVehicle(Globals.flightCode, payload);
 
     boolean SECO = false;
-    F9.setClock(-60.0);
+    LV.setClock(-60.0);
     t = 0.0;
 
     do {
@@ -23,33 +27,34 @@ public class Launch {
       /*
        *	Operator overloading would make this look at a lot nicer. Pity Java doesn't support it.
        *	Basically what's happening in the 'if' statements here is the equivalent of, for example,
-       *	"if(onBoardClock == 167.0) { F9.MECO() }"
+       *	"if(onBoardClock == 167.0) { LV.MECO() }"
        *	Even though 'dt' is an even factor of 1.0, it's not very reliable to say "if(onBoardClock == someTime)".
        *	I'm not sure why.
        */
-      if (Math.abs(F9.clock() - profile.getMEITime()) < 0.5 * dt) {
-        F9.firstStageIgnition();
-      } else if (Math.abs(F9.clock() - profile.getLaunchTime()) < 0.5 * dt) {
-        F9.releaseClamps();
-      } else if (Math.abs(F9.clock() - profile.getPitchTime()) < 0.5 * dt) {
-        F9.pitchKick();
-      } else if (Math.abs(F9.clock() - profile.getMECOTime()) < 0.5 * dt) {
-        F9.MECO();
-      } else if (Math.abs(F9.clock() - profile.getFSSTime()) < 0.5 * dt) {
-        F9.stageSeparation();
-      } else if (Math.abs(F9.clock() - profile.getSEITime()) < 0.5 * dt) {
-        F9.secondStageIgnition();
+      if (Math.abs(LV.clock() - profile.getMEITime()) < 0.5 * dt) {
+        LV.firstStageIgnition();
+      } else if (Math.abs(LV.clock() - profile.getLaunchTime()) < 0.5 * dt) {
+        LV.releaseClamps();
+      } else if (Math.abs(LV.clock() - profile.getPitchTime()) < 0.5 * dt) {
+        LV.pitchKick();
+      }
+	  /* else if (Math.abs(LV.clock() - profile.getMECOTime()) < 0.5 * dt) {
+        LV.MECO();
+      } else if (Math.abs(LV.clock() - profile.getFSSTime()) < 0.5 * dt) {
+        LV.stageSeparation();
+      } else if (Math.abs(LV.clock() - profile.getSEITime()) < 0.5 * dt) {
+        LV.secondStageIgnition();
       }
 
-      if (!SECO && (F9.mStage[1].vel() > 7800 || F9.mStage[1].getPropMass() < 100)) {
-        F9.SECO();
+      if (!SECO && (LV.mStage[1].vel() > 7800 || LV.mStage[1].getPropMass() < 100)) {
+        LV.SECO();
         dt = 0.1;
         SECO = true;
       }
-
-      F9.leapfrogStep();
+		*/
+      LV.leapfrogStep();
       if (mod(t, 5.0) < dt) {
-        F9.outputFile(args[0]);
+        LV.outputFile(args[0]);
       }
 
       t += dt;

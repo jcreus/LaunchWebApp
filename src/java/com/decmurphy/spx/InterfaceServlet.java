@@ -37,6 +37,9 @@ public class InterfaceServlet extends HttpServlet {
           case "flight_code":
             Globals.flightCode = paramValues[0];
             break;
+		  case "payload_mass":
+            profile.setPayloadMass(Double.parseDouble(paramValues[0]));
+            break;
           case "coast_level":
             Globals.coastMap = "/coast_" + paramValues[0] + ".txt";
             break;
@@ -70,6 +73,9 @@ public class InterfaceServlet extends HttpServlet {
           case "yaw":
             profile.setYaw(Double.parseDouble(paramValues[0]));
             break;
+		  case "legs":
+			profile.setLegs(paramValues[0].equalsIgnoreCase("YES"));
+			break;
 
           default:
             System.out.println("Unrecognised time");

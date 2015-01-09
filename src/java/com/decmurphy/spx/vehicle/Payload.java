@@ -1,6 +1,6 @@
 package com.decmurphy.spx.vehicle;
 
-public class Payload
+public abstract class Payload
 {
 	protected double mMass;
 
