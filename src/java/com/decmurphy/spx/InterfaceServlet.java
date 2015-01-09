@@ -41,7 +41,7 @@ public class InterfaceServlet extends HttpServlet {
             profile.setPayloadMass(Double.parseDouble(paramValues[0]));
             break;
           case "coast_level":
-            Globals.coastMap = "/coast_" + paramValues[0] + ".txt";
+            Globals.coastMap = "/" + request.getSession().getId() + "_coast_" + paramValues[0] + ".txt";
             break;
           case "mei_time":
             profile.setMEITime(Double.parseDouble(paramValues[0]));

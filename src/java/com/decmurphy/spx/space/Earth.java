@@ -17,107 +17,115 @@ import java.io.PrintWriter;
  */
 public final class Earth extends Planet {
 
-  public Earth(double x, double y, double z) {
-    super("Earth", x, y, z, radiusOfEarth, massOfEarth);
-    drawHazard();
-  }
+	private int id;
 
-  @Override
-  protected void draw() {
+	public Earth(double x, double y, double z) {
+		this(x, y, z, "");
+	}
 
-    PrintWriter pw = null;
+	public Earth(double x, double y, double z, String id) {
+		super("Earth", x, y, z, id, radiusOfEarth, massOfEarth);
+		this.id = Integer.parseInt(id);
+		drawHazard();
+	}
 
-    try {
+	@Override
+	protected void draw() {
 
-      File outputFile = new File(outputPath, "/" + name + ".output.txt");
-      pw = new PrintWriter(new FileWriter(outputFile, false));
+		PrintWriter pw = null;
 
-      double x, y, z;
-      double theta, psi, dt = Math.PI / 36, dp = Math.PI / 36;
+		try {
 
-      for (theta = 0; theta < Math.PI; theta += dt) {
-        z = radius * Math.cos(theta);
-        for (psi = 0; psi < 2 * Math.PI; psi += dp) {
-          x = radius * Math.sin(theta) * Math.sin(psi);
-          y = radius * Math.sin(theta) * Math.cos(psi);
+			File outputFile = new File(outputPath, "/" + id + "_" + name + ".output.txt");
+			pw = new PrintWriter(new FileWriter(outputFile, false));
 
-          pw.print(x * 1e-3 + "\t" + y * 1e-3 + "\t" + z * 1e-3 + "\n");
-        }
-        pw.print("\n");
-      }
-    } catch (IOException e) {
-    } finally {
-      if (pw != null) {
-        pw.close();
-      }
-    }
+			double x, y, z;
+			double theta, psi, dt = Math.PI / 36, dp = Math.PI / 36;
 
-    pw = null;
-    BufferedReader br;
+			for (theta = 0; theta < Math.PI; theta += dt) {
+				z = radius * Math.cos(theta);
+				for (psi = 0; psi < 2 * Math.PI; psi += dp) {
+					x = radius * Math.sin(theta) * Math.sin(psi);
+					y = radius * Math.sin(theta) * Math.cos(psi);
 
-    double theta, psi;
-    double R = radiusOfEarth * 1e-3;
+					pw.print(x * 1e-3 + "\t" + y * 1e-3 + "\t" + z * 1e-3 + "\n");
+				}
+				pw.print("\n");
+			}
+		} catch (IOException e) {
+		} finally {
+			if (pw != null) {
+				pw.close();
+			}
+		}
 
-    try {
-      String line;
-      File outputFile = new File(outputPath, "/coast.output.txt");
-      pw = new PrintWriter(new FileWriter(outputFile, false));
+		pw = null;
+		BufferedReader br;
 
-      File earthFile = new File(resourcePath, Globals.coastMap);
-      br = new BufferedReader(new FileReader(earthFile));
+		double theta, psi;
+		double R = radiusOfEarth * 1e-3;
 
-      while ((line = br.readLine()) != null) {
-        if (!line.isEmpty()) {
-          String[] parts = line.split("\\s+");
+		try {
+			String line;
+			File outputFile = new File(outputPath, "/" + id + "_coast.output.txt");
+			pw = new PrintWriter(new FileWriter(outputFile, false));
 
-          psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
-          theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
-          pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
-        } else {
-          pw.print("\n");
-        }
-      }
-    } catch (IOException e) {
-    } finally {
-      if (pw != null) {
-        pw.close();
-      }
-      System.out.printf("Earth coast drawn.\n");
-    }
-  }
+			File earthFile = new File(resourcePath, Globals.coastMap);
+			br = new BufferedReader(new FileReader(earthFile));
 
-  protected void drawHazard() {
-    PrintWriter pw = null;
-    BufferedReader br;
+			while ((line = br.readLine()) != null) {
+				if (!line.isEmpty()) {
+					String[] parts = line.split("\\s+");
 
-    double theta, psi;
-    double R = radiusOfEarth * 1e-3;
+					psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
+					theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
+					pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
+				} else {
+					pw.print("\n");
+				}
+			}
+		} catch (IOException e) {
+		} finally {
+			if (pw != null) {
+				pw.close();
+			}
+			System.out.printf("Earth coast drawn.\n");
+		}
+	}
 
-    try {
-      String line;
-      File outputFile = new File(outputPath, "/hazard.output.txt");
-      pw = new PrintWriter(new FileWriter(outputFile, false));
+	protected void drawHazard() {
+		PrintWriter pw = null;
+		BufferedReader br;
 
-      File hazardFile = new File(resourcePath, "/" + Globals.flightCode + ".hazard.txt");
-      br = new BufferedReader(new FileReader(hazardFile));
+		double theta, psi;
+		double R = radiusOfEarth * 1e-3;
 
-      while ((line = br.readLine()) != null) {
-        if (!line.isEmpty()) {
-          String[] parts = line.split("\\s+");
+		try {
+			String line;
+			File outputFile = new File(outputPath, "/" + id + "_hazard.output.txt");
+			pw = new PrintWriter(new FileWriter(outputFile, false));
 
-          psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
-          theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
-          pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
-        } else {
-          pw.print("\n");
-        }
-      }
-    } catch (IOException e) {
-    } finally {
-      if (pw != null) {
-        pw.close();
-      }
-      System.out.printf("Hazard map drawn.\n");
-    }
-  }
+			File hazardFile = new File(resourcePath, "/" + Globals.flightCode + ".hazard.txt");
+			br = new BufferedReader(new FileReader(hazardFile));
+
+			while ((line = br.readLine()) != null) {
+				if (!line.isEmpty()) {
+					String[] parts = line.split("\\s+");
+
+					psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
+					theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
+					pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
+				} else {
+					pw.print("\n");
+				}
+			}
+		} catch (IOException e) {
+		} finally {
+			if (pw != null) {
+				pw.close();
+			}
+			System.out.printf("Hazard map drawn.\n");
+		}
+	}
+
 }

@@ -13,7 +13,8 @@ public class Launch {
 
   public static void main(String[] args) {
     
-	Planet Earth = new Earth(0, 0, 0);
+	String simId = args[0];
+	Planet Earth = new Earth(0, 0, 0, simId);
     
 	Payload payload = PayloadConfig.getPayload(Globals.flightCode);
     LaunchVehicle LV = LaunchVehicleConfig.getLaunchVehicle(Globals.flightCode, payload);
@@ -54,7 +55,7 @@ public class Launch {
 		*/
       LV.leapfrogStep();
       if (mod(t, 5.0) < dt) {
-        LV.outputFile(args[0]);
+        LV.outputFile(simId);
       }
 
       t += dt;

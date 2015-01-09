@@ -8,16 +8,18 @@ public abstract class Planet {
   protected double[] pos = new double[3];
   protected double radius;
   protected double mass;
+  private final int id;
 
-  public Planet(String name, double x, double y, double z, double radius, double mass) {
+  public Planet(String name, double x, double y, double z, String id, double radius, double mass) {
     this.name = name;
     this.pos[0] = x;
     this.pos[1] = y;
     this.pos[2] = z;
     this.radius = radius;
     this.mass = mass;
-
-    draw();
+	this.id = Integer.parseInt(id);
+	
+	System.out.println("CAUTION: No sessionID passed to Earth constructor");
     System.out.printf(this.name + " created.\n");
 
   }
@@ -31,7 +33,7 @@ public abstract class Planet {
       if (!tempFile.exists()) {
         tempFile.mkdirs();
       }
-      File outputFile = new File(tempFile, "/" + name + ".output.txt");
+      File outputFile = new File(tempFile, "/" + id + "_" + name + ".output.txt");
       pw = new PrintWriter(new FileWriter(outputFile, false));
 
       double x, y, z;
