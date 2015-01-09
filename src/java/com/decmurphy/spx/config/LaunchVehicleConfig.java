@@ -39,9 +39,9 @@ public class LaunchVehicleConfig {
 			case "AS-6":
 			case "CRS-4":
 			case "CRS-5":
-			default:
 				return new Falcon9_1(payload);
-
+			default:
+				return null;
 		}
 
 	}

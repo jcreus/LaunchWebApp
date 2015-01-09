@@ -16,7 +16,12 @@ public class Launch {
 	String simId = args[0];
 	Planet Earth = new Earth(0, 0, 0, simId);
     
-	Payload payload = PayloadConfig.getPayload(Globals.flightCode);
+	try {
+		Payload payload = PayloadConfig.getPayload(Globals.flightCode);
+	} catch(PayloadException e) {
+		
+	}
+	
     LaunchVehicle LV = LaunchVehicleConfig.getLaunchVehicle(Globals.flightCode, payload);
 
     boolean SECO = false;
