@@ -1,7 +1,5 @@
 package com.decmurphy.spx;
 
-import static com.decmurphy.spx.InterfaceServlet.imagePath;
-import java.io.File;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 

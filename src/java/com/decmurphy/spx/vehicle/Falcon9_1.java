@@ -1,6 +1,8 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.physics.Globals.*;
+import static com.decmurphy.spx.Globals.incl;
+import static com.decmurphy.spx.Globals.lon;
+import static com.decmurphy.spx.Globals.profile;
 import com.decmurphy.spx.engine.Merlin1D;
 import com.decmurphy.spx.engine.Merlin1Dv;
 

@@ -5,6 +5,7 @@
  */
 package com.decmurphy.spx.config;
 
+import com.decmurphy.spx.exceptions.ProfileException;
 import com.decmurphy.spx.profile.*;
 /**
  *
@@ -15,7 +16,7 @@ public class ProfileConfig {
 	public ProfileConfig() {
 	}
 	
-	public static Profile getProfile(String flightCode) {
+	public static Profile getProfile(String flightCode) throws ProfileException {
 
 		switch(flightCode) {
 			
@@ -39,7 +40,7 @@ public class ProfileConfig {
 			case "CRS-4": return CRS_4Profile.getProfile();
 			case "CRS-5": return CRS_5Profile.getProfile();
 				
-			default: return null;
+			default: throw new ProfileException("No valid mission specified");
 		}
 	}
 }

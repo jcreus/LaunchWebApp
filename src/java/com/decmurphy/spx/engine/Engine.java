@@ -1,6 +1,6 @@
 package com.decmurphy.spx.engine;
 
-import static com.decmurphy.spx.physics.Globals.*;
+import static com.decmurphy.spx.Globals.*;
 
 public class Engine
 {

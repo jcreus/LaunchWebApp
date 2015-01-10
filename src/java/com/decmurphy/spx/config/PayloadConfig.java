@@ -1,10 +1,8 @@
 package com.decmurphy.spx.config;
 
-import static com.decmurphy.spx.physics.Globals.profile;
+import com.decmurphy.spx.exceptions.PayloadException;
+import static com.decmurphy.spx.Globals.profile;
 import com.decmurphy.spx.vehicle.DragonV1;
-import com.decmurphy.spx.vehicle.Falcon1;
-import com.decmurphy.spx.vehicle.Falcon9;
-import com.decmurphy.spx.vehicle.Falcon9_1;
 import com.decmurphy.spx.vehicle.Payload;
 import com.decmurphy.spx.vehicle.Satellite;
 
@@ -17,9 +15,9 @@ public class PayloadConfig {
 	public PayloadConfig() {
 	}
 
-	public static Payload getPayload(String flightCode) {
+	public static Payload getPayload(String flightCode) throws PayloadException {
 
-		Payload p = null;
+		Payload p;
 		switch (flightCode) {
 
 			case "F9-1":
@@ -31,6 +29,7 @@ public class PayloadConfig {
 			case "CRS-4":
 			case "CRS-5":
 				p = new DragonV1();
+				break;
 			case "FSAT-2":
 			case "DEMO":
 			case "TBLZR":
@@ -43,9 +42,11 @@ public class PayloadConfig {
 			case "AS-8":
 			case "AS-6":
 				p = new Satellite(profile.getPayloadMass());
+				break;
 
 			default:
 				p = null;
+				break;
 		}
 
 		if (null == p) {
@@ -53,6 +54,8 @@ public class PayloadConfig {
 		} else if (p.getMass() < 0) {
 			throw new PayloadException("Invalid Payload Mass");
 		}
+
+		return p;
 	}
 
 }

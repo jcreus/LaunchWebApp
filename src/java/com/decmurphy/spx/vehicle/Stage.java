@@ -1,8 +1,16 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.InterfaceServlet.outputPath;
+import static com.decmurphy.spx.Globals.densityAtAltitude;
+import static com.decmurphy.spx.Globals.dt;
+import static com.decmurphy.spx.Globals.earthVel;
+import static com.decmurphy.spx.Globals.gravityAtRadius;
+import static com.decmurphy.spx.Globals.incl;
+import static com.decmurphy.spx.Globals.lon;
+import static com.decmurphy.spx.Globals.profile;
+import static com.decmurphy.spx.Globals.radiusOfEarth;
+import static com.decmurphy.spx.Globals.t;
+import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import java.io.*;
-import static com.decmurphy.spx.physics.Globals.*;
 import com.decmurphy.spx.engine.Engine;
 
 public class Stage {

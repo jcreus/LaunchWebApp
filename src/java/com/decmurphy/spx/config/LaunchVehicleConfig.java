@@ -1,5 +1,6 @@
 package com.decmurphy.spx.config;
 
+import com.decmurphy.spx.exceptions.LaunchVehicleException;
 import com.decmurphy.spx.vehicle.Falcon1;
 import com.decmurphy.spx.vehicle.Falcon9;
 import com.decmurphy.spx.vehicle.Falcon9_1;
@@ -15,9 +16,9 @@ public class LaunchVehicleConfig {
 	public LaunchVehicleConfig() {
 	}
 
-	public static LaunchVehicle getLaunchVehicle(String flightCode, Payload payload) {
+	public static LaunchVehicle getLaunchVehicle(String flightCode, Payload payload) throws LaunchVehicleException {
 
-		switch(flightCode) {
+		switch (flightCode) {
 			case "FSAT-2":
 			case "DEMO":
 			case "TBLZR":
@@ -41,9 +42,7 @@ public class LaunchVehicleConfig {
 			case "CRS-5":
 				return new Falcon9_1(payload);
 			default:
-				return null;
+				throw new LaunchVehicleException("No valid mission specified");
 		}
-
 	}
-	
 }

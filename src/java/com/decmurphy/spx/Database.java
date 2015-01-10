@@ -26,10 +26,11 @@ public class Database {
 
     try {
 
-      Properties props = new Properties();
-      FileInputStream in = new FileInputStream(pathToPropertiesFile);
-      props.load(in);
-      in.close();
+			Properties props;
+			try (FileInputStream in = new FileInputStream(pathToPropertiesFile)) {
+				props = new Properties();
+				props.load(in);
+			}
 
       String url = props.getProperty("dbUrl");
       String user = props.getProperty("dbUser");
