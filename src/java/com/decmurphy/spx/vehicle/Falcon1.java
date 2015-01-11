@@ -4,20 +4,26 @@ import com.decmurphy.spx.engine.Kestrel;
 import com.decmurphy.spx.engine.Merlin1C;
 import static com.decmurphy.spx.Globals.incl;
 import static com.decmurphy.spx.Globals.lon;
+import com.decmurphy.spx.payload.Payload;
+import com.decmurphy.spx.payload.Satellite;
 
 /**
  *
  * @author dmurphy
  */
-public class Falcon1 extends TwoStageRocket
-{
+public class Falcon1 extends TwoStageRocket {
 
-	public Falcon1(Payload payload)
-	{
+	public Falcon1(Payload payload) {
+		this();
+		setPayload(payload);
+	}
+	
+	public Falcon1() {
+
 		Merlin1C M1C = new Merlin1C();
 		Kestrel Kes = new Kestrel();
-
-		this.payload = payload;
+		
+		setPayload(new Satellite(500));
 
 		mStage[0].setEngines(1, M1C);
 		mStage[0].setAeroProperties(0.85, 0.3);
@@ -37,6 +43,10 @@ public class Falcon1 extends TwoStageRocket
 		this.setCoordinates(incl, lon);
 		this.setClock(-60.0);
 		this.gravTurnTime = 55.0;
+	}
+	
+	private void setPayload(Payload p) {
+		this.payload = p;
 	}
 
 }

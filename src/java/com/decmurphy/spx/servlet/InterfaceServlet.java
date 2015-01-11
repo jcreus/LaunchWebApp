@@ -1,7 +1,7 @@
 package com.decmurphy.spx.servlet;
 
 import com.decmurphy.spx.Globals;
-import static com.decmurphy.spx.Globals.profile;
+import static com.decmurphy.spx.Globals.inputVars;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -38,43 +38,43 @@ public class InterfaceServlet extends HttpServlet {
 						Globals.flightCode = paramValues[0];
 						break;
 					case "payload_mass":
-						profile.setPayloadMass(Double.parseDouble(paramValues[0]));
+						inputVars.setPayloadMass(Double.parseDouble(paramValues[0]));
 						break;
 					case "coast_level":
 						Globals.coastMap = "/" + request.getSession().getId() + "_coast_" + paramValues[0] + ".txt";
 						break;
 					case "mei_time":
-						profile.setMEITime(Double.parseDouble(paramValues[0]));
+						inputVars.setMEITime(Double.parseDouble(paramValues[0]));
 						break;
 					case "launch_time":
-						profile.setLaunchTime(Double.parseDouble(paramValues[0]));
+						inputVars.setLaunchTime(Double.parseDouble(paramValues[0]));
 						break;
 					case "pitch_time":
-						profile.setPitchTime(Double.parseDouble(paramValues[0]));
+						inputVars.setPitchTime(Double.parseDouble(paramValues[0]));
 						break;
 					case "meco_time":
-						profile.setMECOTime(Double.parseDouble(paramValues[0]));
+						inputVars.setMECOTime(Double.parseDouble(paramValues[0]));
 						break;
 					case "fss_time":
-						profile.setFSSTime(Double.parseDouble(paramValues[0]));
+						inputVars.setFSSTime(Double.parseDouble(paramValues[0]));
 						break;
 					case "sei_time":
-						profile.setSEITime(Double.parseDouble(paramValues[0]));
+						inputVars.setSEITime(Double.parseDouble(paramValues[0]));
 						break;
 					case "seco_time":
-						profile.setSECOTime(Double.parseDouble(paramValues[0]));
+						inputVars.setSECOTime(Double.parseDouble(paramValues[0]));
 						break;
 					case "sss_time":
-						profile.setSSSTime(Double.parseDouble(paramValues[0]));
+						inputVars.setSSSTime(Double.parseDouble(paramValues[0]));
 						break;
 					case "pitch":
-						profile.setPitch(Double.parseDouble(paramValues[0]));
+						inputVars.setPitch(Double.parseDouble(paramValues[0]));
 						break;
 					case "yaw":
-						profile.setYaw(Double.parseDouble(paramValues[0]));
+						inputVars.setYaw(Double.parseDouble(paramValues[0]));
 						break;
 					case "legs":
-						profile.setLegs(paramValues[0].equalsIgnoreCase("YES"));
+						inputVars.setLegs(paramValues[0].equalsIgnoreCase("YES"));
 						break;
 
 					default:

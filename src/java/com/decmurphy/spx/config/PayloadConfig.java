@@ -1,10 +1,10 @@
 package com.decmurphy.spx.config;
 
+import static com.decmurphy.spx.Globals.inputVars;
 import com.decmurphy.spx.exceptions.PayloadException;
-import static com.decmurphy.spx.Globals.profile;
-import com.decmurphy.spx.vehicle.DragonV1;
-import com.decmurphy.spx.vehicle.Payload;
-import com.decmurphy.spx.vehicle.Satellite;
+import com.decmurphy.spx.payload.DragonV1;
+import com.decmurphy.spx.payload.Payload;
+import com.decmurphy.spx.payload.Satellite;
 
 /**
  *
@@ -41,7 +41,7 @@ public class PayloadConfig {
 			case "OG2-1":
 			case "AS-8":
 			case "AS-6":
-				p = new Satellite(profile.getPayloadMass());
+				p = new Satellite(inputVars.getPayloadMass());
 				break;
 
 			default:

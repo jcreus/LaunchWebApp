@@ -4,20 +4,26 @@ import static com.decmurphy.spx.Globals.incl;
 import static com.decmurphy.spx.Globals.lon;
 import com.decmurphy.spx.engine.Merlin1C;
 import com.decmurphy.spx.engine.Merlin1Cv;
+import com.decmurphy.spx.payload.DragonV1;
+import com.decmurphy.spx.payload.Payload;
 
 /**
  *
  * @author dmurphy
  */
-public class Falcon9 extends TwoStageRocket
-{
+public class Falcon9 extends TwoStageRocket {
 
-	public Falcon9(Payload payload)
-	{
+	public Falcon9(Payload payload) {
+		this();
+		setPayload(payload);
+	}
+	
+	public Falcon9()	{
+		
 		Merlin1C M1C = new Merlin1C();
 		Merlin1Cv M1Cv = new Merlin1Cv();
 
-		this.payload = payload;
+		setPayload(new DragonV1());
 
 		mStage[0].setEngines(9, M1C);
 		mStage[0].setAeroProperties(1.83, 0.3);
@@ -37,6 +43,10 @@ public class Falcon9 extends TwoStageRocket
 		this.setCoordinates(incl, lon);
 		this.setClock(-60.0);
 		this.gravTurnTime = 55.0;
+	}
+	
+	private void setPayload(Payload p) {
+		this.payload = p;
 	}
 	
 }

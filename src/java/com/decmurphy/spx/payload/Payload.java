@@ -1,4 +1,4 @@
-package com.decmurphy.spx.vehicle;
+package com.decmurphy.spx.payload;
 
 public abstract class Payload
 {

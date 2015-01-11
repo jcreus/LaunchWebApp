@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.decmurphy.spx.config;
 
 import com.decmurphy.spx.exceptions.ProfileException;
@@ -39,8 +34,7 @@ public class ProfileConfig {
 			case "AS-6": return AS_6Profile.getProfile();
 			case "CRS-4": return CRS_4Profile.getProfile();
 			case "CRS-5": return CRS_5Profile.getProfile();
-				
-			default: throw new ProfileException("No valid mission specified");
+			default: throw new ProfileException("No valid mission specified: default profile applied");
 		}
 	}
 }

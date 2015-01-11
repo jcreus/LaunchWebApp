@@ -1,8 +1,9 @@
 package com.decmurphy.spx;
 
-import com.decmurphy.spx.config.ProfileConfig;
-import java.math.*;
+import com.decmurphy.spx.profile.DefaultProfile;
 import com.decmurphy.spx.profile.Profile;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Globals {
 
@@ -22,8 +23,8 @@ public class Globals {
 
 	public static double incl = (90 - latitude) * Math.PI / 180;
 	public static double lon = (longitude) * Math.PI / 180;
-
-	public static Profile profile;
+	
+	public static Profile inputVars = new DefaultProfile();
 
 	public static double mod(double a, double b) {
 		if (a < 0) {
@@ -42,24 +43,4 @@ public class Globals {
 		return bd.doubleValue();
 	}
 
-	public static double gravityAtRadius(double radius) {
-		if (radius < 0.0) {
-			throw new IllegalArgumentException();
-		}
-		return gravConstant * massOfEarth / Math.pow(radius, 2);
-	}
-
-	public static double densityAtAltitude(double altitude) {
-		if ((int) (altitude) < 0.0) {
-			throw new IllegalArgumentException();
-		}
-		return 1.21147 * Math.exp(altitude * -1.12727e-4);
-	}
-
-	public static double pressureAtAltitude(double altitude) {
-		if ((int) (altitude) < 0.0) {
-			throw new IllegalArgumentException();
-		}
-		return -517.18 * Math.log(0.012833 * Math.log(6.0985e28 * altitude + 2.0981e28));
-	}
 }
