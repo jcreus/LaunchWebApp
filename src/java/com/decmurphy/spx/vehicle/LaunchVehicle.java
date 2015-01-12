@@ -16,5 +16,7 @@ public abstract class LaunchVehicle {
 	public abstract void gravityTurn();
 	public abstract void outputFile(String simId);
 	public abstract void executeEvent(Event e);
+	public abstract boolean reachesOrbitalVelocity();
+	public abstract boolean depletesFuel();
 	
 }

@@ -57,6 +57,13 @@ public class Mission {
 			}
 		}
 	}
+	
+	public void executeEvent(String s) {
+		for(Event e : profile.events()) {
+			if(e.getName().equalsIgnoreCase(s))
+				LV.executeEvent(e);
+		}
+	}
 
 	public Double[] getAttitude() {
 		return null;
@@ -64,6 +71,7 @@ public class Mission {
 
 	public void leapfrogStep() {
 		LV.leapfrogStep();
+		onBoardClock += dt;
 	}
 
 	public void outputFile(String simId) {

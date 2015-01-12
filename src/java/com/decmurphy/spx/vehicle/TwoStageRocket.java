@@ -1,10 +1,8 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.Globals.dt;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.payload.Payload;
-import com.decmurphy.spx.profile.Profile;
 
 public abstract class TwoStageRocket extends LaunchVehicle {
 
@@ -51,8 +49,6 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 		if (onBoardClock > gravTurnTime) {
 			gravityTurn();
 		}
-
-		TwoStageRocket.onBoardClock += dt;
 	}
 
 	@Override
@@ -71,5 +67,57 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 
 	@Override
 	public void executeEvent(Event e) {
+
+		if (e.getName().equalsIgnoreCase("firstStageIgnition")) {
+			mStage[0].setThrottle(1.0);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "First Stage Ignition");
+		}
+
+		if (e.getName().equalsIgnoreCase("releaseClamps")) {
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Release Clamps");
+			this.clampsReleased = true;
+			this.leapfrogFirstStep();
+		}
+
+		if (e.getName().equalsIgnoreCase("pitchKick")) {
+			mStage[0].pitchKick();
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Pitch Kick");
+		}
+
+		if (e.getName().equalsIgnoreCase("MECO")) {
+			mStage[0].setThrottle(0.0);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "MECO");
+		}
+
+		if (e.getName().equalsIgnoreCase("stageSeparation")) {
+			mStage[1].syncWith(mStage[0]);
+			beforeSep = false;
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Stage Separation");
+		}
+
+		if (e.getName().equalsIgnoreCase("secondStageIgnition")) {
+			mStage[1].setThrottle(1.0);
+			mStage[1].isMoving = true;
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Second Stage Ignition");
+		}
+
+		if (e.getName().equalsIgnoreCase("SECO")) {
+			mStage[1].setThrottle(0.0);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "SECO");
+		}
+	}
+	
+	@Override
+	public boolean reachesOrbitalVelocity() {
+		if(mStage[1].vel() > 7800)
+			return true;
+		return false;
+	}
+	
+	@Override
+	public boolean depletesFuel() {
+		if(mStage[1].getPropMass() < 100)
+			return true;
+		return false;
 	}
 }

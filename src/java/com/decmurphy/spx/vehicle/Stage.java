@@ -1,5 +1,8 @@
 package com.decmurphy.spx.vehicle;
 
+import static com.decmurphy.spx.Globals.incl;
+import static com.decmurphy.spx.Globals.inputVars;
+import static com.decmurphy.spx.Globals.lon;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import static com.decmurphy.spx.Globals.t;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
@@ -128,6 +131,30 @@ public class Stage {
 		System.arraycopy(stage.beta, 0, this.beta, 0, stage.beta.length);
 		System.arraycopy(stage.gamma, 0, this.gamma, 0, stage.gamma.length);
 	}
+	
+	/*
+     *	3D is hard. Honestly it's like an order of magnitude harder than 2D.
+     *	My current method for any kind of operation is to transform it into an easier-to-work-with coordinate system,
+     *	do the operation, and then transform back. For the pitch kick I can skip the first step. So rotate (pitch, yaw) by 'pi/2 - incl'
+     *	degrees about the y-axis and then rotate by 'pi/2 - longitude' degrees about the z-axis.
+     *
+     *	For Cape Canaveral, this is rotating (pitch, yaw) by 61.51 degrees about y, and then by 9.42 degrees about z.
+     *	Voila. That's your heading after pitch-kick.
+     */
+    public void pitchKick() {
+        double pitch = inputVars.getPitch();//0.065;//0.049;	// A higher value for pitch gives a more extreme pitch-kick
+        double yaw = inputVars.getYaw();//-0.78;		// A positive yaw aims south, a negative yaw aims north. 
+        double cs, sn;
+
+        gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));
+
+        cs = Math.sin(pitch) * Math.cos(yaw) / Math.sin(gamma[0]);
+        sn = (Math.sin(pitch) * Math.sin(yaw) * Math.cos(incl) + Math.cos(pitch) * Math.sin(incl)) / Math.sin(gamma[0]);
+
+        gamma[1] = Math.atan2(sn, cs);
+
+        gamma[1] -= (Math.PI / 2 - lon);
+    }
 
 	/*
 	 *	Output telemetry to file. Nothing interesting happens here.
