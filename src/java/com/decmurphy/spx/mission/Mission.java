@@ -6,6 +6,9 @@ import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.vehicle.LaunchVehicle;
+import static java.lang.Math.PI;
+import static java.lang.Math.atan2;
+import static java.lang.Math.sqrt;
 
 /**
  *
@@ -65,8 +68,8 @@ public class Mission {
 		}
 	}
 
-	public Double[] getAttitude() {
-		return null;
+	public void getAttitude() {
+		LV.getAttitude();
 	}
 
 	public void leapfrogStep() {

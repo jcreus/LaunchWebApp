@@ -3,6 +3,9 @@ package com.decmurphy.spx.vehicle;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.payload.Payload;
+import static java.lang.Math.PI;
+import static java.lang.Math.atan2;
+import static java.lang.Math.sqrt;
 
 public abstract class TwoStageRocket extends LaunchVehicle {
 
@@ -49,6 +52,20 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 		if (onBoardClock > gravTurnTime) {
 			gravityTurn();
 		}
+	}
+	
+	@Override
+	public void getAttitude() {
+	/*	
+		mStage.alpha[0] = PI - atan2(sqrt(stage.relVel[0] * stage.relVel[0] + stage.relVel[1] * stage.relVel[1]), stage.relVel[2]);
+		stage.alpha[1] = PI + atan2(stage.relVel[0], stage.relVel[1]);
+
+		stage.beta[0] = PI - atan2(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1]), stage.pos[2]);
+		stage.beta[1] = PI + atan2(stage.pos[0], stage.pos[1]);
+		
+		stage.gamma[0] = PI - stage.alpha[0];
+		stage.gamma[1] = PI + stage.alpha[1];
+	*/
 	}
 
 	@Override
