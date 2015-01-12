@@ -189,13 +189,17 @@ public class Stage {
 		this.fuelCapacity = fuelCapacity;
 	}
 
+	public void setPos(double pos) {
+		S = pos;
+	}
+
+	public void setAccel(double accel) {
+		A = accel;
+	}
+	
 	/*
 	 *	Getter Functions
 	 */
-	protected boolean hasLegs() {
-		return hasLegs;
-	}
-
 	protected double getRadius() {
 		return radius;
 	}
@@ -216,6 +220,14 @@ public class Stage {
 		return fuelCapacity;
 	}
 	
+	public Engine getEngine() {
+		return engine;
+	}
+	
+	public double getThrustAtAltitude(double altitude) {
+		return throttle * numEngines * engine.getThrustAtAltitude(altitude);
+	}
+
 	public double alt() {
 		return S - radiusOfEarth;
 	}
@@ -223,21 +235,9 @@ public class Stage {
 	public double vel() {
 		return VR;
 	}
-
-	public void setPos(double pos) {
-		S = pos;
-	}
-
-	public void setAccel(double accel) {
-		A = accel;
-	}
 	
-	public Engine getEngine() {
-		return engine;
-	}
-	
-	public double getThrustAtAltitude(double altitude) {
-		return throttle * numEngines * engine.getThrustAtAltitude(altitude);
+	protected boolean hasLegs() {
+		return hasLegs;
 	}
 
 }

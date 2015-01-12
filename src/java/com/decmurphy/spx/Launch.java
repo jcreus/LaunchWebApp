@@ -10,6 +10,8 @@ import static com.decmurphy.spx.Globals.mod;
 import static com.decmurphy.spx.Globals.t;
 import com.decmurphy.spx.config.ProfileConfig;
 import com.decmurphy.spx.exceptions.ProfileException;
+import com.decmurphy.spx.mission.Mission;
+import com.decmurphy.spx.mission.MissionBuilder;
 import com.decmurphy.spx.profile.DefaultProfile;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.space.Earth;
@@ -27,7 +29,7 @@ public class Launch {
 
 		String simId = args[0];
 		Planet Earth = new Earth(0, 0, 0, simId);
-
+		
 		Payload payload = new Satellite(500);
 		LaunchVehicle LV = new Falcon1();
 		Profile profile = new DefaultProfile();
@@ -39,9 +41,12 @@ public class Launch {
 		} catch (LaunchVehicleException | PayloadException | ProfileException e) {
 			Logger.getLogger(Launch.class.getName()).log(Level.SEVERE, null, e);
 		}
+		
+		MissionBuilder mb = new MissionBuilder();
+		Mission mission = mb.createMission(LV, payload, profile);
 
 		boolean SECO = false;
-		LV.setClock(-60.0);
+		mission.setClock(-60.0);
 		t = 0.0;
 
 		do {
@@ -53,11 +58,11 @@ public class Launch {
 			 *	Even though 'dt' is an even factor of 1.0, it's not very reliable to say "if(onBoardClock == someTime)".
 			 *	I'm not sure why.
 			 */
-			if (Math.abs(LV.clock() - profile.getMEITime()) < 0.5 * dt) {
+			if (Math.abs(mission.clock() - profile.getMEITime()) < 0.5 * dt) {
 				LV.firstStageIgnition();
-			} else if (Math.abs(LV.clock() - profile.getLaunchTime()) < 0.5 * dt) {
+			} else if (Math.abs(mission.clock() - profile.getLaunchTime()) < 0.5 * dt) {
 				LV.releaseClamps();
-			} else if (Math.abs(LV.clock() - profile.getPitchTime()) < 0.5 * dt) {
+			} else if (Math.abs(mission.clock() - profile.getPitchTime()) < 0.5 * dt) {
 				LV.pitchKick();
 			}
 			/* else if (Math.abs(LV.clock() - profile.getMECOTime()) < 0.5 * dt) {
@@ -76,17 +81,17 @@ public class Launch {
 			 */
 			LV.leapfrogStep();
 			if (mod(t, 5.0) < dt) {
-				LV.outputFile(simId);
+				mission.outputFile(simId);
 			}
 
-			t += dt;
 			/*
-							profile.executeEvents();
-							profile.getAttitude();
-							profile.leapfrogStep();
-							profile.outputFile(simId);
+							mission.executeEvents();
+							mission.getAttitude();
+							mission.leapfrogStep();
+							mission.outputFile(simId);
 			*/
+			t += dt;
 
-		} while (profile.clock() < 6000);
+		} while (mission.clock() < 6000);
 	}
 }

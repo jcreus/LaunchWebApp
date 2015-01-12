@@ -1,8 +1,10 @@
 package com.decmurphy.spx.vehicle;
 
 import static com.decmurphy.spx.Globals.dt;
+import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.payload.Payload;
+import com.decmurphy.spx.profile.Profile;
 
 public abstract class TwoStageRocket extends LaunchVehicle {
 
@@ -46,18 +48,20 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 		/*
 		 *	I gleaned the '55s' value for starting the gravity turn from /u/Wetmelon's KSP video on /r/spacex
 		 */
-		if (onBoardClock > gravTurnTime)
+		if (onBoardClock > gravTurnTime) {
 			gravityTurn();
+		}
 
 		TwoStageRocket.onBoardClock += dt;
 	}
 
 	@Override
 	public void gravityTurn() {
-			Navigation.gravityTurn(mStage[0]);
-			Navigation.gravityTurn(mStage[1]);
+		Navigation.gravityTurn(mStage[0]);
+		Navigation.gravityTurn(mStage[1]);
 	}
 
+	@Override
 	public void outputFile(String id) {
 		mStage[0].outputFile(id);
 		if (!beforeSep) {
@@ -65,12 +69,7 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 		}
 	}
 
-	public double clock() {
-		return onBoardClock;
+	@Override
+	public void executeEvent(Event e) {
 	}
-
-	public void setClock(double t) {
-		onBoardClock = t;
-	}
-
 }

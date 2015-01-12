@@ -43,7 +43,6 @@ public class Falcon9_1 extends TwoStageRocket {
 		mLegsExtended = false;
 
 		this.setCoordinates(incl, lon);
-		this.setClock(-60.0);
 		this.gravTurnTime = 55.0;
 	}
 	

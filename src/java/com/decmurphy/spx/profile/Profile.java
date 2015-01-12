@@ -1,8 +1,10 @@
 package com.decmurphy.spx.profile;
 
 import static com.decmurphy.spx.Globals.t;
+import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.vehicle.LaunchVehicle;
+import java.util.List;
 
 /**
  *
@@ -25,8 +27,26 @@ public abstract class Profile {
 	private boolean legs;
 	private final Payload payload = null;
 	private final LaunchVehicle LV = null;
+	
+	private List<Event> events;
 
 	protected Profile() {}
+	
+	public List<Event> events() {
+		return events;
+	}
+	
+	public void addEvent(String name, double time) {
+		events.add(new Event(name, time));
+	}
+	
+	public double getEventTime(String name) {
+		for(Event e : events) {
+			if(e.getName().equalsIgnoreCase(name))
+				return e.getTime();
+		}
+		return -999;
+	}
 	
 	public void firstStageIgnition() {
 		System.out.printf("T%+7.2f\t%.32s\n", clock(), "First Stage Ignition");
@@ -55,7 +75,7 @@ public abstract class Profile {
 	public void SECO() {
 		System.out.printf("T%+7.2f\t%.32s\n", clock(), "SECO");
 	}
-
+/*
 	protected void leapfrogFirstStep() {
 			LV.leapfrogFirstStep();
 	}
@@ -63,7 +83,7 @@ public abstract class Profile {
 	protected void leapfrogStep() {
 			LV.leapfrogStep();
 	}
-
+*/
 	//////////////////////////////////////////////////////////////////////////////	
 
 	public void setMEITime(double t) {
