@@ -6,9 +6,6 @@ import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.vehicle.LaunchVehicle;
-import static java.lang.Math.PI;
-import static java.lang.Math.atan2;
-import static java.lang.Math.sqrt;
 
 /**
  *
@@ -19,7 +16,7 @@ public class Mission {
 	private LaunchVehicle LV;
 	private Payload payload;
 	private Profile profile;
-	private double onBoardClock;
+	private double missionClock;
 
 	public void addLaunchVehicle(LaunchVehicle LV) {
 		this.LV = LV;
@@ -46,11 +43,11 @@ public class Mission {
 	}
 
 	public double clock() {
-		return onBoardClock;
+		return missionClock;
 	}
 
 	public void setClock(double t) {
-		onBoardClock = t;
+		missionClock = t;
 	}
 
 	public void executeEvents() {
@@ -74,7 +71,7 @@ public class Mission {
 
 	public void leapfrogStep() {
 		LV.leapfrogStep();
-		onBoardClock += dt;
+		missionClock += dt;
 	}
 
 	public void outputFile(String simId) {

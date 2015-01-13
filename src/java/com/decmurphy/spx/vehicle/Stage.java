@@ -1,7 +1,6 @@
 package com.decmurphy.spx.vehicle;
 
 import static com.decmurphy.spx.Globals.incl;
-import static com.decmurphy.spx.Globals.inputVars;
 import static com.decmurphy.spx.Globals.lon;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import static com.decmurphy.spx.Globals.t;
@@ -142,8 +141,8 @@ public class Stage {
      *	Voila. That's your heading after pitch-kick.
      */
     public void pitchKick() {
-        double pitch = inputVars.getPitch();//0.065;//0.049;	// A higher value for pitch gives a more extreme pitch-kick
-        double yaw = inputVars.getYaw();//-0.78;		// A positive yaw aims south, a negative yaw aims north. 
+        double pitch = 0;//inputVars.getPitch();//0.065;//0.049;	// A higher value for pitch gives a more extreme pitch-kick
+        double yaw = 0;//inputVars.getYaw();//-0.78;		// A positive yaw aims south, a negative yaw aims north. 
         double cs, sn;
 
         gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));

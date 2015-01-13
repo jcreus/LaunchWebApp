@@ -1,7 +1,9 @@
 package com.decmurphy.spx.servlet;
 
 import com.decmurphy.spx.Globals;
-import static com.decmurphy.spx.Globals.inputVars;
+import static com.decmurphy.spx.Globals.flightCode;
+import static com.decmurphy.spx.Globals.mission;
+import com.decmurphy.spx.mission.MissionBuilder;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -19,7 +21,7 @@ public class InterfaceServlet extends HttpServlet {
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
-					throws ServletException, IOException {
+			throws ServletException, IOException {
 
 		resourcePath = getServletContext().getRealPath("/resource");
 		outputPath = getServletContext().getRealPath("/output");
@@ -31,50 +33,61 @@ public class InterfaceServlet extends HttpServlet {
 			String paramName = (String) paramNames.nextElement();
 			String[] paramValues = request.getParameterValues(paramName);
 
+			switch (paramName) {
+
+				case "flight_code":
+					Globals.flightCode = paramValues[0];
+					MissionBuilder mb = new MissionBuilder();
+					mission = mb.createMission(flightCode);
+					break;
+				default:
+					break;
+			}
+
 			try {
 				switch (paramName) {
 
-					case "flight_code":
-						Globals.flightCode = paramValues[0];
-						break;
 					case "payload_mass":
-						inputVars.setPayloadMass(Double.parseDouble(paramValues[0]));
+						double m;
+						if((m = Double.parseDouble(paramValues[0])) > 0) {
+							mission.Payload().setMass(m);
+						}
 						break;
 					case "coast_level":
 						Globals.coastMap = "/" + request.getSession().getId() + "_coast_" + paramValues[0] + ".txt";
 						break;
 					case "mei_time":
-						inputVars.setMEITime(Double.parseDouble(paramValues[0]));
+						mission.Profile().addEvent("firstStageIgnition", Double.parseDouble(paramValues[0]));
 						break;
 					case "launch_time":
-						inputVars.setLaunchTime(Double.parseDouble(paramValues[0]));
+						mission.Profile().addEvent("releaseClamps", Double.parseDouble(paramValues[0]));
 						break;
 					case "pitch_time":
-						inputVars.setPitchTime(Double.parseDouble(paramValues[0]));
+						mission.Profile().addEvent("pitchKick", Double.parseDouble(paramValues[0]));
 						break;
 					case "meco_time":
-						inputVars.setMECOTime(Double.parseDouble(paramValues[0]));
+						mission.Profile().addEvent("MECO1", Double.parseDouble(paramValues[0]));
 						break;
 					case "fss_time":
-						inputVars.setFSSTime(Double.parseDouble(paramValues[0]));
+						mission.Profile().addEvent("firstStageSep", Double.parseDouble(paramValues[0]));
 						break;
 					case "sei_time":
-						inputVars.setSEITime(Double.parseDouble(paramValues[0]));
+						mission.Profile().addEvent("secondStageIgnition", Double.parseDouble(paramValues[0]));
 						break;
 					case "seco_time":
-						inputVars.setSECOTime(Double.parseDouble(paramValues[0]));
+						mission.Profile().addEvent("SECO1", Double.parseDouble(paramValues[0]));
 						break;
 					case "sss_time":
-						inputVars.setSSSTime(Double.parseDouble(paramValues[0]));
+						mission.Profile().addEvent("secondStageSep", Double.parseDouble(paramValues[0]));
 						break;
 					case "pitch":
-						inputVars.setPitch(Double.parseDouble(paramValues[0]));
+						mission.Profile().getEvent("pitchKick").addExtraInfo("pitch", Double.parseDouble(paramValues[0]));
 						break;
 					case "yaw":
-						inputVars.setYaw(Double.parseDouble(paramValues[0]));
+						mission.Profile().getEvent("pitchKick").addExtraInfo("yaw", Double.parseDouble(paramValues[0]));
 						break;
 					case "legs":
-						inputVars.setLegs(paramValues[0].equalsIgnoreCase("YES"));
+						mission.LaunchVehicle().setLegs(paramValues[0].equalsIgnoreCase("YES"));
 						break;
 
 					default:
@@ -93,7 +106,7 @@ public class InterfaceServlet extends HttpServlet {
 
 	@Override
 	public void doPost(HttpServletRequest request, HttpServletResponse response)
-					throws ServletException, IOException {
+			throws ServletException, IOException {
 		doGet(request, response);
 	}
 

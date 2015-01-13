@@ -1,18 +1,17 @@
 package com.decmurphy.spx.vehicle;
 
+import static com.decmurphy.spx.Globals.dt;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 import static java.lang.Math.PI;
-import static java.lang.Math.atan2;
-import static java.lang.Math.sqrt;
 
 public abstract class TwoStageRocket extends LaunchVehicle {
 
 	protected Payload payload;
 	public Stage[] mStage;
-	static double onBoardClock;
+	protected double onBoardClock;
 	protected double pitchKickTime;
 	protected double gravTurnTime;
 	boolean clampsReleased = false;
@@ -22,6 +21,16 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 		mStage = new Stage[2];
 		mStage[0] = new Stage("BoosterStage");
 		mStage[1] = new Stage("SecondStage");
+	}
+	
+	@Override
+	public void setClock(double t) {
+		onBoardClock = t;
+	}
+	
+	@Override
+	public double clock() {
+		return onBoardClock;
 	}
 
 	protected void setCoordinates(double cLat, double cLong) {
@@ -54,6 +63,8 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 		if (onBoardClock > gravTurnTime) {
 			gravityTurn();
 		}
+		
+		onBoardClock += dt;
 	}
 
 	@Override
@@ -136,5 +147,10 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 			return true;
 		}
 		return false;
+	}
+	
+	@Override
+	public void setLegs(boolean legs) {
+		mStage[0].setLegs(legs);
 	}
 }

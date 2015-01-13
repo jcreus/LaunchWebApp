@@ -4,22 +4,18 @@ public abstract class Payload
 {
 	protected double mMass;
 
-	public Payload()
-	{
+	public Payload() {
 	}
 
-	public Payload(Payload p)
-	{
+	public Payload(Payload p) {
 		this.mMass = p.mMass;
 	}
 
-	public void setMass(double mass)
-	{
+	public void setMass(double mass) {
 		mMass = mass;
 	}
 
-	public double getMass()
-	{
+	public double getMass() {
 		return mMass;
 	}
 }

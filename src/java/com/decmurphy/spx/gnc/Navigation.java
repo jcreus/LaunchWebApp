@@ -4,7 +4,6 @@ import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.Globals.earthVel;
 import static com.decmurphy.spx.Globals.gravConstant;
 import static com.decmurphy.spx.Globals.incl;
-import static com.decmurphy.spx.Globals.inputVars;
 import static com.decmurphy.spx.Globals.lon;
 import static com.decmurphy.spx.Globals.massOfEarth;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
@@ -154,8 +153,8 @@ public class Navigation {
 	}
 
 	public static void pitchKick(Stage stage) {
-		double pitch = inputVars.getPitch();//0.065;//0.049;	// A higher value for pitch gives a more extreme pitch-kick
-		double yaw = inputVars.getYaw();//-0.78;		// A positive yaw aims south, a negative yaw aims north. 
+		double pitch = 0;//inputVars.getPitch();//0.065;//0.049;	// A higher value for pitch gives a more extreme pitch-kick
+		double yaw = 0;//inputVars.getYaw();//-0.78;		// A positive yaw aims south, a negative yaw aims north. 
 		double cs, sn;
 
 		stage.gamma[0] = acos(cos(pitch) * cos(incl) - sin(pitch) * sin(yaw) * sin(incl));

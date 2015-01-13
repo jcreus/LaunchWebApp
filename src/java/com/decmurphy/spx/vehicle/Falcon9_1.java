@@ -1,7 +1,6 @@
 package com.decmurphy.spx.vehicle;
 
 import static com.decmurphy.spx.Globals.incl;
-import static com.decmurphy.spx.Globals.inputVars;
 import static com.decmurphy.spx.Globals.lon;
 import com.decmurphy.spx.engine.Merlin1D;
 import com.decmurphy.spx.engine.Merlin1Dv;
@@ -26,8 +25,7 @@ public class Falcon9_1 extends TwoStageRocket {
 
 		mStage[0].setEngines(9, M1D);
 		mStage[0].setAeroProperties(1.83, 0.3);
-		mStage[0].setLegs(inputVars.hasLegs());
-		mStage[0].setDryMass(inputVars.hasLegs() ? 20000 : 18000);
+		mStage[0].setDryMass(mStage[0].hasLegs() ? 20000 : 18000);
 		mStage[0].setFuelCapacity(390000);
 		mStage[0].setPropMass(mStage[0].getFuelCapacity());
 		mStage[0].setThrottle(0.0);
@@ -37,7 +35,6 @@ public class Falcon9_1 extends TwoStageRocket {
 		mStage[1].setDryMass(4900);
 		mStage[1].setFuelCapacity(75700);
 		mStage[1].setPropMass(mStage[1].getFuelCapacity());
-		mStage[1].setLegs(false);
 		mStage[1].setThrottle(0.0);
 
 		mLegsExtended = false;

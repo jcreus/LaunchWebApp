@@ -40,6 +40,15 @@ public abstract class Profile {
 		events.add(new Event(name, time));
 	}
 	
+	public Event getEvent(String name) {
+		for(Event e : events) {
+			if(e.getName().equalsIgnoreCase(name)) {
+				return e;
+			}
+		}
+		return null;
+	}
+	
 	public double getEventTime(String name) {
 		for(Event e : events) {
 			if(e.getName().equalsIgnoreCase(name))

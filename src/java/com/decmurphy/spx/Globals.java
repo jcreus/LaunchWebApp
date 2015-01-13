@@ -1,7 +1,6 @@
 package com.decmurphy.spx;
 
-import com.decmurphy.spx.profile.DefaultProfile;
-import com.decmurphy.spx.profile.Profile;
+import com.decmurphy.spx.mission.Mission;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -24,7 +23,7 @@ public class Globals {
 	public static double incl = (90 - latitude) * Math.PI / 180;
 	public static double lon = (longitude) * Math.PI / 180;
 	
-	public static Profile inputVars = new DefaultProfile();
+	public static Mission mission = null;
 
 	public static double mod(double a, double b) {
 		if (a < 0) {

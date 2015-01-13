@@ -1,6 +1,7 @@
 package com.decmurphy.spx.servlet;
 
 import com.decmurphy.spx.Globals;
+import static com.decmurphy.spx.Globals.mission;
 import com.decmurphy.spx.GnuplotFileBuilder;
 import com.decmurphy.spx.Launch;
 import java.io.IOException;
@@ -22,7 +23,7 @@ public class DisplayResults extends HttpServlet {
 
 		String id = request.getSession().getId();
 		String[] args = {id};
-		Launch.main(args);
+		Launch.main(mission, args);
 
 		GnuplotFileBuilder gp_landing = null,
 						gp_globe = null,

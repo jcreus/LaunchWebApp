@@ -19,5 +19,8 @@ public abstract class LaunchVehicle {
 	public abstract boolean reachesOrbitalVelocity();
 	public abstract boolean depletesFuel();
 	public abstract void invoke(Profile p);
+	public abstract void setClock(double t);
+	public abstract double clock();
+	public abstract void setLegs(boolean legs);
 	
 }
