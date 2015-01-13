@@ -68,8 +68,8 @@ public class Mission {
 		}
 	}
 
-	public void getAttitude() {
-		LV.getAttitude();
+	public void invokeProfile() {
+		LV.invoke(profile);
 	}
 
 	public void leapfrogStep() {

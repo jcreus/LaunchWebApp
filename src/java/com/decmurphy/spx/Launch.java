@@ -52,7 +52,7 @@ public class Launch {
 		do {
 
 			mission.executeEvents();
-			mission.getAttitude();
+			mission.invokeProfile();
 			mission.leapfrogStep();
 			mission.outputFile(simId);
 

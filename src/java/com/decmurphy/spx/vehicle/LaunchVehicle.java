@@ -1,6 +1,7 @@
 package com.decmurphy.spx.vehicle;
 
 import com.decmurphy.spx.event.Event;
+import com.decmurphy.spx.profile.Profile;
 
 /**
  *
@@ -17,6 +18,6 @@ public abstract class LaunchVehicle {
 	public abstract void executeEvent(Event e);
 	public abstract boolean reachesOrbitalVelocity();
 	public abstract boolean depletesFuel();
-	public abstract void getAttitude();
+	public abstract void invoke(Profile p);
 	
 }

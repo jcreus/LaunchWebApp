@@ -3,6 +3,7 @@ package com.decmurphy.spx.vehicle;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.payload.Payload;
+import com.decmurphy.spx.profile.Profile;
 import static java.lang.Math.PI;
 import static java.lang.Math.atan2;
 import static java.lang.Math.sqrt;
@@ -12,6 +13,7 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 	protected Payload payload;
 	public Stage[] mStage;
 	static double onBoardClock;
+	protected double pitchKickTime;
 	protected double gravTurnTime;
 	boolean clampsReleased = false;
 	boolean beforeSep = false;
@@ -53,25 +55,21 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 			gravityTurn();
 		}
 	}
-	
-	@Override
-	public void getAttitude() {
-	/*	
-		mStage.alpha[0] = PI - atan2(sqrt(stage.relVel[0] * stage.relVel[0] + stage.relVel[1] * stage.relVel[1]), stage.relVel[2]);
-		stage.alpha[1] = PI + atan2(stage.relVel[0], stage.relVel[1]);
 
-		stage.beta[0] = PI - atan2(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1]), stage.pos[2]);
-		stage.beta[1] = PI + atan2(stage.pos[0], stage.pos[1]);
-		
-		stage.gamma[0] = PI - stage.alpha[0];
-		stage.gamma[1] = PI + stage.alpha[1];
-	*/
+	@Override
+	public void invoke(Profile p) {
+		if (onBoardClock > gravTurnTime) {
+			mStage[0].gamma[0] = PI - mStage[0].alpha[0];
+			mStage[0].gamma[1] = PI + mStage[0].alpha[1];
+		}
 	}
 
 	@Override
 	public void gravityTurn() {
 		Navigation.gravityTurn(mStage[0]);
-		Navigation.gravityTurn(mStage[1]);
+		if (!beforeSep) {
+			Navigation.gravityTurn(mStage[1]);
+		}
 	}
 
 	@Override
@@ -123,18 +121,20 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "SECO");
 		}
 	}
-	
+
 	@Override
 	public boolean reachesOrbitalVelocity() {
-		if(mStage[1].vel() > 7800)
+		if (mStage[1].vel() > 7800) {
 			return true;
+		}
 		return false;
 	}
-	
+
 	@Override
 	public boolean depletesFuel() {
-		if(mStage[1].getPropMass() < 100)
+		if (mStage[1].getPropMass() < 100) {
 			return true;
+		}
 		return false;
 	}
 }
