@@ -6,6 +6,7 @@ import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.vehicle.LaunchVehicle;
+import static java.lang.Math.abs;
 
 /**
  *
@@ -16,7 +17,6 @@ public class Mission {
 	private LaunchVehicle LV;
 	private Payload payload;
 	private Profile profile;
-	private double missionClock;
 
 	public void addLaunchVehicle(LaunchVehicle LV) {
 		this.LV = LV;
@@ -30,6 +30,10 @@ public class Mission {
 		this.profile = profile;
 	}
 
+	public void setClock(double t) {
+		LV.setClock(t);
+	}
+	
 	public LaunchVehicle LaunchVehicle() {
 		return LV;
 	}
@@ -43,16 +47,12 @@ public class Mission {
 	}
 
 	public double clock() {
-		return missionClock;
-	}
-
-	public void setClock(double t) {
-		missionClock = t;
+		return LV.clock();
 	}
 
 	public void executeEvents() {
 		for (Event e : this.profile.events()) {
-			if ((this.clock() - e.getTime()) < dt / 2) {
+			if (abs(this.clock() - e.getTime()) < dt / 2) {
 				LV.executeEvent(e);
 			}
 		}
@@ -71,7 +71,6 @@ public class Mission {
 
 	public void leapfrogStep() {
 		LV.leapfrogStep();
-		missionClock += dt;
 	}
 
 	public void outputFile(String simId) {

@@ -1,7 +1,6 @@
 package com.decmurphy.spx;
 
 import static com.decmurphy.spx.Globals.dt;
-import static com.decmurphy.spx.Globals.t;
 import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.space.Earth;
 import com.decmurphy.spx.space.Planet;
@@ -15,7 +14,6 @@ public class Launch {
 
 		boolean SECO = false;
 		mission.setClock(-60.0);
-		t = 0.0;
 
 		do {
 
@@ -25,13 +23,11 @@ public class Launch {
 			mission.outputFile(simId);
 
 			if(!SECO && (mission.LaunchVehicle().reachesOrbitalVelocity() || mission.LaunchVehicle().depletesFuel())) {
-				mission.executeEvent("SECO");
+				mission.executeEvent("SECO1");
 				dt = 0.1;
 				SECO = true;
 			}
 
-			t += dt;
-
-		} while (mission.clock() < 6000);
+		} while (mission.LaunchVehicle().completedOrbits() < 3);
 	}
 }

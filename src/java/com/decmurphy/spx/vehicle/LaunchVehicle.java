@@ -1,26 +1,27 @@
 package com.decmurphy.spx.vehicle;
 
 import com.decmurphy.spx.event.Event;
+import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 
 /**
  *
  * @author dmurphy
  */
-public abstract class LaunchVehicle {
-	
-	public LaunchVehicle() {}
-	
-	public abstract void leapfrogFirstStep();
-	public abstract void leapfrogStep();
-	public abstract void gravityTurn();
-	public abstract void outputFile(String simId);
-	public abstract void executeEvent(Event e);
-	public abstract boolean reachesOrbitalVelocity();
-	public abstract boolean depletesFuel();
-	public abstract void invoke(Profile p);
-	public abstract void setClock(double t);
-	public abstract double clock();
-	public abstract void setLegs(boolean legs);
+public interface LaunchVehicle {
+		
+	public void leapfrogFirstStep();
+	public void leapfrogStep();
+	public void gravityTurn();
+	public void outputFile(String simId);
+	public void executeEvent(Event e);
+	public void setPayload(Payload pl);
+	public boolean reachesOrbitalVelocity();
+	public boolean depletesFuel();
+	public void invoke(Profile p);
+	public void setClock(double t);
+	public double clock();
+	public void setLegs(boolean legs);
+	public int completedOrbits();
 	
 }

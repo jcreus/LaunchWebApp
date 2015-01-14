@@ -5,9 +5,8 @@ import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
-import static java.lang.Math.PI;
 
-public abstract class TwoStageRocket extends LaunchVehicle {
+public abstract class TwoStageRocket implements LaunchVehicle {
 
 	protected Payload payload;
 	public Stage[] mStage;
@@ -24,6 +23,11 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 	}
 	
 	@Override
+	public void setPayload(Payload pl) {
+		payload = pl;
+	}
+	
+	@Override
 	public void setClock(double t) {
 		onBoardClock = t;
 	}
@@ -37,11 +41,18 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 		mStage[0].setCoordinates(cLat, cLong);
 		mStage[1].setCoordinates(cLat, cLong);
 	}
+	
+	@Override
+	public int completedOrbits() {
+		return mStage[1].completedOrbits();
+	}
 
 	@Override
 	public void leapfrogFirstStep() {
 		mStage[0].setMass(mStage[0].getMass() + mStage[1].getMass() + payload.getMass());
 		Navigation.leapfrogFirstStep(mStage[0]);
+		
+		onBoardClock += dt;		//TSR/mission clock
 	}
 
 	@Override
@@ -64,14 +75,18 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 			gravityTurn();
 		}
 		
-		onBoardClock += dt;
+		onBoardClock += dt;		//TSR/mission clock
 	}
 
 	@Override
 	public void invoke(Profile p) {
-		if (onBoardClock > gravTurnTime) {
-			mStage[0].gamma[0] = PI - mStage[0].alpha[0];
-			mStage[0].gamma[1] = PI + mStage[0].alpha[1];
+		/*
+			Want to make sure any attitude changes keep effect permanently - not just for the moment they are initiated.
+			By 'permanently', I of course mean until it's replaced by the next attitude change.
+		*/
+		Event event;
+		if((event = p.getEvent(onBoardClock)) != null) {
+			executeEvent(event);
 		}
 	}
 
@@ -95,41 +110,45 @@ public abstract class TwoStageRocket extends LaunchVehicle {
 	public void executeEvent(Event e) {
 
 		if (e.getName().equalsIgnoreCase("firstStageIgnition")) {
-			mStage[0].setThrottle(1.0);
+			mStage[(int)e.getValueOf("stage")].setThrottle(1.0);
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "First Stage Ignition");
 		}
-
-		if (e.getName().equalsIgnoreCase("releaseClamps")) {
+		else if (e.getName().equalsIgnoreCase("releaseClamps")) {
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Release Clamps");
 			this.clampsReleased = true;
 			this.leapfrogFirstStep();
 		}
-
-		if (e.getName().equalsIgnoreCase("pitchKick")) {
-			mStage[0].pitchKick();
+		else if (e.getName().equalsIgnoreCase("pitchKick")) {
+			mStage[(int)e.getValueOf("stage")].pitchKick(e.getValueOf("pitch"), e.getValueOf("yaw"));
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Pitch Kick");
 		}
-
-		if (e.getName().equalsIgnoreCase("MECO")) {
-			mStage[0].setThrottle(0.0);
-			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "MECO");
+		else if (e.getName().equalsIgnoreCase("MECO1")) {
+			mStage[(int)e.getValueOf("stage")].setThrottle(0.0);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "MECO-1");
 		}
-
-		if (e.getName().equalsIgnoreCase("stageSeparation")) {
+		else if (e.getName().equalsIgnoreCase("firstStageSep")) {
 			mStage[1].syncWith(mStage[0]);
 			beforeSep = false;
-			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Stage Separation");
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "First Stage Separation");
 		}
-
-		if (e.getName().equalsIgnoreCase("secondStageIgnition")) {
-			mStage[1].setThrottle(1.0);
-			mStage[1].isMoving = true;
+		else if (e.getName().equalsIgnoreCase("secondStageIgnition")) {
+			mStage[(int)e.getValueOf("stage")].setThrottle(1.0);
+			mStage[(int)e.getValueOf("stage")].isMoving = true;
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Second Stage Ignition");
 		}
-
-		if (e.getName().equalsIgnoreCase("SECO")) {
-			mStage[1].setThrottle(0.0);
-			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "SECO");
+		else if (e.getName().equalsIgnoreCase("SECO1")) {
+			mStage[(int)e.getValueOf("stage")].setThrottle(0.0);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "SECO-1");
+		}
+		else if (e.getName().equalsIgnoreCase("secondStageSep")) {
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Second Stage Separation");
+		}
+		
+		if(e.getName().startsWith("attitude")) {
+			mStage[(int)e.getValueOf("stage")].pitchKick(e.getValueOf("pitch"), e.getValueOf("yaw"));
+		}
+		else if(e.getName().startsWith("thrust")) {
+			mStage[(int)e.getValueOf("stage")].setThrottle(e.getValueOf("throttle"));
 		}
 	}
 

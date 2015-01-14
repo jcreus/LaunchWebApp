@@ -7,7 +7,6 @@ import java.math.RoundingMode;
 public class Globals {
 
 	public static double dt = 0.001;
-	public static double t = 0.0;
 	public static final double gravConstant = 6.67384e-11;
 	public static final double g0 = 9.797333749;
 	public static final double massOfEarth = 5.972e24;

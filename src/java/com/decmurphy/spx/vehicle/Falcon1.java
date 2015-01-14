@@ -43,9 +43,4 @@ public class Falcon1 extends TwoStageRocket {
 		this.setCoordinates(incl, lon);
 		this.gravTurnTime = 55.0;
 	}
-	
-	private void setPayload(Payload p) {
-		this.payload = p;
-	}
-
 }

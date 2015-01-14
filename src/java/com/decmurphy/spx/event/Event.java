@@ -8,12 +8,12 @@ import java.util.HashMap;
  */
 public class Event {
 	
-	private final double executionTime;
 	private final String name;
+	private final double executionTime;
 	private HashMap<String, Double> extraInfo;
 	
 	public Event(String name, double time) {
-		this.name = name;
+		this.name = name.toLowerCase();
 		this.executionTime = time;
 	}
 	
@@ -25,11 +25,16 @@ public class Event {
 		return executionTime;
 	}
 	
-	public void addExtraInfo(String s, double val) {
-		extraInfo.put(s, val);
+	public Event addExtraInfo(String paramName, double val) {
+		extraInfo.put(paramName.toLowerCase(), val);
+		return this;
 	}
 	
 	public double getValueOf(String s) {
-		return extraInfo.get(s);
+		return extraInfo.get(s.toLowerCase());
+	}
+	
+	public HashMap<String, Double> map() {
+		return extraInfo;
 	}
 }

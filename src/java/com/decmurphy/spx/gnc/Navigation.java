@@ -53,6 +53,8 @@ public class Navigation {
 		stage.setAccel(sqrt(stage.accel[0] * stage.accel[0] + stage.accel[1] * stage.accel[1] + stage.accel[2] * stage.accel[2]));
 
 		stage.isMoving = true;
+		stage.onBoardClock += dt;	//Stage clock
+
 	}
 
 	/*
@@ -113,7 +115,6 @@ public class Navigation {
 			}
 			stage.setPos(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]));
 
-//			if(F9.onBoardClock > 1.0) setThrottle(0.0);
 			gravityForce = 0.0;
 		}
 
@@ -149,6 +150,8 @@ public class Navigation {
 		stage.beta[1] = PI + atan2(stage.pos[0], stage.pos[1]);
 
 		stage.propMass -= stage.throttle * stage.numEngines * stage.getEngine().getMdot() * dt;
+		
+		stage.onBoardClock += dt;		//Stage clock
 
 	}
 
@@ -195,7 +198,5 @@ public class Navigation {
 		}
 		return -517.18 * Math.log(0.012833 * Math.log(6.0985e28 * altitude + 2.0981e28));
 	}
-
-	
 
 }

@@ -12,42 +12,10 @@ public class CRS_4Profile extends Profile {
 	}
 
 	public static Profile getProfile() {
+		instance.addEvent("attitude1", 310.0).addExtraInfo("stage", 1).addExtraInfo("pitch", -0.5).addExtraInfo("yaw", +0.035);
+		instance.addEvent("thrust", 365.0).addExtraInfo("stage", 1).addExtraInfo("throttle", 80);	// percent
+		instance.addEvent("attitude2", 510.0).addExtraInfo("stage", 1).addExtraInfo("pitch", -0.3).addExtraInfo("yaw", +0.004);
 		return instance;
-	}
-
-	@Override
-	public void firstStageIgnition() {
-		super.firstStageIgnition();
-	}
-
-	@Override
-	public void releaseClamps() {
-		super.releaseClamps();
-	}
-
-	@Override
-	public void pitchKick() {
-		super.pitchKick();
-	}
-
-	@Override
-	public void MECO() {
-		super.MECO();
-	}
-
-	@Override
-	public void stageSeparation() {
-		super.stageSeparation();
-	}
-
-	@Override
-	public void secondStageIgnition() {
-		super.secondStageIgnition();
-	}
-
-	@Override
-	public void SECO() {
-		super.SECO();
 	}
 
 }

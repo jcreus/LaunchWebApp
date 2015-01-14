@@ -3,10 +3,10 @@ package com.decmurphy.spx.vehicle;
 import static com.decmurphy.spx.Globals.incl;
 import static com.decmurphy.spx.Globals.lon;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
-import static com.decmurphy.spx.Globals.t;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import java.io.*;
 import com.decmurphy.spx.engine.Engine;
+import static java.lang.Math.atan2;
 
 public class Stage {
 
@@ -21,6 +21,10 @@ public class Stage {
 	private double dryMass;
 	private double fuelCapacity;
 	public double propMass;
+	public double onBoardClock;
+	
+	private int completedOrbits;
+	private double newtheta, oldtheta;
 
 	/*
 	 *	All angles are given in spherical coordinates and hence are given by three parameters - the radius and the polar/azimuthal angles.
@@ -82,6 +86,9 @@ public class Stage {
 		this.relVel = new double[3];
 		this.accel = new double[3];
 		this.force = new double[3];
+		
+		this.completedOrbits = 0;
+		this.newtheta = this.oldtheta = 0.0;
 
 		this.setCoordinates(0.0, 0.0);
 	}
@@ -121,7 +128,6 @@ public class Stage {
 		 *	Fuck you, Java.
 		 */
 
-//		this.OnBoardClock = 0.0 + stage.onBoardClock;
 		System.arraycopy(stage.pos, 0, this.pos, 0, stage.pos.length);
 		System.arraycopy(stage.relVel, 0, this.relVel, 0, stage.relVel.length);
 		System.arraycopy(stage.absVel, 0, this.absVel, 0, stage.absVel.length);
@@ -140,9 +146,10 @@ public class Stage {
      *	For Cape Canaveral, this is rotating (pitch, yaw) by 61.51 degrees about y, and then by 9.42 degrees about z.
      *	Voila. That's your heading after pitch-kick.
      */
-    public void pitchKick() {
-        double pitch = 0;//inputVars.getPitch();//0.065;//0.049;	// A higher value for pitch gives a more extreme pitch-kick
-        double yaw = 0;//inputVars.getYaw();//-0.78;		// A positive yaw aims south, a negative yaw aims north. 
+    public void pitchKick(double pitch, double yaw) {
+
+		// A higher value for pitch gives a more extreme pitch-kick
+		// A positive yaw aims south, a negative yaw aims north. 
         double cs, sn;
 
         gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));
@@ -166,7 +173,7 @@ public class Stage {
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",
-							t, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VA, throttle, M);
+							onBoardClock, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VA, throttle, M);
 
 		} catch (IOException e) {
 		} finally {
@@ -174,6 +181,16 @@ public class Stage {
 				pw.close();
 			}
 		}
+	}
+	
+	public int completedOrbits() {
+		newtheta = atan2(this.pos[1], this.pos[0]);
+		
+		if(newtheta < oldtheta)
+			completedOrbits++;
+		oldtheta = newtheta;
+		
+		return completedOrbits;
 	}
 
 	protected void setEngines(int numEngines, Engine engine) {
