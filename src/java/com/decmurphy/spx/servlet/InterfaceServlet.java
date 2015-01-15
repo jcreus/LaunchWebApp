@@ -25,8 +25,8 @@ public class InterfaceServlet extends HttpServlet {
 
 		resourcePath = getServletContext().getRealPath("/resource");
 		outputPath = getServletContext().getRealPath("/output");
-		imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
-		//imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
+		//imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
+		imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
 
 		Enumeration paramNames = request.getParameterNames();
 		while (paramNames.hasMoreElements()) {
@@ -47,7 +47,7 @@ public class InterfaceServlet extends HttpServlet {
 			try {
 				switch (paramName) {
 
-					case "coast_level":	Globals.coastMap = "/" + request.getSession().getId() + "_coast_" + paramValues[0] + ".txt"; break;
+					case "coast_level":	Globals.coastMap = "/coast_" + paramValues[0] + ".txt"; break;
 					case "payload_mass":
 						double m;
 						if((m = Double.parseDouble(paramValues[0])) > 0) {

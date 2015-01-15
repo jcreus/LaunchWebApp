@@ -40,9 +40,9 @@ public class GnuplotFileBuilder {
         pw.printf("set term png\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
-        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", id, outputPath);
-        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", id, outputPath);
-        pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", id, outputPath);
+        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", outputPath, id);
+        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
+        pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
 
       } else if (phase.equalsIgnoreCase("landing2")) {
 
@@ -58,9 +58,9 @@ public class GnuplotFileBuilder {
         pw.printf("set term png\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
-        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", id, outputPath);
-        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", id, outputPath);
-        pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", id, outputPath);
+        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", outputPath, id);
+        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
+        pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
 
       } else if (phase.equalsIgnoreCase("globe")) {
 
@@ -73,8 +73,8 @@ public class GnuplotFileBuilder {
         pw.printf("set term png\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 7, ", outputPath, id, outputPath, id);
-        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", id, outputPath);
-        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5\n", id, outputPath);
+        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", outputPath, id);
+        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5\n", outputPath, id);
 
       } else if (phase.equalsIgnoreCase("velocity")) {
         
@@ -114,12 +114,10 @@ public class GnuplotFileBuilder {
   }
 
   public final String getImagePath() {
-    ///home/declan/NetBeansProjects/SpXDevelWeb/web/output/1419988961952.png
     return imagePath + "/" + this.imgPath;
   }
 
   public final String getPath() {
-    ///home/declan/NetBeansProjects/SpXDevelWeb/build/web/output/1419988961952.gp
     return outputPath + "/" + this.name;
   }
 

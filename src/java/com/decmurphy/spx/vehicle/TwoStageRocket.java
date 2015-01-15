@@ -119,7 +119,7 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 			this.leapfrogFirstStep();
 		}
 		else if (e.getName().equalsIgnoreCase("pitchKick")) {
-			mStage[(int)e.getValueOf("stage")].pitchKick(e.getValueOf("pitch"), e.getValueOf("yaw"));
+			Navigation.pitchKick(mStage[(int)e.getValueOf("stage")], e.getValueOf("pitch"), e.getValueOf("yaw"));
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Pitch Kick");
 		}
 		else if (e.getName().equalsIgnoreCase("MECO1")) {
@@ -145,7 +145,7 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 		}
 		
 		if(e.getName().startsWith("attitude")) {
-			mStage[(int)e.getValueOf("stage")].pitchKick(e.getValueOf("pitch"), e.getValueOf("yaw"));
+			Navigation.pitchKick(mStage[(int)e.getValueOf("stage")], e.getValueOf("pitch"), e.getValueOf("yaw"));
 		}
 		else if(e.getName().startsWith("thrust")) {
 			mStage[(int)e.getValueOf("stage")].setThrottle(e.getValueOf("throttle"));

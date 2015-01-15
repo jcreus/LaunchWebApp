@@ -154,21 +154,31 @@ public class Navigation {
 		stage.onBoardClock += dt;		//Stage clock
 
 	}
+	
+	/*
+     *	3D is hard. Honestly it's like an order of magnitude harder than 2D.
+     *	My current method for any kind of operation is to transform it into an easier-to-work-with coordinate system,
+     *	do the operation, and then transform back. For the pitch kick I can skip the first step. So rotate (pitch, yaw) by 'pi/2 - incl'
+     *	degrees about the y-axis and then rotate by 'pi/2 - longitude' degrees about the z-axis.
+     *
+     *	For Cape Canaveral, this is rotating (pitch, yaw) by 61.51 degrees about y, and then by 9.42 degrees about z.
+     *	Voila. That's your heading after pitch-kick.
+     */
+    public static void pitchKick(Stage stage, double pitch, double yaw) {
 
-	public static void pitchKick(Stage stage) {
-		double pitch = 0;//inputVars.getPitch();//0.065;//0.049;	// A higher value for pitch gives a more extreme pitch-kick
-		double yaw = 0;//inputVars.getYaw();//-0.78;		// A positive yaw aims south, a negative yaw aims north. 
-		double cs, sn;
+		// A higher value for pitch gives a more extreme pitch-kick
+		// A positive yaw aims south, a negative yaw aims north. 
+        double cs, sn;
 
-		stage.gamma[0] = acos(cos(pitch) * cos(incl) - sin(pitch) * sin(yaw) * sin(incl));
+        stage.gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));
 
-		cs = sin(pitch) * cos(yaw) / sin(stage.gamma[0]);
-		sn = (sin(pitch) * sin(yaw) * cos(incl) + cos(pitch) * sin(incl)) / sin(stage.gamma[0]);
+        cs = Math.sin(pitch) * Math.cos(yaw) / Math.sin(stage.gamma[0]);
+        sn = (Math.sin(pitch) * Math.sin(yaw) * Math.cos(incl) + Math.cos(pitch) * Math.sin(incl)) / Math.sin(stage.gamma[0]);
 
-		stage.gamma[1] = atan2(sn, cs);
+        stage.gamma[1] = Math.atan2(sn, cs);
 
-		stage.gamma[1] -= (PI / 2 - lon);
-	}
+        stage.gamma[1] -= (Math.PI / 2 - lon);
+    }
 
 	/*
 	 *	Flying prograde

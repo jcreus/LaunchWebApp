@@ -1,6 +1,7 @@
 package com.decmurphy.spx.profile;
 
 import com.decmurphy.spx.event.Event;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,7 +12,9 @@ public abstract class Profile {
 	
 	protected List<Event> events;
 
-	protected Profile() {}
+	protected Profile() {
+		this.events = new ArrayList();
+}
 	
 	public List<Event> events() {
 		return events;
@@ -26,7 +29,7 @@ public abstract class Profile {
 	public Event getEvent(double t) {
 		Event current = null;
 		for(Event e : events) {
-			if(e.map().containsKey("pitch") && t > e.getTime())
+			if(e.getName().startsWith("attitude") && t > e.getTime())
 				current = e;
 		}
 		return current;

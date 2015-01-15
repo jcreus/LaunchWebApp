@@ -10,11 +10,12 @@ public class Event {
 	
 	private final String name;
 	private final double executionTime;
-	private HashMap<String, Double> extraInfo;
+	private final HashMap<String, Double> extraInfo;
 	
 	public Event(String name, double time) {
 		this.name = name.toLowerCase();
 		this.executionTime = time;
+		extraInfo = new HashMap();
 	}
 	
 	public String getName() {

@@ -18,7 +18,7 @@ import java.io.PrintWriter;
  */
 public final class Earth extends Planet {
 
-	private int id;
+	private String id;
 
 	public Earth(double x, double y, double z) {
 		this(x, y, z, "");
@@ -26,7 +26,8 @@ public final class Earth extends Planet {
 
 	public Earth(double x, double y, double z, String id) {
 		super("Earth", x, y, z, id, radiusOfEarth, massOfEarth);
-		this.id = Integer.parseInt(id);
+		this.id = id;
+		draw();
 		drawHazard();
 	}
 
@@ -72,6 +73,8 @@ public final class Earth extends Planet {
 			pw = new PrintWriter(new FileWriter(outputFile, false));
 
 			File earthFile = new File(resourcePath, Globals.coastMap);
+			System.out.println("COAST:\nOpening: " + earthFile + "\nWriting: " + outputFile);
+			
 			br = new BufferedReader(new FileReader(earthFile));
 
 			while ((line = br.readLine()) != null) {
