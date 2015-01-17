@@ -14,7 +14,7 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	protected double pitchKickTime;
 	protected double gravTurnTime;
 	boolean clampsReleased = false;
-	boolean beforeSep = false;
+	boolean beforeSep = true;
 
 	public TwoStageRocket() {
 		mStage = new Stage[2];
