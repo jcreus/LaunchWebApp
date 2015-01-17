@@ -58,8 +58,8 @@ public class InterfaceServlet extends HttpServlet {
 					case "mei_time":	mission.Profile().addEvent("firstStageIgnition", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
 					case "launch_time":	mission.Profile().addEvent("releaseClamps", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
 					case "pitch_time":	mission.Profile().addEvent("pitchKick", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
-					case "pitch":		mission.Profile().getEvent("pitchKick").addExtraInfo("pitch", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
-					case "yaw":			mission.Profile().getEvent("pitchKick").addExtraInfo("yaw", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
+					case "pitch":		mission.Profile().getEvent("pitchKick").addExtraInfo("pitch", Double.parseDouble(paramValues[0])); break;
+					case "yaw":			mission.Profile().getEvent("pitchKick").addExtraInfo("yaw", Double.parseDouble(paramValues[0])); break;
 					case "meco_time":	mission.Profile().addEvent("MECO1", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
 						
 					case "fss_time":	mission.Profile().addEvent("firstStageSep", Double.parseDouble(paramValues[0])); break;

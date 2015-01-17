@@ -49,7 +49,7 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 
 	@Override
 	public void leapfrogFirstStep() {
-		mStage[0].setMass(mStage[0].getMass() + mStage[1].getMass() + payload.getMass());
+		mStage[0].setEffectiveMass(mStage[0].getMass() + mStage[1].getMass() + payload.getMass());
 		Navigation.leapfrogFirstStep(mStage[0]);
 		
 		onBoardClock += dt;		//TSR/mission clock
@@ -58,13 +58,13 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	@Override
 	public void leapfrogStep() {
 		if (beforeSep) {
-			mStage[0].setMass(mStage[0].getMass() + mStage[1].getMass() + payload.getMass());
+			mStage[0].setEffectiveMass(mStage[0].getMass() + mStage[1].getMass() + payload.getMass());
 			Navigation.leapfrogStep(mStage[0]);
 		} else {
-			mStage[0].setMass(mStage[0].getMass());
+			mStage[0].setEffectiveMass(mStage[0].getMass());
 			Navigation.leapfrogStep(mStage[0]);
 
-			mStage[1].setMass(mStage[1].getMass() + payload.getMass());
+			mStage[1].setEffectiveMass(mStage[1].getMass() + payload.getMass());
 			Navigation.leapfrogStep(mStage[1]);
 		}
 
@@ -154,18 +154,12 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 
 	@Override
 	public boolean reachesOrbitalVelocity() {
-		if (mStage[1].vel() > 7800) {
-			return true;
-		}
-		return false;
+		return mStage[1].vel() > 7800;
 	}
 
 	@Override
 	public boolean depletesFuel() {
-		if (mStage[1].getPropMass() < 100) {
-			return true;
-		}
-		return false;
+		return mStage[1].getPropMass() < 100;
 	}
 	
 	@Override

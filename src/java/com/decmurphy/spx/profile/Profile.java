@@ -16,7 +16,7 @@ public abstract class Profile {
 		this.events = new ArrayList();
 }
 	
-	public List<Event> events() {
+	public final List<Event> events() {
 		return events;
 	}
 	
@@ -29,8 +29,12 @@ public abstract class Profile {
 	public Event getEvent(double t) {
 		Event current = null;
 		for(Event e : events) {
-			if(e.getName().startsWith("attitude") && t > e.getTime())
-				current = e;
+			if(t > e.getTime()) {
+				if(e.getName().startsWith("attitude") || e.getName().startsWith("pitch"))
+					current = e;
+				else if(e.getName().startsWith("gravity"))
+					current = null;
+			}
 		}
 		return current;
 	}

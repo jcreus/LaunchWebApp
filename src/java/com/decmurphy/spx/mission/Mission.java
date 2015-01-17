@@ -52,9 +52,8 @@ public class Mission {
 
 	public void executeEvents() {
 		for (Event e : this.profile.events()) {
-			if (abs(this.clock() - e.getTime()) < dt / 2) {
+			if (abs(this.clock() - e.getTime()) < dt / 2)
 				LV.executeEvent(e);
-			}
 		}
 	}
 	
@@ -63,6 +62,10 @@ public class Mission {
 			if(e.getName().equalsIgnoreCase(s))
 				LV.executeEvent(e);
 		}
+	}
+	
+	public void executeOverrideEvent(int stage, String s) {
+		LV.executeEvent(new Event(s, clock()).addExtraInfo("stage", stage));
 	}
 
 	public void invokeProfile() {

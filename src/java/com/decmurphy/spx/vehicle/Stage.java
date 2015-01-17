@@ -59,10 +59,9 @@ public class Stage {
 					accel, // acceleration
 					force;          // force
 
-	public double S, VR, VA, A, M;	// magnitudes of position, relV, absV, acceleration, total mass
+	public double S, VR, VA, A;	// magnitudes of position, relV, absV, acceleration, total mass
+	private double M;
 	public double Q, Cd, XA;		// aerodynamic pressure, drag coefficient, cross-sectional area of stage
-
-	private double dragForce, thrustForce, gravityForce;
 
 	public Stage(String name) {
 		this.name = name;
@@ -148,7 +147,7 @@ public class Stage {
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",
-							onBoardClock, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VA, throttle, M);
+							onBoardClock, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, throttle, getPropMass());
 
 		} catch (IOException e) {
 		} finally {
@@ -199,7 +198,7 @@ public class Stage {
 		this.propMass = propMass;
 	}
 
-	protected void setMass(double mass) {
+	protected void setEffectiveMass(double mass) {
 		this.M = mass;
 	}
 
@@ -232,6 +231,10 @@ public class Stage {
 
 	public double getMass() {
 		return this.getDryMass() + this.getPropMass();
+	}
+	
+	public double getEffectiveMass() {
+		return M;
 	}
 
 	protected double getFuelCapacity() {

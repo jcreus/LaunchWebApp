@@ -9,7 +9,6 @@ import static com.decmurphy.spx.Globals.massOfEarth;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.vehicle.Stage;
 import static java.lang.Math.PI;
-import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.pow;
@@ -29,7 +28,7 @@ public class Navigation {
 		
 		try {
 			thrustForce = stage.getThrustAtAltitude(stage.alt());
-			gravityForce = stage.getMass() * gravityAtRadius(radiusOfEarth + stage.alt());
+			gravityForce = stage.getEffectiveMass() * gravityAtRadius(radiusOfEarth + stage.alt());
 		} catch (IllegalArgumentException e) {
 		}
 
@@ -37,9 +36,9 @@ public class Navigation {
 		stage.force[1] = thrustForce * sin(stage.gamma[0]) * cos(stage.gamma[1]) + gravityForce * sin(stage.beta[0]) * cos(stage.beta[1]);
 		stage.force[2] = thrustForce * cos(stage.gamma[0]) + gravityForce * cos(stage.beta[0]);
 
-		stage.accel[0] = stage.force[0] / stage.getMass();
-		stage.accel[1] = stage.force[1] / stage.getMass();
-		stage.accel[2] = stage.force[2] / stage.getMass();
+		stage.accel[0] = stage.force[0] / stage.getEffectiveMass();
+		stage.accel[1] = stage.force[1] / stage.getEffectiveMass();
+		stage.accel[2] = stage.force[2] / stage.getEffectiveMass();
 
 		stage.absVel[0] = stage.accel[0] * dt / 2 - earthVel * sin(stage.beta[0]) * cos(stage.beta[1]);
 		stage.absVel[1] = stage.accel[1] * dt / 2 - earthVel * sin(stage.beta[0]) * sin(stage.beta[1]);
@@ -75,7 +74,7 @@ public class Navigation {
 			if (stage.isMoving) {
 				dragForce = stage.Q * stage.Cd * stage.XA;
 				thrustForce = stage.getThrustAtAltitude(stage.alt());
-				gravityForce = stage.getMass() * gravityAtRadius(radiusOfEarth + stage.alt());
+				gravityForce = stage.getEffectiveMass() * gravityAtRadius(radiusOfEarth + stage.alt());
 			} else {
 				dragForce = thrustForce = gravityForce = 0.0;
 			}
@@ -128,9 +127,9 @@ public class Navigation {
 						+ dragForce * cos(stage.alpha[0])
 						+ gravityForce * cos(stage.beta[0]);
 
-		stage.accel[0] = stage.force[0] / stage.getMass();
-		stage.accel[1] = stage.force[1] / stage.getMass();
-		stage.accel[2] = stage.force[2] / stage.getMass();
+		stage.accel[0] = stage.force[0] / stage.getEffectiveMass();
+		stage.accel[1] = stage.force[1] / stage.getEffectiveMass();
+		stage.accel[2] = stage.force[2] / stage.getEffectiveMass();
 		stage.setAccel(sqrt(stage.accel[0] * stage.accel[0] + stage.accel[1] * stage.accel[1] + stage.accel[2] * stage.accel[2]));
 
 		stage.absVel[0] += stage.accel[0] * dt;
@@ -167,7 +166,8 @@ public class Navigation {
     public static void pitchKick(Stage stage, double pitch, double yaw) {
 
 		// A higher value for pitch gives a more extreme pitch-kick
-		// A positive yaw aims south, a negative yaw aims north. 
+		// A positive yaw aims south, a negative yaw aims north.
+			
         double cs, sn;
 
         stage.gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));

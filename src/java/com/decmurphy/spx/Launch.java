@@ -18,16 +18,16 @@ public class Launch {
 		do {
 
 			mission.executeEvents();
-			mission.invokeProfile();
+			//mission.invokeProfile();
 			mission.leapfrogStep();
 			mission.outputFile(simId);
 
 			if(!SECO && (mission.LaunchVehicle().reachesOrbitalVelocity() || mission.LaunchVehicle().depletesFuel())) {
-				mission.executeEvent("SECO1");
+				mission.executeOverrideEvent(1, "SECO1");
 				dt = 0.1;
 				SECO = true;
 			}
 
-		} while (mission.LaunchVehicle().completedOrbits() < 3);
+		} while (mission.LaunchVehicle().completedOrbits() < 1 && mission.clock() < 2000);
 	}
 }
