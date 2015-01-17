@@ -11,8 +11,8 @@ public class TH_6Profile extends Profile {
     private TH_6Profile() {};
     
     public static Profile getProfile() {
-				instance.addEvent("gravityTurn", 55.0);
-        return instance;
+			instance.addEvent("attitude1", 400.0).addExtraInfo("stage", 1).addExtraInfo("pitch", -0.5).addExtraInfo("yaw", +0.035);
+      return instance;
     }
     
 }

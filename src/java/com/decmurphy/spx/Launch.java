@@ -18,7 +18,7 @@ public class Launch {
 		do {
 
 			mission.executeEvents();
-			//mission.invokeProfile();
+			mission.invokeProfile();
 			mission.leapfrogStep();
 			mission.outputFile(simId);
 
@@ -28,6 +28,6 @@ public class Launch {
 				SECO = true;
 			}
 
-		} while (mission.LaunchVehicle().completedOrbits() < 1 && mission.clock() < 2000);
+		} while (mission.LaunchVehicle().completedOrbits() < 1 && (!SECO || mission.LaunchVehicle().alt() > 0));
 	}
 }

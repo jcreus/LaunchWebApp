@@ -166,4 +166,9 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	public void setLegs(boolean legs) {
 		mStage[0].setLegs(legs);
 	}
+	
+	@Override
+	public double alt() {
+		return mStage[1].alt();
+	}
 }

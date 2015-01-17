@@ -127,6 +127,7 @@ public class Stage {
 		 *	Fuck you, Java.
 		 */
 
+		onBoardClock = stage.onBoardClock;
 		System.arraycopy(stage.pos, 0, this.pos, 0, stage.pos.length);
 		System.arraycopy(stage.relVel, 0, this.relVel, 0, stage.relVel.length);
 		System.arraycopy(stage.absVel, 0, this.absVel, 0, stage.absVel.length);
@@ -147,7 +148,7 @@ public class Stage {
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",
-							onBoardClock, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, throttle, getPropMass());
+							onBoardClock, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, throttle, M);
 
 		} catch (IOException e) {
 		} finally {

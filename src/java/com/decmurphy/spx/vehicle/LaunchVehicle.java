@@ -23,5 +23,6 @@ public interface LaunchVehicle {
 	public double clock();
 	public void setLegs(boolean legs);
 	public int completedOrbits();
+	public double alt();
 	
 }
