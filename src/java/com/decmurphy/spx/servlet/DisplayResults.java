@@ -28,6 +28,7 @@ public class DisplayResults extends HttpServlet {
 		GnuplotFileBuilder gp_landing = null,
 						gp_globe = null,
 						gp_alt = null,
+						gp_aoa = null,
 						gp_landing2 = null,
 						gp_velocity = null,
 						gp_phase = null;
@@ -56,6 +57,10 @@ public class DisplayResults extends HttpServlet {
 			gp_phase = new GnuplotFileBuilder(id, "phase");
 			Process p6 = Runtime.getRuntime().exec("gnuplot " + gp_phase.getPath());
 			p6.waitFor();
+
+			gp_aoa = new GnuplotFileBuilder(id, "aoa");
+			Process p7 = Runtime.getRuntime().exec("gnuplot " + gp_aoa.getPath());
+			p7.waitFor();
 		} catch (InterruptedException e) {
 		}
 
@@ -88,6 +93,11 @@ public class DisplayResults extends HttpServlet {
 						+ "       <img class=\"fourth\" src=\"" + gp_landing2.getImgPath() + "\" alt=\"alt-first-stage-trajectory\"/>\n"
 						+ "       <img class=\"fifth\" src=\"" + gp_velocity.getImgPath() + "\" alt=\"velocity\"/>\n"
 						+ "       <img class=\"sixth\" src=\"" + gp_phase.getImgPath() + "\" alt=\"phase-space\"/>\n"
+						+ "     </div>\n"
+						+ "     <div id=\"row3\">\n"
+						+ "       <img class=\"seventh\" src=\"" + gp_aoa.getImgPath() + "\" alt=\"angle-of-attack\"/>\n"
+						+ "       <img class=\"eigth\" src=\"" + "\" alt=\"\"/>\n"
+						+ "       <img class=\"ninth\" src=\"" + "\" alt=\"\"/>\n"
 						+ "     </div>\n"
 						+ "   </div>\n"
 						+ " </body>\n"

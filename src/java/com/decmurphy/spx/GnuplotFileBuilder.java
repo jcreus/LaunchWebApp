@@ -62,6 +62,16 @@ public class GnuplotFileBuilder {
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
 
+      } else if (phase.equalsIgnoreCase("aoa")) {
+
+        pw.printf("set key off\n");
+        pw.printf("set xlabel \"Time (s)\"\n");
+        pw.printf("set ylabel \"Angle of Attack (rads)\"\n");
+        pw.printf("set term png\n");
+        pw.printf("set output \"%s\"\n", getImagePath());
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:7 w l, \"%s/%s_SecondStage.dat\" u 1:7 w l\n", outputPath, id, outputPath, id);
+        
+
       } else if (phase.equalsIgnoreCase("globe")) {
 
         pw.printf("set key off\n");

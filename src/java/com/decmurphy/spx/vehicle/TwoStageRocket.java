@@ -144,8 +144,8 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Second Stage Separation");
 		}
 		
-		if(e.getName().startsWith("attitude")) {
-			Navigation.pitchKick(mStage[(int)e.getValueOf("stage")], e.getValueOf("pitch"), e.getValueOf("yaw"));
+		if(e.getName().startsWith("adjust")) {
+			Navigation.adjustPitch(mStage[(int)e.getValueOf("stage")], e.getValueOf("pitch"));
 		}
 		else if(e.getName().startsWith("thrust")) {
 			mStage[(int)e.getValueOf("stage")].setThrottle(e.getValueOf("throttle"));

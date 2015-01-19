@@ -9,6 +9,7 @@ import static com.decmurphy.spx.Globals.massOfEarth;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.vehicle.Stage;
 import static java.lang.Math.PI;
+import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.pow;
@@ -20,12 +21,17 @@ import static java.lang.Math.sqrt;
  * @author declan
  */
 public class Navigation {
+	
+	private enum Transform {
+		FORWARD,
+		BACKWARD
+	}
 
 	public static void leapfrogFirstStep(Stage stage) {
-		
+
 		double gravityForce = 0.0;
 		double thrustForce = 0.0;
-		
+
 		try {
 			thrustForce = stage.getThrustAtAltitude(stage.alt());
 			gravityForce = stage.getEffectiveMass() * gravityAtRadius(radiusOfEarth + stage.alt());
@@ -63,7 +69,7 @@ public class Navigation {
 	 *	And don't forget to remove the appropriate amount of mass from the system.
 	 */
 	public static void leapfrogStep(Stage stage) {
-		
+
 		double thrustForce = 0.0;
 		double dragForce = 0.0;
 		double gravityForce = 0.0;
@@ -149,36 +155,66 @@ public class Navigation {
 		stage.beta[1] = PI + atan2(stage.pos[0], stage.pos[1]);
 
 		stage.propMass -= stage.throttle * stage.numEngines * stage.getEngine().getMdot() * dt;
-		
+
 		stage.onBoardClock += dt;		//Stage clock
 
 	}
-	
+
 	/*
-     *	3D is hard. Honestly it's like an order of magnitude harder than 2D.
-     *	My current method for any kind of operation is to transform it into an easier-to-work-with coordinate system,
-     *	do the operation, and then transform back. For the pitch kick I can skip the first step. So rotate (pitch, yaw) by 'pi/2 - incl'
-     *	degrees about the y-axis and then rotate by 'pi/2 - longitude' degrees about the z-axis.
-     *
-     *	For Cape Canaveral, this is rotating (pitch, yaw) by 61.51 degrees about y, and then by 9.42 degrees about z.
-     *	Voila. That's your heading after pitch-kick.
-     */
-    public static void pitchKick(Stage stage, double pitch, double yaw) {
+	 *	3D is hard. Honestly it's like an order of magnitude harder than 2D.
+	 *	My current method for any kind of operation is to transform it into an easier-to-work-with coordinate system,
+	 *	do the operation, and then transform back. For the pitch kick I can skip the first step. So rotate (pitch, yaw) by 'pi/2 - incl'
+	 *	degrees about the y-axis and then rotate by 'pi/2 - longitude' degrees about the z-axis.
+	 *
+	 *	For Cape Canaveral, this is rotating (pitch, yaw) by 61.51 degrees about y, and then by 9.42 degrees about z.
+	 *	Voila. That's your heading after pitch-kick.
+	 */
+	public static void pitchKick(Stage stage, double pitch, double yaw) {
 
 		// A higher value for pitch gives a more extreme pitch-kick
 		// A positive yaw aims south, a negative yaw aims north.
-			
-        double cs, sn;
+		double cs, sn;
 
-        stage.gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));
+		stage.gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));
 
-        cs = Math.sin(pitch) * Math.cos(yaw) / Math.sin(stage.gamma[0]);
-        sn = (Math.sin(pitch) * Math.sin(yaw) * Math.cos(incl) + Math.cos(pitch) * Math.sin(incl)) / Math.sin(stage.gamma[0]);
+		cs = Math.sin(pitch) * Math.cos(yaw) / Math.sin(stage.gamma[0]);
+		sn = (Math.sin(pitch) * Math.sin(yaw) * Math.cos(incl) + Math.cos(pitch) * Math.sin(incl)) / Math.sin(stage.gamma[0]);
 
-        stage.gamma[1] = Math.atan2(sn, cs);
+		stage.gamma[1] = Math.atan2(sn, cs);
 
-        stage.gamma[1] -= (Math.PI / 2 - lon);
-    }
+		stage.gamma[1] -= (Math.PI / 2 - lon);
+	}
+	
+	private static void vectorTransform(double[] arr, double x, double y, Transform dir) {
+		
+		double cs, sn;
+		int r = (dir == Transform.FORWARD) ? 1 : -1;
+		
+		arr[0] = acos(cos(x) * cos(r * incl) - sin(x) * sin(y) * sin(r * incl));
+		cs = sin(x) * cos(y) / sin(arr[0]);
+		sn = (sin(x) * sin(y) * cos(r * incl) + cos(x) * sin(r * incl)) / sin(arr[0]);
+		arr[1] = atan2(sn, cs);
+
+	}
+
+	public static void adjustPitch(Stage stage, double delP) {
+
+		double pitch = stage.gamma[0], yaw = stage.gamma[1];
+		double temp1 = stage.beta[0], temp2 = stage.beta[1];
+
+		vectorTransform(stage.gamma, pitch, yaw, Transform.BACKWARD);
+		vectorTransform(stage.beta, temp1, temp2, Transform.BACKWARD);
+
+		pitch = (3 * PI / 2 - stage.beta[0]) - delP;
+		yaw = stage.gamma[1];
+		
+		temp1 = stage.beta[0];
+		temp2 = stage.beta[1];
+
+		vectorTransform(stage.gamma, pitch, yaw, Transform.FORWARD);
+		vectorTransform(stage.beta, temp1, temp2, Transform.FORWARD);
+
+	}
 
 	/*
 	 *	Flying prograde
@@ -194,7 +230,7 @@ public class Navigation {
 		}
 		return gravConstant * massOfEarth / pow(radius, 2);
 	}
-	
+
 	public static double densityAtAltitude(double altitude) {
 		if ((int) (altitude) < 0.0) {
 			throw new IllegalArgumentException();

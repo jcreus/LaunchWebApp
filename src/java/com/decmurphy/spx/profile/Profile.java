@@ -30,7 +30,7 @@ public abstract class Profile {
 		Event current = null;
 		for(Event e : events) {
 			if(t > e.getTime()) {
-				if(e.getName().startsWith("attitude"))
+				if(e.getName().startsWith("adjust"))
 					current = e;
 			}
 		}

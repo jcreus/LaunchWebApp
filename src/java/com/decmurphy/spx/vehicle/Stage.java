@@ -6,6 +6,7 @@ import static com.decmurphy.spx.Globals.radiusOfEarth;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import java.io.*;
 import com.decmurphy.spx.engine.Engine;
+import static java.lang.Math.PI;
 import static java.lang.Math.atan2;
 
 public class Stage {
@@ -148,7 +149,7 @@ public class Stage {
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",
-							onBoardClock, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, throttle, M);
+							onBoardClock, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, (beta[0]+gamma[0])/PI, M);
 
 		} catch (IOException e) {
 		} finally {
