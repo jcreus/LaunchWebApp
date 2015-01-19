@@ -2,7 +2,7 @@
 --
 -- Host: localhost    Database: spacex
 -- ------------------------------------------------------
--- Server version	5.5.40-0ubuntu1
+-- Server version	5.5.40-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -58,7 +58,8 @@ INSERT INTO `launches` VALUES (15,'2014-07-14','SpaceX',0,'Falcon9',2,'OG2-1','O
 INSERT INTO `launches` VALUES (16,'2014-08-05','SpaceX',0,'Falcon9',2,'AsiaSat-8','AS-8');
 INSERT INTO `launches` VALUES (17,'2014-09-07','SpaceX',0,'Falcon9',2,'AsiaSat-6','AS-6');
 INSERT INTO `launches` VALUES (18,'2014-09-21','SpaceX',0,'Falcon9',2,'CRS-4','CRS-4');
-INSERT INTO `launches` VALUES (19,'0000-00-00','SpaceX',0,'Falcon9',2,'CRS-5','CRS-5');
+INSERT INTO `launches` VALUES (19,'2015-01-10','SpaceX',0,'Falcon9',2,'CRS-5','CRS-5');
+INSERT INTO `launches` VALUES (20,'2015-02-09','SpaceX',0,'Falcon9',2,'DSCOVR','DSCOVR');
 /*!40000 ALTER TABLE `launches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,6 +114,7 @@ INSERT INTO `profiles` VALUES (16,4535,0,-2,180,0,0,0,0,7,0.045,0.07,182,189,0);
 INSERT INTO `profiles` VALUES (17,4428,0,-2,180,0,0,0,0,7,0.027,0.06,182,189,0);
 INSERT INTO `profiles` VALUES (18,6416,1,-2,167,276,291,439,461,7,0.063,-0.78,169,177,0);
 INSERT INTO `profiles` VALUES (19,6517,1,-2,0,0,0,0,0,7,0.063,-0.78,0,0,0);
+INSERT INTO `profiles` VALUES (20,570,1,-2,0,0,0,0,0,7,0.063,-0.78,0,0,0);
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -125,4 +127,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-05 15:49:42
+-- Dump completed on 2015-01-19 22:55:22
