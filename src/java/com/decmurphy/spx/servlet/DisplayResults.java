@@ -23,7 +23,7 @@ public class DisplayResults extends HttpServlet {
 
 		String id = request.getSession().getId();
 		String[] args = {id};
-		Launch.main(mission, args);
+		Launch.execute(mission, args);
 
 		GnuplotFileBuilder gp_landing = null,
 						gp_globe = null,

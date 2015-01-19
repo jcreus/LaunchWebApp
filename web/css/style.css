@@ -44,6 +44,7 @@ video#bgvid {
 }
 
 #footer {
+ color: lightskyblue;
  clear: both;
  position: relative;
  text-align: right;

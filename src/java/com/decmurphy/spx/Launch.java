@@ -7,7 +7,7 @@ import com.decmurphy.spx.space.Planet;
 
 public class Launch {
 
-	public static void main(Mission mission, String[] args) {
+	public static void execute(Mission mission, String[] args) {
 
 		String simId = args[0];
 		Planet Earth = new Earth(0, 0, 0, simId);

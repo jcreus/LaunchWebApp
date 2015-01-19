@@ -83,7 +83,7 @@ body, html {
   line-height: 140%;
   padding-top: 10px;
   background-image: url("../images/background3.jpg");
-  background-size: 100% 100%;
+  background-size: 100%;
   padding: 15px;
   position: relative;
   box-sizing: border-box;
@@ -95,6 +95,7 @@ body, html {
 
 .tab-pane input[type=text] {
   color: #000;
+  max-width: 80%;
 }
 
 a i {
