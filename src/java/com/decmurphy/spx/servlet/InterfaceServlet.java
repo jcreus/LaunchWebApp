@@ -25,8 +25,8 @@ public class InterfaceServlet extends HttpServlet {
 
 		resourcePath = getServletContext().getRealPath("/resource");
 		outputPath = getServletContext().getRealPath("/output");
-		//imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
-		imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
+		imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
+		//imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
 		//imagePath = "/cygdrive/c/Users/dmurphy/GitHub/LaunchWebApp/web/output";
 
 		Enumeration paramNames = request.getParameterNames();
