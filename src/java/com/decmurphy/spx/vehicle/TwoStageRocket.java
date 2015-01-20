@@ -1,10 +1,14 @@
 package com.decmurphy.spx.vehicle;
 
 import static com.decmurphy.spx.Globals.dt;
+import static com.decmurphy.spx.Globals.gravConstant;
+import static com.decmurphy.spx.Globals.massOfEarth;
+import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
+import static java.lang.Math.sqrt;
 
 public abstract class TwoStageRocket implements LaunchVehicle {
 
@@ -154,7 +158,7 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 
 	@Override
 	public boolean reachesOrbitalVelocity() {
-		return mStage[1].vel() > 7800;
+		return mStage[1].vel() > sqrt(gravConstant*massOfEarth/(radiusOfEarth + alt()));
 	}
 
 	@Override
