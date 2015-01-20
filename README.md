@@ -7,15 +7,16 @@ A Java web app for the C Launch code I built previously. The C implementation ha
 Java
 ============
 
-The code consists mainly of objects which make up a rocket. A Builder design pattern might be a good idea for building specific LVs.
-Most of the interesting stuff happens in the Stage class, (the physics happens in Stage.leapfrogStep, telemetry is output in Stage.outputFile, etc)
+Current code works but cannot implement mission-specific profiles. Current development build (see: profile branch) is attempting to generalise the process. Improvements include:
+* Migrating to a Mission-centric problem, where a simulation must have a predetermined Launch Vehicle (LV), a Payload and a Profile.
+* LVs will be modularised - built from stages and engines. Adding new LVs is seemless.
+* Payloads will be divided into Satellites or Capsules.
+* Profiles can be dynamic until stage separation, where hard-coded course corrections take over.
 
 Servlets
 ============
 
 A user interface is built via Java Servlets. Home.java builds a dynamic html page (defined to be the welcome page in web.xml) where the user can choose a past SpaceX launch profile or build their own. Posting the form sends the input data to InterfaceServlet.java which parses and runs the simulation.
-
-TODO: Scroll bar of launch payloads over input form. Have ~5 visible at a time
 
 MySQL
 ============
@@ -25,6 +26,6 @@ The past launch profiles which get loaded up on the Home servlet are stored in a
 Output
 ============
 
-The current big problem. The DisplayResults servlet builds and submits Gnuplot files, creating .png images of the trajectory. These images are created successfully (find all output files in build/web/output, by the way) but displaying them on a webpage is a different matter. Something to do with this whole thing running on a *web*-server, not a *file*-server.
+The DisplayResults servlet builds and submits Gnuplot files, creating .png images of the trajectory. These images are displayed for the user.
 
-Answers on a postcard please.
+TODO: Find elegant solution for auto-removing irrelevant images/output telemetry
