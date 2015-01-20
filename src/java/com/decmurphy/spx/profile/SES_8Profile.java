@@ -11,7 +11,9 @@ public class SES_8Profile extends Profile {
     private SES_8Profile() {};
     
     public static Profile getProfile() {
-        return instance;
+	  instance.addEvent("adjustCourse", 400.0).addExtraInfo("stage", 1).addExtraInfo("pitch", 0.0);
+	  instance.addEvent("adjustCourse", 450.0).addExtraInfo("stage", 1).addExtraInfo("pitch", -0.1);
+      return instance;
     }
     
 }
