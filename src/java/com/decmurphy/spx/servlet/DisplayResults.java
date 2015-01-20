@@ -10,12 +10,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.log4j.Logger;
 
 /**
  *
  * @author declan
  */
 public class DisplayResults extends HttpServlet {
+  
+  private static final Logger logger = Logger.getLogger(com.decmurphy.spx.servlet.DisplayResults.class);
 
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -62,6 +65,7 @@ public class DisplayResults extends HttpServlet {
 			Process p7 = Runtime.getRuntime().exec("gnuplot " + gp_aoa.getPath());
 			p7.waitFor();
 		} catch (InterruptedException e) {
+		  logger.error("Exceptions happen!", e);
 		}
 
 		response.setContentType("text/html");
