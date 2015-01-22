@@ -104,7 +104,7 @@ public class ExecuteLaunch extends HttpServlet {
 				
 		String ID = UUID.randomUUID().toString();
 		request.getSession().setAttribute(ID, body);
-		response.sendRedirect("/LaunchWebApp/DisplayResults?id=" + ID);
+		response.sendRedirect("/DisplayResults?id=" + ID);
 	}
 
 	@Override
