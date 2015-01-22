@@ -72,9 +72,7 @@ public final class Earth extends Planet {
 			File outputFile = new File(outputPath, "/" + id + "_coast.output.txt");
 			pw = new PrintWriter(new FileWriter(outputFile, false));
 
-			File earthFile = new File(resourcePath, Globals.coastMap);
-			System.out.println("COAST:\nOpening: " + earthFile + "\nWriting: " + outputFile);
-			
+			File earthFile = new File(resourcePath, Globals.coastMap);			
 			br = new BufferedReader(new FileReader(earthFile));
 
 			while ((line = br.readLine()) != null) {

@@ -12,24 +12,29 @@ public class Launch {
 		String simId = args[0];
 		Planet Earth = new Earth(0, 0, 0, simId);
 
-		boolean SECO = false;
-		mission.setClock(-60.0);
+		if (mission != null) {
+			boolean SECO = false;
+			mission.setClock(-60.0);
 
-		do {
+			do {
 
-			mission.executeEvents();
-			mission.invokeProfile();
-			mission.leapfrogStep();
-			mission.outputFile(simId);
+				mission.executeEvents();
+				mission.invokeProfile();
+				mission.leapfrogStep();
+				mission.outputFile(simId);
 
-			if(!SECO && (mission.LaunchVehicle().reachesOrbitalVelocity() || mission.LaunchVehicle().depletesFuel())) {
-				mission.executeOverrideEvent(1, "SECO1");
-				dt = 0.1;
-				SECO = true;
-			}
+				if (!SECO && (mission.LaunchVehicle().reachesOrbitalVelocity() || mission.LaunchVehicle().depletesFuel())) {
+					mission.executeOverrideEvent(1, "SECO1");
+					dt = 0.1;
+					SECO = true;
+				}
 
-		} while (mission.LaunchVehicle().completedOrbits() < 2 && (!SECO || mission.LaunchVehicle().alt() > 0));
-		
-		System.out.println("CompletedOrbits: " + mission.LaunchVehicle().completedOrbits());
+			} while (mission.LaunchVehicle().completedOrbits() < 2 && (!SECO || mission.LaunchVehicle().alt() > 0));
+
+			System.out.println("CompletedOrbits: " + mission.LaunchVehicle().completedOrbits());
+		}
+		else {
+			System.out.println("Mission = null");
+		}
 	}
 }

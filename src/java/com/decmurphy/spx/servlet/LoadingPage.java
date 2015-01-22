@@ -27,7 +27,7 @@ public class LoadingPage extends HttpServlet {
             + "   <title>" + title + "</title>\n"
             + "   <meta charset=\"UTF-8\">\n"
             + "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
-            + "   <meta http-equiv=\"refresh\" content=\"1;URL='DisplayResults'\" />"
+            + "   <meta http-equiv=\"refresh\" content=\"1;URL='ExecuteLaunch'\" />"
             + "   <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>\n"
             + " </head>\n"
             + " <body>\n"
