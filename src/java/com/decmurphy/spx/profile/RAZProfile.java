@@ -8,10 +8,11 @@ public class RAZProfile extends Profile {
 	    
     private static final RAZProfile instance = new RAZProfile();
 
-    private RAZProfile() {};
+    private RAZProfile() {}
     
     public static Profile getProfile() {
-        return instance;
+			instance.clean();
+      return instance;
     }
     
 }

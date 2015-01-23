@@ -8,10 +8,11 @@ public class CASSProfile extends Profile {
 	    
     private static final CASSProfile instance = new CASSProfile();
 
-    private CASSProfile() {};
+    private CASSProfile() {}
     
     public static Profile getProfile() {
-        return instance;
+			instance.clean();
+      return instance;
     }
     
 }

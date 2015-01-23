@@ -8,10 +8,11 @@ public class DEMOProfile extends Profile {
 	    
     private static final DEMOProfile instance = new DEMOProfile();
 
-    private DEMOProfile() {};
+    private DEMOProfile() {}
     
     public static Profile getProfile() {
-        return instance;
+			instance.clean();
+      return instance;
     }
     
 }

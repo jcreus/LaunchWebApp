@@ -8,10 +8,11 @@ public class CRS_3Profile extends Profile {
 	    
     private static final CRS_3Profile instance = new CRS_3Profile();
 
-    private CRS_3Profile() {};
+    private CRS_3Profile() {}
     
     public static Profile getProfile() {
-        return instance;
+			instance.clean();
+      return instance;
     }
     
 }

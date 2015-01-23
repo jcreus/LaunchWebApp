@@ -8,10 +8,11 @@ public class DefaultProfile extends Profile {
 	    
     private static final DefaultProfile instance = new DefaultProfile();
 
-    public DefaultProfile() {};
+    public DefaultProfile() {}
     
     public static Profile getProfile() {
-        return instance;
+			instance.clean();
+      return instance;
     }
     
 }

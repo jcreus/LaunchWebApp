@@ -8,10 +8,11 @@ public class FSAT2Profile extends Profile {
 	    
     private static final FSAT2Profile instance = new FSAT2Profile();
 
-    private FSAT2Profile() {};
+    private FSAT2Profile() {}
     
     public static Profile getProfile() {
-        return instance;
+			instance.clean();
+      return instance;
     }
     
 }

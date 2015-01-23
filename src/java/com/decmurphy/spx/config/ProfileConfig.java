@@ -34,6 +34,7 @@ public class ProfileConfig {
 			case "AS-6": return AS_6Profile.getProfile();
 			case "CRS-4": return CRS_4Profile.getProfile();
 			case "CRS-5": return CRS_5Profile.getProfile();
+			case "DSCOVR": return DSCOVRProfile.getProfile();
 			default: throw new ProfileException("No valid mission specified: default profile applied");
 		}
 	}

@@ -25,8 +25,7 @@ public class InterfaceServlet extends HttpServlet {
 
 		resourcePath = getServletContext().getRealPath("/resource");
 		outputPath = getServletContext().getRealPath("/output");
-		imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
-		//
+		//imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
 		imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
 		//imagePath = "/cygdrive/c/Users/dmurphy/Documents/GitHub/LaunchWebApp/web/output";
 		
@@ -50,8 +49,9 @@ public class InterfaceServlet extends HttpServlet {
 			}
 
 			try {
-				switch (paramName) {
 
+				switch (paramName) {
+					
 					case "coast_level":	Globals.coastMap = "/coast_" + paramValues[0] + ".txt"; break;
 					case "payload_mass":
 						double m;
@@ -60,20 +60,20 @@ public class InterfaceServlet extends HttpServlet {
 						}
 						break;
 						
-					case "mei_time":	mission.Profile().addEvent("firstStageIgnition", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
+					case "mei_time":		mission.Profile().addEvent("firstStageIgnition", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
 					case "launch_time":	mission.Profile().addEvent("releaseClamps", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
 					case "pitch_time":	mission.Profile().addEvent("pitchKick", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
-					case "pitch":		mission.Profile().getEvent("pitchKick").addExtraInfo("pitch", Double.parseDouble(paramValues[0])); break;
-					case "yaw":			mission.Profile().getEvent("pitchKick").addExtraInfo("yaw", Double.parseDouble(paramValues[0])); break;
-					case "meco_time":	mission.Profile().addEvent("MECO1", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
+					case "pitch":				mission.Profile().getEvent("pitchKick").addExtraInfo("pitch", Double.parseDouble(paramValues[0])); break;
+					case "yaw":					mission.Profile().getEvent("pitchKick").addExtraInfo("yaw", Double.parseDouble(paramValues[0])); break;
+					case "meco_time":		mission.Profile().addEvent("MECO1", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;
 						
-					case "fss_time":	mission.Profile().addEvent("firstStageSep", Double.parseDouble(paramValues[0])); break;
+					case "fss_time":		mission.Profile().addEvent("firstStageSep", Double.parseDouble(paramValues[0])); break;
 						
-					case "sei_time":	mission.Profile().addEvent("secondStageIgnition", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 1);	break;
-					case "seco_time":	mission.Profile().addEvent("SECO1", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 1); break;
-					case "sss_time":	mission.Profile().addEvent("secondStageSep", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 1); break;
+					case "sei_time":		mission.Profile().addEvent("secondStageIgnition", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 1);	break;
+					case "seco_time":		mission.Profile().addEvent("SECO1", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 1); break;
+					case "sss_time":		mission.Profile().addEvent("secondStageSep", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 1); break;
 						
-					case "legs":		mission.LaunchVehicle().setLegs(paramValues[0].equalsIgnoreCase("YES")); break;
+					case "legs":				mission.LaunchVehicle().setLegs(paramValues[0].equalsIgnoreCase("YES")); break;
 					default: break;
 
 				}

@@ -1,9 +1,5 @@
 package com.decmurphy.spx;
 
-import com.decmurphy.spx.mission.Mission;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
 public class Globals {
 
 	public static double dt = 0.001;
@@ -28,15 +24,4 @@ public class Globals {
 		}
 		return a < b ? a : mod(a - b, b);
 	}
-
-	public static double round(double value, int places) {
-		if (places < 0) {
-			throw new IllegalArgumentException();
-		}
-
-		BigDecimal bd = new BigDecimal(value);
-		bd = bd.setScale(places, RoundingMode.HALF_UP);
-		return bd.doubleValue();
-	}
-
 }
