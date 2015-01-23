@@ -20,9 +20,14 @@ public class DisplayResults extends HttpServlet {
 		String ID = request.getParameter("id");
 		String body = (String) request.getSession().getAttribute(ID);
 		
-		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-    out.println(body);
+		if(body!=null && !body.isEmpty()) {
+		  response.setContentType("text/html");
+		  out.println(body);
+		}
+		else {
+		  out.println("Error: No output body found");
+		}
 
 	}
 
