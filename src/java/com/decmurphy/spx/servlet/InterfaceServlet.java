@@ -25,8 +25,8 @@ public class InterfaceServlet extends HttpServlet {
 
 		resourcePath = getServletContext().getRealPath("/resource");
 		outputPath = getServletContext().getRealPath("/output");
-		imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
-		//imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
+		//imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
+		imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
 		//imagePath = "/cygdrive/c/Users/dmurphy/Documents/GitHub/LaunchWebApp/web/output";
 		
 		String getId = UUID.randomUUID().toString();
@@ -81,7 +81,7 @@ public class InterfaceServlet extends HttpServlet {
 		}
 		
 		request.getSession().setAttribute(getId, mission);
-		response.sendRedirect("/LoadingPage?id=" + getId);
+		response.sendRedirect("/LaunchWebApp/LoadingPage?id=" + getId);
 	}
 
 	@Override

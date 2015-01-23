@@ -20,7 +20,7 @@ public class ExecuteLaunch extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response)
 		  throws ServletException, IOException {
 
-	String ID = request.getParameter("ID");
+	String ID = request.getParameter("id");
 	Mission mission = (Mission) request.getSession().getAttribute(ID);
 
 	if (mission != null) {
@@ -103,7 +103,7 @@ public class ExecuteLaunch extends HttpServlet {
 	String body = sb.toString();
 
 	request.getSession().setAttribute(ID, body);
-	response.sendRedirect("/DisplayResults?id=" + ID);
+	response.sendRedirect("/LaunchWebApp/DisplayResults?id=" + ID);
   }
 
   @Override
