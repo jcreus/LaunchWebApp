@@ -28,7 +28,7 @@ public class DisplayResults extends HttpServlet {
 	} else {
 	  out.println("Empty body");
 	}
-
+// idfugheiudbge
   }
 
   @Override
