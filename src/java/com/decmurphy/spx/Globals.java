@@ -21,8 +21,6 @@ public class Globals {
 
 	public static double incl = (90 - latitude) * Math.PI / 180;
 	public static double lon = (longitude) * Math.PI / 180;
-	
-	public static Mission mission = null;
 
 	public static double mod(double a, double b) {
 		if (a < 0) {

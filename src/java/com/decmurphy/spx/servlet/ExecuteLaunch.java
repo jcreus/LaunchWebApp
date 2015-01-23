@@ -1,9 +1,9 @@
 package com.decmurphy.spx.servlet;
 
 import com.decmurphy.spx.Globals;
-import static com.decmurphy.spx.Globals.mission;
 import com.decmurphy.spx.GnuplotFileBuilder;
 import com.decmurphy.spx.Launch;
+import com.decmurphy.spx.mission.Mission;
 import java.io.IOException;
 import java.util.UUID;
 import javax.servlet.ServletException;
@@ -20,10 +20,14 @@ public class ExecuteLaunch extends HttpServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 					throws ServletException, IOException {
+	  
+		String ID = request.getParameter("ID");
+		Mission mission = (Mission) request.getSession().getAttribute(ID);
 
-		String id = request.getSession().getId() + "_" + System.currentTimeMillis();
-		String[] args = {id};
-		Launch.execute(mission, args);
+		if(mission != null) {
+		  String[] args = {ID};
+		  Launch.execute(mission, args);
+		}
 
 		GnuplotFileBuilder gp_landing = null,
 						gp_globe = null,
@@ -34,31 +38,31 @@ public class ExecuteLaunch extends HttpServlet {
 						gp_phase = null;
 
 		try {
-			gp_landing = new GnuplotFileBuilder(id, "landing");
+			gp_landing = new GnuplotFileBuilder(ID, "landing");
 			Process p1 = Runtime.getRuntime().exec("gnuplot " + gp_landing.getPath());
 			p1.waitFor();
 
-			gp_globe = new GnuplotFileBuilder(id, "globe");
+			gp_globe = new GnuplotFileBuilder(ID, "globe");
 			Process p2 = Runtime.getRuntime().exec("gnuplot " + gp_globe.getPath());
 			p2.waitFor();
 
-			gp_alt = new GnuplotFileBuilder(id, "altitude");
+			gp_alt = new GnuplotFileBuilder(ID, "altitude");
 			Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_alt.getPath());
 			p3.waitFor();
 
-			gp_landing2 = new GnuplotFileBuilder(id, "landing2");
+			gp_landing2 = new GnuplotFileBuilder(ID, "landing2");
 			Process p4 = Runtime.getRuntime().exec("gnuplot " + gp_landing2.getPath());
 			p4.waitFor();
 
-			gp_velocity = new GnuplotFileBuilder(id, "velocity");
+			gp_velocity = new GnuplotFileBuilder(ID, "velocity");
 			Process p5 = Runtime.getRuntime().exec("gnuplot " + gp_velocity.getPath());
 			p5.waitFor();
 
-			gp_phase = new GnuplotFileBuilder(id, "phase");
+			gp_phase = new GnuplotFileBuilder(ID, "phase");
 			Process p6 = Runtime.getRuntime().exec("gnuplot " + gp_phase.getPath());
 			p6.waitFor();
 
-			gp_aoa = new GnuplotFileBuilder(id, "aoa");
+			gp_aoa = new GnuplotFileBuilder(ID, "aoa");
 			Process p7 = Runtime.getRuntime().exec("gnuplot " + gp_aoa.getPath());
 			p7.waitFor();
 		} catch (InterruptedException e) {
@@ -71,7 +75,7 @@ public class ExecuteLaunch extends HttpServlet {
 						+ " <head>\n"
 						+ "   <title>" + title + "</title>\n"
 						+ "   <meta charset=\"UTF-8\">\n"
-						+ "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
+						+ "   <meta name=\"viewport\" content=\"wIDth=device-wIDth, initial-scale=1.0\">\n"
 						+ "   <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>\n"
 						+ "   <link rel=\"stylesheet\" href=\"css/tabs.css\" type=\"text/css\"/>\n"
 						+ "   <link rel=\"stylesheet\" href=\"css/button.css\" type=\"text/css\"/>\n"
@@ -81,17 +85,17 @@ public class ExecuteLaunch extends HttpServlet {
 						+ "     <img src=\"images/background.jpg\" alt=\"background\" />\n"
 						+ "   </div>\n"
 						+ "   <div class=\"container\">\n"
-						+ "     <div id=\"row1\">\n"
+						+ "     <div ID=\"row1\">\n"
 						+ "       <img class=\"first\" src=\"" + gp_landing.getImgPath() + "\" alt=\"first-stage-trajectory\"/>\n"
-						+ "       <img class=\"second\" src=\"" + gp_globe.getImgPath() + "\" alt=\"wide-view\"/>\n"
+						+ "       <img class=\"second\" src=\"" + gp_globe.getImgPath() + "\" alt=\"wIDe-view\"/>\n"
 						+ "       <img class=\"third\" src=\"" + gp_alt.getImgPath() + "\" alt=\"altitude\"/>\n"
 						+ "     </div>\n"
-						+ "     <div id=\"row2\">\n"
+						+ "     <div ID=\"row2\">\n"
 						+ "       <img class=\"fourth\" src=\"" + gp_landing2.getImgPath() + "\" alt=\"alt-first-stage-trajectory\"/>\n"
 						+ "       <img class=\"fifth\" src=\"" + gp_velocity.getImgPath() + "\" alt=\"velocity\"/>\n"
 						+ "       <img class=\"sixth\" src=\"" + gp_phase.getImgPath() + "\" alt=\"phase-space\"/>\n"
 						+ "     </div>\n"
-						+ "     <div id=\"row3\">\n"
+						+ "     <div ID=\"row3\">\n"
 						+ "       <img class=\"seventh\" src=\"" + gp_aoa.getImgPath() + "\" alt=\"angle-of-attack\"/>\n"
 						+ "       <img class=\"eigth\" src=\"" + "\" alt=\"\"/>\n"
 						+ "       <img class=\"ninth\" src=\"" + "\" alt=\"\"/>\n"
@@ -102,7 +106,6 @@ public class ExecuteLaunch extends HttpServlet {
 		
 		String body = sb.toString();
 				
-		String ID = UUID.randomUUID().toString();
 		request.getSession().setAttribute(ID, body);
 		response.sendRedirect("/DisplayResults?id=" + ID);
 	}

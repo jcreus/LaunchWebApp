@@ -2,7 +2,7 @@ package com.decmurphy.spx.servlet;
 
 import com.decmurphy.spx.Globals;
 import static com.decmurphy.spx.Globals.flightCode;
-import static com.decmurphy.spx.Globals.mission;
+import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.mission.MissionBuilder;
 import java.io.*;
 import javax.servlet.*;
@@ -28,6 +28,9 @@ public class InterfaceServlet extends HttpServlet {
 		imagePath = "/var/lib/tomcat8/webapps/ROOT/output";
 		//imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
 		//imagePath = "/cygdrive/c/Users/dmurphy/Documents/GitHub/LaunchWebApp/web/output";
+		
+		String getId = UUID.randomUUID().toString();
+		Mission mission = null;
 
 		Enumeration paramNames = request.getParameterNames();
 		while (paramNames.hasMoreElements()) {
@@ -76,10 +79,9 @@ public class InterfaceServlet extends HttpServlet {
 			} catch (NumberFormatException e) {
 			}
 		}
-
-		String site = "LoadingPage";
-		response.setStatus(HttpServletResponse.SC_MOVED_TEMPORARILY);
-		response.setHeader("Location", site);
+		
+		request.getSession().setAttribute(getId, mission);
+		response.sendRedirect("/LoadingPage?id=" + getId);
 	}
 
 	@Override
