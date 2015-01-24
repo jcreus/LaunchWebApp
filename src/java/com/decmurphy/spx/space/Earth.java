@@ -72,16 +72,18 @@ public final class Earth extends Planet {
 			File outputFile = new File(outputPath, "/" + id + "_coast.output.txt");
 			pw = new PrintWriter(new FileWriter(outputFile, false));
 
-			File earthFile = new File(resourcePath, Globals.coastMap);			
+			File earthFile = new File(resourcePath, Globals.coastMap);
 			br = new BufferedReader(new FileReader(earthFile));
 
 			while ((line = br.readLine()) != null) {
 				if (!line.isEmpty()) {
 					String[] parts = line.split("\\s+");
 
-					psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
-					theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
-					pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
+					if (Double.parseDouble(parts[0]) < 0.0) {
+						psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
+						theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
+						pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
+					}
 				} else {
 					pw.print("\n");
 				}
