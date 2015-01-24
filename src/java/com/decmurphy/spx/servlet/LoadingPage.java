@@ -29,6 +29,8 @@ public class LoadingPage extends HttpServlet {
 						+ "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
 						+ "   <meta http-equiv=\"refresh\" content=\"1;URL='ExecuteLaunch?id=" + request.getParameter("id") + "'\" />"
 						+ "   <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>\n"
+						+ "	  <link rel=\"shortcut icon\" href=\"images/favicon.ico\" type=\"image/x-icon\">\n"
+						+ "   <link rel=\"icon\" href=\"images/favicon-logo.png\" type=\"image/x-icon\">\n"
 						+ " </head>\n"
 						+ " <body>\n"
 						+ "   <video autoplay loop poster=\"images/background.jpg\" id=\"bgvid\">\n"

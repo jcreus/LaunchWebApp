@@ -5,10 +5,6 @@
         <!--    <welcome-file>index.html</welcome-file> -->
     </welcome-file-list>
     <servlet>
-        <servlet-name>ErrorHandler</servlet-name>
-        <servlet-class>com.decmurphy.spx.servlet.ErrorHandler</servlet-class>
-    </servlet>
-    <servlet>
         <servlet-name>InterfaceServlet</servlet-name>
         <servlet-class>com.decmurphy.spx.servlet.InterfaceServlet</servlet-class>
     </servlet>
@@ -28,10 +24,6 @@
         <servlet-name>DisplayResults</servlet-name>
         <servlet-class>com.decmurphy.spx.servlet.DisplayResults</servlet-class>
     </servlet>
-    <servlet-mapping>
-        <servlet-name>ErrorHandler</servlet-name>
-        <url-pattern>/ErrorHandler</url-pattern>
-    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>InterfaceServlet</servlet-name>
         <url-pattern>/InterfaceServlet</url-pattern>
@@ -55,15 +47,4 @@
     <session-config>
         <session-timeout>30</session-timeout>
     </session-config>
-    <error-page>
-        <error-code>404</error-code>
-        <location>/ErrorHandler</location>
-    </error-page>
-    <error-page>
-        <exception-type>java.lang.Throwable</exception-type>
-        <location>/ErrorHandler</location>
-    </error-page>
-    <listener>
-        <listener-class>com.decmurphy.spx.SessionCounterListener</listener-class>
-    </listener>
 </web-app>
