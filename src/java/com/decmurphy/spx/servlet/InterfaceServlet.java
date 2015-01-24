@@ -27,7 +27,7 @@ public class InterfaceServlet extends HttpServlet {
 		outputPath = getServletContext().getRealPath("/output");
 		imagePath = "/var/lib/tomcat8/webapps/LaunchWebApp/output";
 		//imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
-		////imagePath = "/cygdrive/c/Users/dmurphy/Documents/GitHub/LaunchWebApp/web/output";
+		//imagePath = "/cygdrive/c/Users/dmurphy/Documents/GitHub/LaunchWebApp/web/output";
 		
 		String getId = UUID.randomUUID().toString();
 		Mission mission = null;

@@ -1,7 +1,5 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.Globals.incl;
-import static com.decmurphy.spx.Globals.lon;
 import com.decmurphy.spx.engine.Merlin1D;
 import com.decmurphy.spx.engine.Merlin1Dv;
 import com.decmurphy.spx.payload.DragonV1;
@@ -39,7 +37,6 @@ public class Falcon9_1 extends TwoStageRocket {
 
 		mLegsExtended = false;
 
-		this.setCoordinates(incl, lon);
 		this.gravTurnTime = 55.0;
 	}
 

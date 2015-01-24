@@ -3,6 +3,7 @@ package com.decmurphy.spx.mission;
 import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.Globals.mod;
 import com.decmurphy.spx.event.Event;
+import com.decmurphy.spx.launchsite.LaunchSite;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.vehicle.LaunchVehicle;
@@ -17,6 +18,7 @@ public class Mission {
 	private LaunchVehicle LV;
 	private Payload payload;
 	private Profile profile;
+	private LaunchSite LS;
 
 	public void addLaunchVehicle(LaunchVehicle LV) {
 		this.LV = LV;
@@ -28,6 +30,10 @@ public class Mission {
 
 	public void addProfile(Profile profile) {
 		this.profile = profile;
+	}
+	
+	public void addLaunchSite(LaunchSite launchSite) {
+		this.LS = launchSite;
 	}
 
 	public void setClock(double t) {
@@ -44,6 +50,10 @@ public class Mission {
 
 	public Profile Profile() {
 		return profile;
+	}
+	
+	public LaunchSite LaunchSite() {
+		return LS;
 	}
 
 	public double clock() {

@@ -6,6 +6,7 @@ import static com.decmurphy.spx.Globals.massOfEarth;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
+import com.decmurphy.spx.launchsite.LaunchSite;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 import static java.lang.Math.sqrt;
@@ -41,9 +42,9 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 		return onBoardClock;
 	}
 
-	protected void setCoordinates(double cLat, double cLong) {
-		mStage[0].setCoordinates(cLat, cLong);
-		mStage[1].setCoordinates(cLat, cLong);
+	protected void setCoordinates(double incl, double lon) {
+		mStage[0].setCoordinates(incl, lon);
+		mStage[1].setCoordinates(incl, lon);
 	}
 	
 	@Override
@@ -174,5 +175,10 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	@Override
 	public double alt() {
 		return mStage[1].alt();
+	}
+	
+	@Override
+	public void setLaunchSite(LaunchSite ls) {
+		setCoordinates(ls.getIncl(), ls.getLong());
 	}
 }

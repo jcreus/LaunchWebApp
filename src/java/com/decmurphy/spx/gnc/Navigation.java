@@ -3,13 +3,12 @@ package com.decmurphy.spx.gnc;
 import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.Globals.earthVel;
 import static com.decmurphy.spx.Globals.gravConstant;
-import static com.decmurphy.spx.Globals.incl;
-import static com.decmurphy.spx.Globals.lon;
 import static com.decmurphy.spx.Globals.massOfEarth;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.vehicle.Stage;
 import static java.lang.Math.PI;
 import static java.lang.Math.acos;
+import static java.lang.Math.asin;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.pow;
@@ -174,6 +173,8 @@ public class Navigation {
 		// A higher value for pitch gives a more extreme pitch-kick
 		// A positive yaw aims south, a negative yaw aims north.
 		double cs, sn;
+		double incl = acos(stage.pos[2]/radiusOfEarth);
+		double lon = atan2(stage.pos[0], stage.pos[1]);
 
 		stage.gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));
 
@@ -185,9 +186,10 @@ public class Navigation {
 		stage.gamma[1] -= (Math.PI / 2 - lon);
 	}
 	
-	private static void vectorTransform(double[] arr, double x, double y, Transform dir) {
+	private static void vectorTransform(Stage stage, double[] arr, double x, double y, Transform dir) {
 		
 		double cs, sn;
+		double incl = acos(stage.pos[2]/radiusOfEarth);
 		int r = (dir == Transform.FORWARD) ? 1 : -1;
 		
 		arr[0] = acos(cos(x) * cos(r * incl) - sin(x) * sin(y) * sin(r * incl));
@@ -202,8 +204,8 @@ public class Navigation {
 		double pitch = stage.gamma[0], yaw = stage.gamma[1];
 		double temp1 = stage.beta[0], temp2 = stage.beta[1];
 
-		vectorTransform(stage.gamma, pitch, yaw, Transform.BACKWARD);
-		vectorTransform(stage.beta, temp1, temp2, Transform.BACKWARD);
+		vectorTransform(stage, stage.gamma, pitch, yaw, Transform.BACKWARD);
+		vectorTransform(stage, stage.beta, temp1, temp2, Transform.BACKWARD);
 
 		pitch = (3 * PI / 2 - stage.beta[0]) - delP;
 		yaw = stage.gamma[1];
@@ -211,8 +213,8 @@ public class Navigation {
 		temp1 = stage.beta[0];
 		temp2 = stage.beta[1];
 
-		vectorTransform(stage.gamma, pitch, yaw, Transform.FORWARD);
-		vectorTransform(stage.beta, temp1, temp2, Transform.FORWARD);
+		vectorTransform(stage, stage.gamma, pitch, yaw, Transform.FORWARD);
+		vectorTransform(stage, stage.beta, temp1, temp2, Transform.FORWARD);
 
 	}
 

@@ -1,7 +1,5 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.Globals.incl;
-import static com.decmurphy.spx.Globals.lon;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import java.io.*;
@@ -93,14 +91,14 @@ public class Stage {
 		this.setCoordinates(0.0, 0.0);
 	}
 
-	final void setCoordinates(double cLat, double cLong) {
-		pos[0] = radiusOfEarth * Math.sin(cLat) * Math.sin(cLong);
-		pos[1] = radiusOfEarth * Math.sin(cLat) * Math.cos(cLong);
-		pos[2] = radiusOfEarth * Math.cos(cLat);
+	final void setCoordinates(double incl, double lon) {
+		pos[0] = radiusOfEarth * Math.sin(incl) * Math.sin(lon);
+		pos[1] = radiusOfEarth * Math.sin(incl) * Math.cos(lon);
+		pos[2] = radiusOfEarth * Math.cos(incl);
 
-		filepos[0] = radiusOfEarth * Math.sin(cLat) * Math.sin(cLong);
-		filepos[1] = radiusOfEarth * Math.sin(cLat) * Math.cos(cLong);
-		filepos[2] = radiusOfEarth * Math.cos(cLat);
+		filepos[0] = radiusOfEarth * Math.sin(incl) * Math.sin(lon);
+		filepos[1] = radiusOfEarth * Math.sin(incl) * Math.cos(lon);
+		filepos[2] = radiusOfEarth * Math.cos(incl);
 
 		S = radiusOfEarth;
  

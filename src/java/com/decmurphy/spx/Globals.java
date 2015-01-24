@@ -12,12 +12,6 @@ public class Globals {
 	public static String flightCode = "";
 	public static String coastMap = "";
 
-	public static double latitude = 28.49;
-	public static double longitude = 80.58;
-
-	public static double incl = (90 - latitude) * Math.PI / 180;
-	public static double lon = (longitude) * Math.PI / 180;
-
 	public static double mod(double a, double b) {
 		if (a < 0) {
 			a *= -1;
