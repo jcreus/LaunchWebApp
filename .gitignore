@@ -1,4 +1,4 @@
 build/*
 web/db.properties
 web/output/*
-nbproject/private/*
+nbproject/private
