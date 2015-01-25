@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.40, for debian-linux-gnu (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.41, for debian-linux-gnu (x86_64)
 --
 -- Host: localhost    Database: spacex
 -- ------------------------------------------------------
--- Server version	5.5.40-0ubuntu0.14.04.1
+-- Server version	5.5.41-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -113,7 +113,7 @@ INSERT INTO `profiles` VALUES (15,1032,1,-2,161,515,552,628,0,7,0.025,-0.78,163,
 INSERT INTO `profiles` VALUES (16,4535,0,-2,180,0,0,0,0,7,0.045,0.07,182,189,0);
 INSERT INTO `profiles` VALUES (17,4428,0,-2,180,0,0,0,0,7,0.027,0.06,182,189,0);
 INSERT INTO `profiles` VALUES (18,6416,1,-2,167,276,291,439,461,7,0.063,-0.78,169,177,0);
-INSERT INTO `profiles` VALUES (19,6517,1,-2,0,0,0,0,0,7,0.063,-0.78,0,0,0);
+INSERT INTO `profiles` VALUES (19,6517,1,-2,163,0,0,0,0,7,0.045,-0.82,165,173,0);
 INSERT INTO `profiles` VALUES (20,570,1,-2,0,0,0,0,0,7,0.063,-0.78,0,0,0);
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
@@ -127,4 +127,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-01-24 10:32:50
+-- Dump completed on 2015-01-25 16:29:37
