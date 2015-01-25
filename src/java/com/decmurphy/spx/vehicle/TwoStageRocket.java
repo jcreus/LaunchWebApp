@@ -7,6 +7,7 @@ import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.launchsite.LaunchSite;
+import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 import static java.lang.Math.sqrt;
@@ -20,11 +21,14 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	protected double gravTurnTime;
 	boolean clampsReleased = false;
 	boolean beforeSep = true;
+	private Mission mission = null;
 
 	public TwoStageRocket() {
 		mStage = new Stage[2];
 		mStage[0] = new Stage("BoosterStage");
 		mStage[1] = new Stage("SecondStage");
+		mStage[0].setParent(this);
+		mStage[1].setParent(this);
 	}
 	
 	@Override
@@ -35,6 +39,16 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	@Override
 	public void setClock(double t) {
 		onBoardClock = t;
+	}
+	
+	@Override
+	public void setMission(Mission m) {
+		mission = m;
+	}
+	
+	@Override
+	public Mission getMission() {
+		return mission;
 	}
 	
 	@Override

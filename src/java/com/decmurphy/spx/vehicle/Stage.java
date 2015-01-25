@@ -22,6 +22,7 @@ public class Stage {
 	public double propMass;
 	public double onBoardClock;
 	
+	private LaunchVehicle parent;
 	private int completedOrbits;
 	private double newtheta, oldtheta;
 
@@ -85,6 +86,7 @@ public class Stage {
 		this.accel = new double[3];
 		this.force = new double[3];
 		
+		this.parent = null;
 		this.completedOrbits = 0;
 		this.newtheta = this.oldtheta = 0.0;
 
@@ -157,10 +159,15 @@ public class Stage {
 		}
 	}
 	
+	public void setParent(LaunchVehicle lv) {
+		parent = lv;
+	}
+	
 	public int completedOrbits() {
-		newtheta = atan2(this.pos[1], this.pos[0]);
+		newtheta = atan2(this.pos[0], this.pos[1]);
 		
-		if(newtheta < oldtheta)
+		if(oldtheta > parent.getMission().LaunchSite().getLong()
+			&& newtheta < parent.getMission().LaunchSite().getLong())
 			completedOrbits++;
 		oldtheta = newtheta;
 		
@@ -254,7 +261,7 @@ public class Stage {
 	}
 
 	public double vel() {
-		return VR;
+		return VA;
 	}
 	
 	protected boolean hasLegs() {

@@ -33,6 +33,7 @@ public class MissionBuilder {
 		m.addLaunchSite(ls);
 		
 		m.LaunchVehicle().setPayload(m.Payload());
+		m.LaunchVehicle().setMission(m);
 		
 		return m;
 	}
@@ -60,7 +61,8 @@ public class MissionBuilder {
 		m.addPayload(payload);
 		m.addProfile(profile);
 		
-		m.LaunchVehicle().setLaunchSite(launchSite);
+		m.LaunchVehicle().setMission(m);
+		m.addLaunchSite(launchSite);
 		m.LaunchVehicle().setPayload(m.Payload());
 
 		return m;

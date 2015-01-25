@@ -2,9 +2,12 @@ package com.decmurphy.spx.servlet;
 
 import com.decmurphy.spx.Globals;
 import static com.decmurphy.spx.Globals.flightCode;
+import static com.decmurphy.spx.Globals.earthVel;
+import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.mission.MissionBuilder;
 import java.io.*;
+import static java.lang.Math.PI;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.util.*;
@@ -53,11 +56,19 @@ public class InterfaceServlet extends HttpServlet {
 				switch (paramName) {
 					
 					case "coast_level":	Globals.coastMap = "/coast_" + paramValues[0] + ".txt"; break;
+					case "coriolis" :
+						earthVel = paramValues[0].equalsIgnoreCase("yes") ? radiusOfEarth*2*PI/(24*60*60) : // ~464 m/s at the equator
+											 paramValues[0].equalsIgnoreCase("no") ? 0.0 :
+											 -1.0;
+						if(earthVel < 0.0)
+							throw new IllegalArgumentException("Illegal value for Coriolis Effect. \"Yes\" or \"No\"");
+						break;
 					case "payload_mass":
 						double m;
-						if((m = Double.parseDouble(paramValues[0])) > 0) {
+						if((m = Double.parseDouble(paramValues[0])) > 0)
 							mission.Payload().setMass(m);
-						}
+						if(m < 0.0)
+							throw new IllegalArgumentException("Illegal value for Payload Mass. Must be non-negative");
 						break;
 						
 					case "mei_time":		mission.Profile().addEvent("firstStageIgnition", Double.parseDouble(paramValues[0])).addExtraInfo("stage", 0); break;

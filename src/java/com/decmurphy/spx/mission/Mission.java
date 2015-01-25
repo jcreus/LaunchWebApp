@@ -34,6 +34,7 @@ public class Mission {
 	
 	public void addLaunchSite(LaunchSite launchSite) {
 		this.LS = launchSite;
+		LaunchVehicle().setLaunchSite(launchSite);
 	}
 
 	public void setClock(double t) {

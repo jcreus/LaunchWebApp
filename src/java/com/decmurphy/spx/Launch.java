@@ -28,9 +28,7 @@ public class Launch {
 				SECO = true;
 			}
 
-		} while (mission.LaunchVehicle().completedOrbits() < 2 && (!SECO || mission.LaunchVehicle().alt() > 0));
-
-		System.out.println("CompletedOrbits: " + mission.LaunchVehicle().completedOrbits());
+		} while (mission.LaunchVehicle().completedOrbits() < 1 && (!SECO || mission.LaunchVehicle().alt() > 0));
 
 	}
 }

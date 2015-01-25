@@ -2,6 +2,7 @@ package com.decmurphy.spx.vehicle;
 
 import com.decmurphy.spx.engine.Kestrel;
 import com.decmurphy.spx.engine.Merlin1C;
+import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.payload.Satellite;
 
@@ -40,4 +41,5 @@ public class Falcon1 extends TwoStageRocket {
 
 		this.gravTurnTime = 55.0;
 	}
+
 }
