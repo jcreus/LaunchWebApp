@@ -71,7 +71,7 @@ public class Database {
         tabs.append("                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type=\"text\" size=\"15\" name=\"sss_time\"		 value=\"\"/>s</td>																												</tr>\n");
         tabs.append("              </table>\n");
 				tabs.append("							 <table class=\"table_right\">\n");
-				tabs.append("								 <tr><td>Coriolis Effect</td><td><input type=\"text\" size=\"5\" value=\"Yes\"/></td></tr>\n");
+				tabs.append("								 <tr><td>Coriolis Effect</td><td><input name=\"coriolis\" type=\"text\" size=\"5\" value=\"Yes\"/></td></tr>\n");
 				tabs.append("								 <tr><td><a class=\"add_field_button\" href=\"#\"><i class=\"glyphicon small glyphicon-plus\"></i></a></td></tr>\n");
 				tabs.append("							 </table>\n");
 				tabs.append("							 <input class=\"launch_button\" type=\"submit\" value=\"LAUNCH\"/>\n");
