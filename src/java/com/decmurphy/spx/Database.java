@@ -54,7 +54,7 @@ public class Database {
         list.append("          <li").append(id == 1 ? " class=\"active\"" : "").append("><a href=\"#tab").append(id).append("\" data-toggle=\"tab\">").append(rs2.getString("code")).append("</a></li>\n");
 
         tabs.append("          <div class=\"tab-pane").append(id == 1 ? " in active" : "").append("\" id=\"tab").append(id).append("\">\n");
-        tabs.append("            <form action=\"InterfaceServlet\" method=\"POST\">\n");
+        tabs.append("            <form class=\"input_fields_wrap\" action=\"InterfaceServlet\" method=\"POST\">\n");
         tabs.append("              <input type=\"hidden\" name=\"flight_code\" value=\"").append(rs2.getString("code")).append("\"/>\n");
         tabs.append("              <table>\n");
         tabs.append("                <tr><td>Payload Mass</td> <td>    </td><td><input type=\"text\" name=\"payload_mass\" value=\"").append(rs.getInt("Mass")).append("\"/>kg  </td><td></td><td><h3>Map Resolution</h3></td></tr>\n");
@@ -70,6 +70,8 @@ public class Database {
         tabs.append("                <tr><td>SECO</td>         <td> @ T</td><td><input type=\"text\" name=\"seco_time\" value=\"\"       />s   </td></tr>\n");
         tabs.append("                <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type=\"text\" name=\"sss_time\" value=\"\"        />s   </td></tr>\n");
         tabs.append("              </table>\n");
+		tabs.append("			   <button class=\"add_field_button\">Add More Fields</button>");
+		tabs.append("			   <div><input type=\"text\" name=\"mytext[]\"></div>");
         tabs.append("            </form>\n");
         tabs.append("          </div>\n");
       }

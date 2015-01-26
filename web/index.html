@@ -19,6 +19,7 @@
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
     <script src="js/scroll.js"></script>
     <script src="js/tabpane.js"></script>
+    <script src="js/dynamic_fields.js"></script>
     <link rel="stylesheet" href="css/style.css" type="text/css"/>
     <link rel="stylesheet" href="css/tabs.css" type="text/css"/>
     <link rel="stylesheet" href="css/button.css" type="text/css"/>
@@ -56,7 +57,7 @@
         <a id="right-button" href="javascript: void(0);"><i class="glyphicon glyphicon-chevron-right"></i></a>
         <div class="tab-content">
           <div class="tab-pane in active" id="tab1">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="FSAT-2"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="-1"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -72,10 +73,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab2">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="DEMO"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="-1"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -91,10 +94,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab3">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="TBLZR"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="-1"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -110,10 +115,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab4">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="RAT"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="165"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -129,10 +136,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab5">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="RAZ"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="180"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -148,10 +157,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab6">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="F9-1"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="-1"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -167,10 +178,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab7">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="COTS-1"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="4200"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -186,10 +199,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab8">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="COTS-2"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="4200"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -205,10 +220,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab9">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="CRS-1"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="4200"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -224,10 +241,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab10">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="CRS-2"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="4775"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -243,10 +262,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab11">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="CASS"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="500"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -262,10 +283,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab12">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="SES-8"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3170"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -281,10 +304,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab13">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="TH-6"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="3325"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -300,10 +325,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab14">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="CRS-3"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="6289"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -319,10 +346,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab15">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="OG2-1"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="1032"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -338,10 +367,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab16">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="AS-8"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="4535"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -357,10 +388,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab17">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="AS-6"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="4428"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -376,10 +409,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab18">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="CRS-4"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="6416"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -395,10 +430,12 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
           <div class="tab-pane" id="tab19">
-            <form action="InterfaceServlet" method="POST">
+            <form class="input_fields_wrap" action="InterfaceServlet" method="POST">
               <input type="hidden" name="flight_code" value="CRS-5"/>
               <table>
                 <tr><td>Payload Mass</td> <td>    </td><td><input type="text" name="payload_mass" value="6517"/>kg  </td><td><h3>Map Resolution</h3></td></tr>
@@ -414,6 +451,8 @@
                 <tr><td>SECO</td>         <td> @ T</td><td><input type="text" name="seco_time" value=""       />s   </td></tr>
                 <tr><td>2nd Stage Sep</td><td> @ T</td><td><input type="text" name="sss_time" value=""        />s   </td></tr>
               </table>
+              <button class="add_field_button">Add More Fields</button>
+              <div><input type="text" name="mytext[]"></div>
             </form>
           </div>
         </div>
