@@ -36,6 +36,8 @@ public class Home extends HttpServlet {
 						+ "    <script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js\"></script>\n"
 						+ "    <script src=\"http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js\"></script>\n"
 						+ "    <script src=\"js/scroll.js\"></script>\n"
+						+ "    <script src=\"js/tabpane.js\"></script>\n"
+						+ "    <script src=\"js/dynamic_fields.js\"></script>\n"
 						+ "    <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>\n"
 						+ "    <link rel=\"stylesheet\" href=\"css/tabs.css\" type=\"text/css\"/>\n"
 						+ "    <link rel=\"stylesheet\" href=\"css/button.css\" type=\"text/css\"/>\n"

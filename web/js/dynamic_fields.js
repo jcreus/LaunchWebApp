@@ -1,20 +1,32 @@
 
 
 $(document).ready(function() {
-    var max_fields      = 10; //maximum input boxes allowed
-    var wrapper         = $(".input_fields_wrap"); //Fields wrapper
-    var add_button      = $(".add_field_button"); //Add button ID
+    var max_fields      = 5;
+    var wrapper         = $(".table_right");
+    var add_button      = $(".add_field_button");
     
-    var x = 1; //initlal text box count
-    $(add_button).click(function(e){ //on add input button click
+    var hint = 'For Pitch/Yaw, this parameter means rads rel. to the horizon (e.g Pitch 0.0 flies parallel to ground, Yaw 0.0 flies parallel to equator). For thrust, enter a % value.';
+    
+    var x = 0;
+    $(add_button).click(function(e){
         e.preventDefault();
-        if(x < max_fields){ //max input box allowed
-            x++; //text box increment
-            $(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="remove_field">Remove</a></div>'); //add input box
+        if(x < max_fields){
+            x++;
+            var row = '<tr><td>';
+            row += '<select class="form-control">';
+            row += '<option value="" disabled selected>Course Correction</option>';
+            row += '<option value="pitch">Pitch</option>';
+            row += '<option value="yaw">Yaw</option>';
+            row += '<option value="throttle">Throttle</option>';
+            row += '</select></td>';
+            row += '<td></td><td><input title="' + hint + '" type="text" size="10" placeholder="Parameter" name=""></td>';
+            row += '<td> @ T</td><td><input type="text" size="10" placeholder="Time" name=""></td>';
+            row += '<td class="remove_field"><a href="#"><i class="glyphicon small glyphicon-remove"/></a></td></tr>\n';
+            $(wrapper).append(row);
         }
     });
     
-    $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
-        e.preventDefault(); $(this).parent('div').remove(); x--;
+    $(wrapper).on("click",".remove_field", function(e){
+        e.preventDefault(); $(this).parent('tr').remove(); x--;
     });
 });

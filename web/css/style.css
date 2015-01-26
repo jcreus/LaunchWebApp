@@ -8,7 +8,9 @@ and open the template in the editor.
     Author     : declan
 */
 .launch_button {
-  margin-left: 60px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
 }
 .bg {
   z-index: -2;
@@ -72,4 +74,13 @@ img.sixth {
   top: 0;
   right: 0;
   width: 33%;
+}
+
+.table_left {
+  float: left;
+  padding-right: 50px;
+}
+
+.table_right {
+  float: left;
 }

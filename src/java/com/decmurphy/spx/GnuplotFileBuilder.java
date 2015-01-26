@@ -2,6 +2,7 @@ package com.decmurphy.spx;
 
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import static com.decmurphy.spx.servlet.InterfaceServlet.imagePath;
+import static com.decmurphy.spx.servlet.InterfaceServlet.resourcePath;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class GnuplotFileBuilder {
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
-        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", outputPath, id);
+        pw.printf("\"%s/%s_finecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath, id);
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
 
@@ -58,7 +59,7 @@ public class GnuplotFileBuilder {
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
-        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", outputPath, id);
+        pw.printf("\"%s/%s_finecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath, id);
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
 
@@ -83,7 +84,7 @@ public class GnuplotFileBuilder {
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 7, ", outputPath, id, outputPath, id);
-        pw.printf("\"%s/%s_coast.output.txt\" u 1:2:3 w l ls 9, ", outputPath, id);
+        pw.printf("\"%s/%s_coarsecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath, id);
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5\n", outputPath, id);
 
       } else if (phase.equalsIgnoreCase("velocity")) {
