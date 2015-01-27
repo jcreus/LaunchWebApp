@@ -155,6 +155,28 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 			mStage[(int)e.getValueOf("stage")].isMoving = true;
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Second Stage Ignition");
 		}
+		else if (e.getName().equalsIgnoreCase("boost_start")) {
+			mStage[0].setEngines(3);
+			mStage[0].setThrottle(1.0);
+			mStage[0].setExtraBurnIsUnderway(true);
+		}
+		else if (e.getName().equalsIgnoreCase("boost_end")) {
+			mStage[0].setThrottle(0.0);
+			mStage[0].setExtraBurnIsUnderway(false);
+		}
+		else if (e.getName().equalsIgnoreCase("entry_start")) {
+			mStage[0].setEngines(3);
+			mStage[0].setThrottle(1.0);
+			mStage[0].setExtraBurnIsUnderway(true);
+		}
+		else if (e.getName().equalsIgnoreCase("entry_end")) {
+			mStage[0].setThrottle(0.0);
+			mStage[0].setExtraBurnIsUnderway(false);
+		}
+		else if (e.getName().equalsIgnoreCase("landing_start")) {
+			mStage[0].setEngines(1);
+			mStage[0].executeLandingBurn();
+		}
 		else if (e.getName().equalsIgnoreCase("SECO1")) {
 			mStage[(int)e.getValueOf("stage")].setThrottle(0.0);
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "SECO-1");

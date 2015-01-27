@@ -8,9 +8,7 @@ and open the template in the editor.
     Author     : declan
 */
 .launch_button {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
+
 }
 .bg {
   z-index: -2;
@@ -46,13 +44,13 @@ video#bgvid {
 }
 
 #footer {
- color: lightskyblue;
- clear: both;
- position: relative;
- text-align: right;
- padding-right: 10px;
- z-index: 10;
- height: 4em;
+  color: lightskyblue;
+  clear: both;
+  position: relative;
+  text-align: right;
+  padding-right: 10px;
+  z-index: 10;
+  height: 4em;
 }
 
 img.first,
@@ -78,9 +76,24 @@ img.sixth {
 
 .table_left {
   float: left;
-  padding-right: 50px;
+  min-width: 40%;
+  border-right: thick solid #000000;
 }
 
 .table_right {
+  padding: 10px;
   float: left;
+  position: absolute;
+  left: 50%;
+}
+
+.table_top {
+  padding: 10px;
+  border-bottom: thick solid #000000;
+}
+
+.table-bottom {
+  position: absolute;
+  left: 50px;
+  padding: 10px;
 }

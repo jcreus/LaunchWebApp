@@ -16,6 +16,7 @@ public class Stage {
 
 	protected boolean hasLegs;
 	public boolean isMoving;
+	private boolean extraBurn;
 	private double radius;
 	private double dryMass;
 	private double fuelCapacity;
@@ -69,6 +70,7 @@ public class Stage {
 		this.throttle = 0.0;
 		this.hasLegs = false;
 		this.isMoving = false;
+		this.extraBurn = false;
 		this.radius = 0.0;
 		this.dryMass = 0.0;
 		this.propMass = 0.0;
@@ -159,6 +161,10 @@ public class Stage {
 		}
 	}
 	
+	public void executeLandingBurn() {
+		// TODO
+	}
+	
 	public void setParent(LaunchVehicle lv) {
 		parent = lv;
 	}
@@ -172,6 +178,18 @@ public class Stage {
 		oldtheta = newtheta;
 		
 		return completedOrbits;
+	}
+	
+	public void setExtraBurnIsUnderway(boolean b) {
+		this.extraBurn = b;
+	}
+	
+	public boolean extraBurnIsUnderway() {
+		return extraBurn;
+	}
+	
+	public void setEngines(int numEngines) {
+		this.numEngines = numEngines;
 	}
 
 	protected void setEngines(int numEngines, Engine engine) {

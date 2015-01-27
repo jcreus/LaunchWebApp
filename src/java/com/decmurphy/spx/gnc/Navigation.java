@@ -8,7 +8,6 @@ import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.vehicle.Stage;
 import static java.lang.Math.PI;
 import static java.lang.Math.acos;
-import static java.lang.Math.asin;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.pow;
@@ -222,8 +221,15 @@ public class Navigation {
 	 *	Flying prograde
 	 */
 	public static void gravityTurn(Stage stage) {
-		stage.gamma[0] = PI - stage.alpha[0];
-		stage.gamma[1] = PI + stage.alpha[1];
+		
+		if(stage.extraBurnIsUnderway()) {		// Fly retrograde
+			stage.gamma[0] = stage.alpha[0];
+			stage.gamma[1] = stage.alpha[1];
+		}
+		else {												// Gravity turn
+			stage.gamma[0] = PI - stage.alpha[0];
+			stage.gamma[1] = PI + stage.alpha[1];
+		}
 	}
 
 	public static double gravityAtRadius(double radius) {
