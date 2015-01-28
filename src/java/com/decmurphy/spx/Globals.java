@@ -10,12 +10,5 @@ public class Globals {
 	public static double earthVel = 0.0;
 
 	public static String flightCode = "";
-	public static String coastMap = "";
 
-	public static double mod(double a, double b) {
-		if (a < 0) {
-			a *= -1;
-		}
-		return a < b ? a : mod(a - b, b);
-	}
 }

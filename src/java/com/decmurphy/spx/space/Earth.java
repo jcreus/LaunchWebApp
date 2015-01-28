@@ -60,41 +60,6 @@ public final class Earth extends Planet {
 				pw.close();
 			}
 		}
-
-		pw = null;
-		BufferedReader br;
-
-		double theta, psi;
-		double R = radiusOfEarth * 1e-3;
-
-		try {
-			String line;
-			File outputFile = new File(outputPath, "/" + id + "_coast.output.txt");
-			pw = new PrintWriter(new FileWriter(outputFile, false));
-
-			File earthFile = new File(resourcePath, Globals.coastMap);
-			br = new BufferedReader(new FileReader(earthFile));
-
-			while ((line = br.readLine()) != null) {
-				if (!line.isEmpty()) {
-					String[] parts = line.split("\\s+");
-
-					if (Double.parseDouble(parts[0]) < 0.0) {
-						psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
-						theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
-						pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
-					}
-				} else {
-					pw.print("\n");
-				}
-			}
-		} catch (IOException e) {
-		} finally {
-			if (pw != null) {
-				pw.close();
-			}
-			System.out.printf("Earth coast drawn.\n");
-		}
 	}
 
 	protected void drawHazard() {

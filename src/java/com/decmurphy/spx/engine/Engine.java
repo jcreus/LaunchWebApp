@@ -1,7 +1,7 @@
 package com.decmurphy.spx.engine;
 
 import static com.decmurphy.spx.Globals.*;
-import com.decmurphy.spx.gnc.Navigation;
+import static com.decmurphy.spx.gnc.Physics.pressureAtAltitude;
 
 public abstract class Engine {
 	
@@ -31,8 +31,8 @@ public abstract class Engine {
 
 	public double getIspAtAltitude(double altitude)	{
 		return this.getSeaLevelIsp()
-						+ (1.0/Navigation.pressureAtAltitude(0))*(Navigation.pressureAtAltitude(0)
-						- Navigation.pressureAtAltitude(altitude*1e-3)) * (this.getVacIsp() - this.getSeaLevelIsp());
+						+ (1.0/pressureAtAltitude(0))*(pressureAtAltitude(0)
+						- pressureAtAltitude(altitude*1e-3)) * (this.getVacIsp() - this.getSeaLevelIsp());
 	}
 
 	public double getMdot()	{

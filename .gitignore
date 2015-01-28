@@ -1,4 +1,5 @@
 build/*
+build.xml
 web/db.properties
 web/output/*
 nbproject/

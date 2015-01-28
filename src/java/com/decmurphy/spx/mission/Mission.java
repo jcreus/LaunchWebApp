@@ -1,7 +1,6 @@
 package com.decmurphy.spx.mission;
 
 import static com.decmurphy.spx.Globals.dt;
-import static com.decmurphy.spx.Globals.mod;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.launchsite.LaunchSite;
 import com.decmurphy.spx.payload.Payload;
@@ -88,7 +87,7 @@ public class Mission {
 	}
 
 	public void outputFile(String simId) {
-		if ((mod(this.clock(), 5.0) < dt)) {
+		if (this.clock()%5.0 < dt) {
 			this.LV.outputFile(simId);
 		}
 	}

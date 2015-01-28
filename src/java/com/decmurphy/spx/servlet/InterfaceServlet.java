@@ -55,7 +55,6 @@ public class InterfaceServlet extends HttpServlet {
 
 				switch (paramName) {
 					
-					case "coast_level":	Globals.coastMap = "/coast_" + paramValues[0] + ".txt"; break;
 					case "coriolis" :
 						earthVel = paramValues[0].equalsIgnoreCase("on") ? radiusOfEarth*2*PI/(24*60*60) : // ~464 m/s at the equator
 											 paramValues[0].equalsIgnoreCase("off") ? 0.0 :
