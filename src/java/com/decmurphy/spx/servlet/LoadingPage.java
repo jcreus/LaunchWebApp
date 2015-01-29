@@ -19,8 +19,8 @@ public class LoadingPage extends HttpServlet {
 					throws ServletException, IOException {
 		
 		Random rand = new Random();
-		int numImages = 5;	// number of .webm files in web/images/
-    int r = rand.nextInt(numImages) + 1;
+		int numImages = 6;	// number of .webm files in web/images/
+		int r = rand.nextInt(numImages) + 1;
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();

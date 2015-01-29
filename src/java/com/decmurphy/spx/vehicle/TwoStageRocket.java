@@ -159,23 +159,28 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 			mStage[0].setEngines(3);
 			mStage[0].setThrottle(1.0);
 			mStage[0].setExtraBurnIsUnderway(true);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Boostback Start");
 		}
 		else if (e.getName().equalsIgnoreCase("boost_end")) {
 			mStage[0].setThrottle(0.0);
 			mStage[0].setExtraBurnIsUnderway(false);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Boostback End");
 		}
 		else if (e.getName().equalsIgnoreCase("entry_start")) {
 			mStage[0].setEngines(3);
 			mStage[0].setThrottle(1.0);
 			mStage[0].setExtraBurnIsUnderway(true);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "ReEntry Burn Start");
 		}
 		else if (e.getName().equalsIgnoreCase("entry_end")) {
 			mStage[0].setThrottle(0.0);
 			mStage[0].setExtraBurnIsUnderway(false);
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "ReEntry Burn End");
 		}
 		else if (e.getName().equalsIgnoreCase("landing_start")) {
 			mStage[0].setEngines(1);
 			mStage[0].executeLandingBurn();
+			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Landing Burn Start");
 		}
 		else if (e.getName().equalsIgnoreCase("SECO1")) {
 			mStage[(int)e.getValueOf("stage")].setThrottle(0.0);

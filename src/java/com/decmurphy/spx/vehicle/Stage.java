@@ -109,6 +109,9 @@ public class Stage {
 	this.radius = s.radius;
 	this.dryMass = s.dryMass;
 	this.propMass = s.propMass;
+	
+	this.engine = s.engine;
+	this.numEngines = s.numEngines;
 
 	this.S = s.S;
 	this.VR = s.VR;
