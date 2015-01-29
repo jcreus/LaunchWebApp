@@ -5,6 +5,7 @@ import static com.decmurphy.spx.Globals.gravConstant;
 import static com.decmurphy.spx.Globals.massOfEarth;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.event.Event;
+import static com.decmurphy.spx.gnc.HoverSlam.updateLandingThrottle;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.launchsite.LaunchSite;
 import com.decmurphy.spx.mission.Mission;
@@ -76,6 +77,11 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 
 	@Override
 	public void leapfrogStep() {
+
+		if (mStage[0].landingBurnIsUnderway() && onBoardClock%3.0 < dt) {
+			mStage[0].setThrottle(updateLandingThrottle(mStage[0]));
+		}
+			
 		if (beforeSep) {
 			mStage[0].setEffectiveMass(mStage[0].getMass() + mStage[1].getMass() + payload.getMass());
 			Navigation.leapfrogStep(mStage[0]);

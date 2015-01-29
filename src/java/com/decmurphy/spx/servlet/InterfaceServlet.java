@@ -26,13 +26,13 @@ public class InterfaceServlet extends HttpServlet {
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		//resourcePath = getServletContext().getRealPath("/resource");
-		resourcePath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\build\\\\web\\\\resource";
-		//outputPath = getServletContext().getRealPath("/output");
-		outputPath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\build\\\\web\\\\output";
+		resourcePath = getServletContext().getRealPath("/resource");
+		//resourcePath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\build\\\\web\\\\resource";
+		outputPath = getServletContext().getRealPath("/output");
+		//outputPath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\build\\\\web\\\\output";
 		//imagePath = "/var/lib/tomcat8/webapps/LaunchWebApp/output";
-		//imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
-		imagePath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\web\\\\output";
+		imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
+		//imagePath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\web\\\\output";
 		
 		String getId = UUID.randomUUID().toString();
 		Mission mission = null;
