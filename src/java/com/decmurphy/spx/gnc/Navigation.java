@@ -120,6 +120,8 @@ public class Navigation {
 				stage.absVel[i] = 0.0;
 			}
 			stage.setPos(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]));
+			stage.setLandingBurn(false);
+			stage.isMoving = false;
 
 			gravityForce = 0.0;
 		}

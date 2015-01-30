@@ -38,38 +38,38 @@ public class ExecuteLaunch extends HttpServlet {
 
 		try {
 			gp_landing = new GnuplotFileBuilder(ID, "landing");
-			Process p1 = Runtime.getRuntime().exec("gnuplot " + gp_landing.getPath());
-			//Process p1 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_landing.getPath());
+			//Process p1 = Runtime.getRuntime().exec("gnuplot " + gp_landing.getPath());
+			Process p1 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_landing.getPath());
 			p1.waitFor();
 
 			gp_globe = new GnuplotFileBuilder(ID, "globe");
-			Process p2 = Runtime.getRuntime().exec("gnuplot " + gp_globe.getPath());
-			//Process p2 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_globe.getPath());
+			//Process p2 = Runtime.getRuntime().exec("gnuplot " + gp_globe.getPath());
+			Process p2 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_globe.getPath());
 			p2.waitFor();
 
 			gp_alt = new GnuplotFileBuilder(ID, "altitude");
-			Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_alt.getPath());
-			//Process p3 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_alt.getPath());
+			//Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_alt.getPath());
+			Process p3 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_alt.getPath());
 			p3.waitFor();
 
 			gp_landing2 = new GnuplotFileBuilder(ID, "landing2");
-			Process p4 = Runtime.getRuntime().exec("gnuplot " + gp_landing2.getPath());
-			//Process p4 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_landing2.getPath());
+			//Process p4 = Runtime.getRuntime().exec("gnuplot " + gp_landing2.getPath());
+			Process p4 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_landing2.getPath());
 			p4.waitFor();
 
 			gp_velocity = new GnuplotFileBuilder(ID, "velocity");
-			Process p5 = Runtime.getRuntime().exec("gnuplot " + gp_velocity.getPath());
-			//Process p5 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_velocity.getPath());
+			//Process p5 = Runtime.getRuntime().exec("gnuplot " + gp_velocity.getPath());
+			Process p5 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_velocity.getPath());
 			p5.waitFor();
 
 			gp_phase = new GnuplotFileBuilder(ID, "phase");
-			Process p6 = Runtime.getRuntime().exec("gnuplot " + gp_phase.getPath());
-			//Process p6 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_phase.getPath());
+			//Process p6 = Runtime.getRuntime().exec("gnuplot " + gp_phase.getPath());
+			Process p6 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_phase.getPath());
 			p6.waitFor();
 
 			gp_aoa = new GnuplotFileBuilder(ID, "aoa");
-			Process p7 = Runtime.getRuntime().exec("gnuplot " + gp_aoa.getPath());
-			//Process p7 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_aoa.getPath());
+			//Process p7 = Runtime.getRuntime().exec("gnuplot " + gp_aoa.getPath());
+			Process p7 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_aoa.getPath());
 			p7.waitFor();
 		} catch (InterruptedException e) {
 		}
