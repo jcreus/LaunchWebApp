@@ -44,7 +44,7 @@ public class Home extends HttpServlet {
 						+ "	   <link rel=\"shortcut icon\" href=\"images/favicon.ico\" type=\"image/x-icon\">\n"
 						+ "    <link rel=\"icon\" href=\"images/favicon-logo.png\" type=\"image/x-icon\">\n"
 						+ "  </head>\n"
-						+ "  <body>\n"
+						+ "  <body id=\"home\">\n"
 						+ "    <div class=\"bg\">\n"
 						+ "      <img src=\"images/background.jpg\" alt=\"background\" />\n"
 						+ "    </div>\n"
