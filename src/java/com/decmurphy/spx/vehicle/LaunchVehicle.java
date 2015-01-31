@@ -11,7 +11,7 @@ import com.decmurphy.spx.profile.Profile;
  * @author dmurphy
  */
 public interface LaunchVehicle {
-		
+	
 	public void leapfrogFirstStep();
 	public void leapfrogStep();
 	public void gravityTurn();

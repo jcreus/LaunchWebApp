@@ -1,5 +1,6 @@
 package com.decmurphy.spx.vehicle;
 
+import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import java.io.*;
@@ -7,24 +8,6 @@ import com.decmurphy.spx.engine.Engine;
 import static java.lang.Math.atan2;
 
 public class Stage {
-
-	public String name;
-	public double numEngines;
-	private Engine engine;
-	public double throttle;
-
-	protected boolean hasLegs;
-	public boolean isMoving;
-	private boolean extraBurn;
-	private double radius;
-	private double dryMass;
-	private double fuelCapacity;
-	public double propMass;
-	public double onBoardClock;
-
-	private LaunchVehicle parent;
-	private int completedOrbits;
-	private double newtheta, oldtheta;
 
 	/*
 	 *	All angles are given in spherical coordinates and hence are given by three parameters - the radius and the polar/azimuthal angles.
@@ -43,27 +26,26 @@ public class Stage {
 	 *	before going any further. It's gonna come up a lot and I'm not gonna be explaining it every time!
 	 *
 	 */
-	public double[] alpha, // angle of attack 		(drag acts through this angle)
-					beta, // angle of position	(gravity acts through this one)
-					gamma;          // angle of thrust		(guess what acts through this one)
+	public double[] alpha,	// angle of attack 		(drag acts through this angle)
+									beta,		// angle of position	(gravity acts through this one - points towards earth's centre)
+									gamma;  // angle of thrust		(guess what acts through this one)
 
 	/*
 	 *	These ones are in cartesian coordinates. It's started off easier to visualize but I never thought
 	 *	about whether they should be cartesian or spherical. Should I put these in spherical coordinates too?
 	 *	I'll think about it. It would make the leapfrog	function a lot simpler, that's for sure.
 	 */
-	public double[] pos, // cartesian position
-					filepos, // (experimental)
-					relVel, // relative velocity	(relative to earth's surface. Starts at 0)
-					absVel, // absolute velocity	(Starts at earth velocity at launch pad. Gives a nice boost closer to equator)
-					accel, // acceleration
-					force;          // force
+	public double[] pos,		// cartesian position
+									filepos,// (experimental)
+									relVel, // relative velocity	(relative to earth's surface. Starts at 0)
+									absVel, // absolute velocity	(Starts at earth velocity at launch pad. Gives a nice boost closer to equator)
+									accel,	// acceleration
+									force;	// force
 
-	public double S, VR, VA, A;	// magnitudes of position, relV, absV, acceleration, total mass
-	private double M;
-	public double Q, Cd, XA;		// aerodynamic pressure, drag coefficient, cross-sectional area of stage
-	private boolean landingBurnIsUnderway;
-
+	public double S, VR, VA, A;	// magnitudes of position, relV, absV, acceleration
+	public String name;
+	public boolean isMoving;
+	
 	public Stage(String name) {
 		this.name = name;
 
@@ -71,7 +53,7 @@ public class Stage {
 		this.hasLegs = false;
 		this.isMoving = false;
 		this.extraBurn = false;
-		this.landingBurnIsUnderway = false;
+		this.landingBurn = false;
 		this.radius = 0.0;
 		this.dryMass = 0.0;
 		this.propMass = 0.0;
@@ -103,7 +85,7 @@ public class Stage {
 		this.hasLegs = s.hasLegs;
 		this.isMoving = s.isMoving;
 		this.extraBurn = s.extraBurn;
-		this.landingBurnIsUnderway = s.landingBurnIsUnderway;
+		this.landingBurn = s.landingBurn;
 		this.radius = s.radius;
 		this.dryMass = s.dryMass;
 		this.propMass = s.propMass;
@@ -118,7 +100,7 @@ public class Stage {
 		
 		this.Cd = s.Cd;
 		this.XA = s.XA;
-		this.M = s.M;
+		this.additionalMass = s.additionalMass;
 
 		this.alpha = new double[]{s.alpha[0], s.alpha[1]};
 		this.beta = new double[]{s.beta[0], s.beta[1]};
@@ -172,7 +154,6 @@ public class Stage {
 		 *	Fuck you, Java.
 		 */
 
-		onBoardClock = stage.onBoardClock;
 		System.arraycopy(stage.pos, 0, this.pos, 0, stage.pos.length);
 		System.arraycopy(stage.relVel, 0, this.relVel, 0, stage.relVel.length);
 		System.arraycopy(stage.absVel, 0, this.absVel, 0, stage.absVel.length);
@@ -193,7 +174,7 @@ public class Stage {
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",
-							onBoardClock, pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, throttle, getPropMass());
+							clock(), pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, getThrottle(), getPropMass());
 
 		} catch (IOException e) {
 		} finally {
@@ -203,22 +184,41 @@ public class Stage {
 		}
 	}
 
+	public double clock() {
+		return parent.clock();
+	}
+
 	public void executeLandingBurn() {
-		setLandingBurn(true);
+		setLandingBurnIsUnderway(true);
 	}
-
+	
+	private boolean extraBurn;
+	public void setExtraBurnIsUnderway(boolean b) {
+		this.extraBurn = b;
+	}
+	public boolean extraBurnIsUnderway() {
+		return extraBurn;
+	}
+	
+	private boolean landingBurn;
+	public void setLandingBurnIsUnderway(boolean b) {
+		this.extraBurn = b;
+		this.landingBurn = b;
+	}
 	public boolean landingBurnIsUnderway() {
-		return landingBurnIsUnderway;
+		return landingBurn;
 	}
 
+	private LaunchVehicle parent;
 	public void setParent(LaunchVehicle lv) {
 		parent = lv;
 	}
-	
 	public LaunchVehicle getParent() {
 		return parent;
 	}
 
+	private int completedOrbits;
+	private double newtheta, oldtheta;
 	public int completedOrbits() {
 		newtheta = atan2(this.pos[0], this.pos[1]);
 
@@ -231,76 +231,79 @@ public class Stage {
 		return completedOrbits;
 	}
 
-	public void setExtraBurnIsUnderway(boolean b) {
-		this.extraBurn = b;
-	}
-
-	public boolean extraBurnIsUnderway() {
-		return extraBurn;
-	}
-
-	public void setEngines(int numEngines) {
-		this.numEngines = numEngines;
-	}
-
-	protected void setEngines(int numEngines, Engine engine) {
+	private Engine engine;
+	public void setEngines(int numEngines, Engine engine) {
 		this.numEngines = numEngines;
 		this.engine = engine;
 	}
+	public Engine getEngine() {
+		return engine;
+	}
+	
+	private int numEngines;
+	public void setEngines(int numEngines) {
+		this.numEngines = numEngines;
+	}
+	public int getNumEngines() {
+		return numEngines;
+	}
 
+	private double throttle;
 	public void setThrottle(double throttle) {
 		this.throttle = throttle;
 	}
+	public double getThrottle() {
+		return throttle;
+	}
 
-	protected void setLegs(boolean hasLegs) {
+	private boolean hasLegs;
+	public void setLegs(boolean hasLegs) {
 		this.hasLegs = hasLegs;
 		if (hasLegs) {
 			this.dryMass += 2000;
 		}
 	}
+	public boolean hasLegs() {
+		return hasLegs;
+	}
+	
+	private double Q;
+	public void setQ(double q) {
+		Q = q;
+	}
+	public double getQ() {
+		return Q;
+	}
 
-	protected void setAeroProperties(double radius, double dragCoefficient) {
+	private double radius, Cd, XA;
+	public void setAeroProperties(double radius, double dragCoefficient) {
 		this.Cd = dragCoefficient;
-
 		this.radius = radius;
 		this.XA = Math.PI * radius * radius;
 	}
+	public double getAeroProp(String s) {
+		s = s.toLowerCase();
+		switch(s) {
+			case "r": return radius;
+			case "cd": return getDragCoefficientAtAltitude(alt());
+			case "xa": return XA;
+			default:	throw new IllegalArgumentException("Unrecognised Aero Property");
+		}
+	}
 
+	
+	private double dryMass;
 	protected void setDryMass(double dryMass) {
 		this.dryMass = dryMass;
 	}
-
-	protected void setPropMass(double propMass) {
-		this.propMass = propMass;
-	}
-
-	protected void setEffectiveMass(double mass) {
-		this.M = mass;
-	}
-
-	protected void setFuelCapacity(double fuelCapacity) {
-		this.fuelCapacity = fuelCapacity;
-	}
-
-	public void setPos(double pos) {
-		S = pos;
-	}
-
-	public void setAccel(double accel) {
-		A = accel;
-	}
-
-	/*
-	 *	Getter Functions
-	 */
-	protected double getRadius() {
-		return radius;
-	}
-
 	public double getDryMass() {
 		return dryMass;
 	}
 
+	private double propMass;	
+	public void setPropMass(double propMass) {
+		this.propMass = propMass;
+	}
 	public double getPropMass() {
 		return propMass;
 	}
@@ -309,41 +312,53 @@ public class Stage {
 		return this.getDryMass() + this.getPropMass();
 	}
 
+	private double additionalMass;
+	public void setAdditionalMass(double mass) {
+		this.additionalMass = mass;
+	}
 	public double getEffectiveMass() {
-		return M;
+		return additionalMass + getMass();
 	}
 
-	protected double getFuelCapacity() {
+	private double fuelCapacity;
+	public void setFuelCapacity(double fuelCapacity) {
+		this.fuelCapacity = fuelCapacity;
+	}
+	public double getFuelCapacity() {
 		return fuelCapacity;
 	}
 
-	public Engine getEngine() {
-		return engine;
-	}
+	//////////////////////////////////////////////////////////////////////////////
 
 	public double getThrustAtAltitude(double altitude) {
-		return throttle * numEngines * engine.getThrustAtAltitude(altitude);
+		return getThrottle() * getNumEngines() * engine.getThrustAtAltitude(altitude);
+	}
+	
+	public double getDragCoefficientAtAltitude(double altitude) {
+		//		TODO:
+		//		come up with some polynomial
+		//		like http://www.braeunig.us/apollo/pics/cd2.gif
+		//		from http://www.braeunig.us/apollo/saturnV.htm
+		double machNumber = VR/(340.0-(altitude/260.0));
+		return machNumber < 1 ? 0.2 :
+						machNumber < 5 ? (11.0-machNumber)/20.0 :	// close enough function for sharp nose projectile
+						0.3;
 	}
 
 	public double alt() {
 		return S - radiusOfEarth;
 	}
 
-	public double vel() {
+	public double absVel() {
 		return VA;
+	}
+	
+	public double relVel() {
+		return VR;
 	}
 
 	public double[] vectorVel() {
 		return relVel;
-	}
-
-	protected boolean hasLegs() {
-		return hasLegs;
-	}
-
-	public void setLandingBurn(boolean b) {
-		setExtraBurnIsUnderway(b);
-		landingBurnIsUnderway = b;
 	}
 
 }

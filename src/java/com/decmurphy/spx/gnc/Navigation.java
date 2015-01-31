@@ -3,7 +3,6 @@ package com.decmurphy.spx.gnc;
 import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.Globals.earthVel;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
-import static com.decmurphy.spx.gnc.HoverSlam.updateLandingThrottle;
 import static com.decmurphy.spx.gnc.Physics.densityAtAltitude;
 import static com.decmurphy.spx.gnc.Physics.gravityAtRadius;
 import com.decmurphy.spx.vehicle.Stage;
@@ -53,11 +52,10 @@ public class Navigation {
 		stage.relVel[1] = 0;
 		stage.relVel[2] = 0;
 
-		stage.setPos(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]));
-		stage.setAccel(sqrt(stage.accel[0] * stage.accel[0] + stage.accel[1] * stage.accel[1] + stage.accel[2] * stage.accel[2]));
+		stage.S = sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]);
+		stage.A = sqrt(stage.accel[0] * stage.accel[0] + stage.accel[1] * stage.accel[1] + stage.accel[2] * stage.accel[2]);
 
 		stage.isMoving = true;
-		stage.onBoardClock += dt;	//Stage clock
 
 	}
 
@@ -74,24 +72,17 @@ public class Navigation {
 		double gravityForce = 0.0;
 
 		try {
-			stage.Q = 0.5 * densityAtAltitude(stage.alt()) * stage.VR * stage.VR;
+			stage.setQ(0.5 * densityAtAltitude(stage.alt()) * stage.VR * stage.VR);
+			if (stage.getPropMass() < 500) stage.setThrottle(0.0);
 
 			if (stage.isMoving) {
-				dragForce = stage.Q * stage.Cd * stage.XA;
-				thrustForce = stage.getPropMass()>500 ? stage.getThrustAtAltitude(stage.alt()) : 0.0;
+				dragForce = stage.getQ() * stage.getAeroProp("Cd") * stage.getAeroProp("XA");
+				thrustForce = stage.getPropMass() > 500 ? stage.getThrustAtAltitude(stage.alt()) : 0.0;
 				gravityForce = stage.getEffectiveMass() * gravityAtRadius(radiusOfEarth + stage.alt());
 			} else {
 				dragForce = thrustForce = gravityForce = 0.0;
 			}
 		} catch (IllegalArgumentException e) {
-			if (stage.VR < 5) {
-				System.out.printf(stage.name + " Touchdown wooooooo\n");
-			} else {
-				System.out.printf("Looks like your " + stage.name + " crashed m8.\n");
-			}
-			stage.setLandingBurn(false);
-			stage.isMoving = false;
-
 		}
 
 		stage.pos[0] += stage.absVel[0] * dt;
@@ -102,7 +93,7 @@ public class Navigation {
 		stage.filepos[1] += stage.relVel[1] * dt;
 		stage.filepos[2] += stage.relVel[2] * dt;
 
-		stage.setPos(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]));
+		stage.S = sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]);
 
 		/*
 		 *	If a crash happens (i.e if distance from earth's centre < earth's radius) then turn off engines.
@@ -113,17 +104,25 @@ public class Navigation {
 		 *	the stage falls before it rises. I'll find a more elegant solution to this problem soon.
 		 */
 		if (stage.alt() < 0) {
-			int i;
-			for (i = 0; i < 3; i++) {
+			if (stage.landingBurnIsUnderway()) {
+				System.out.printf("T%+7.2f\t%.32s\n", stage.clock(), "Crash/Landing");
+			}
+
+			for (int i = 0; i < 3; i++) {
 				stage.pos[i] -= stage.absVel[i] * dt;
 				stage.filepos[i] -= stage.relVel[i] * dt;
 				stage.absVel[i] = 0.0;
 			}
-			stage.setPos(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]));
-			stage.setLandingBurn(false);
+			stage.S = sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]);
+			if (stage.clock() > 100.0) {
+				stage.setThrottle(0.0);
+			}
+			stage.setLandingBurnIsUnderway(false);
 			stage.isMoving = false;
 
+			thrustForce = 0.0;
 			gravityForce = 0.0;
+			dragForce = 0.0;
 		}
 
 		stage.force[0] = thrustForce * sin(stage.gamma[0]) * sin(stage.gamma[1])
@@ -139,7 +138,7 @@ public class Navigation {
 		stage.accel[0] = stage.force[0] / stage.getEffectiveMass();
 		stage.accel[1] = stage.force[1] / stage.getEffectiveMass();
 		stage.accel[2] = stage.force[2] / stage.getEffectiveMass();
-		stage.setAccel(sqrt(stage.accel[0] * stage.accel[0] + stage.accel[1] * stage.accel[1] + stage.accel[2] * stage.accel[2]));
+		stage.A = sqrt(stage.accel[0] * stage.accel[0] + stage.accel[1] * stage.accel[1] + stage.accel[2] * stage.accel[2]);
 
 		stage.absVel[0] += stage.accel[0] * dt;
 		stage.absVel[1] += stage.accel[1] * dt;
@@ -157,9 +156,7 @@ public class Navigation {
 		stage.beta[0] = PI - atan2(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1]), stage.pos[2]);
 		stage.beta[1] = PI + atan2(stage.pos[0], stage.pos[1]);
 
-		stage.propMass -= stage.throttle * stage.numEngines * stage.getEngine().getMdot() * dt;
-
-		stage.onBoardClock += dt;		//Stage clock
+		stage.setPropMass(stage.getPropMass() - stage.getThrottle() * stage.getNumEngines() * stage.getEngine().getMdot() * dt);
 
 	}
 

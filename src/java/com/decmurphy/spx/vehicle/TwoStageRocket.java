@@ -54,7 +54,7 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	
 	@Override
 	public double clock() {
-		return onBoardClock;
+    return onBoardClock;
 	}
 
 	protected void setCoordinates(double incl, double lon) {
@@ -69,10 +69,10 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 
 	@Override
 	public void leapfrogFirstStep() {
-		mStage[0].setEffectiveMass(mStage[0].getMass() + mStage[1].getMass() + payload.getMass());
+		mStage[0].setAdditionalMass(mStage[1].getMass() + payload.getMass());
 		Navigation.leapfrogFirstStep(mStage[0]);
 		
-		onBoardClock += dt;		//TSR/mission clock
+		incrementClock();		//TSR/mission clock
 	}
 
 	@Override
@@ -83,13 +83,13 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 		}
 			
 		if (beforeSep) {
-			mStage[0].setEffectiveMass(mStage[0].getMass() + mStage[1].getMass() + payload.getMass());
+			mStage[0].setAdditionalMass(mStage[1].getMass() + payload.getMass());
 			Navigation.leapfrogStep(mStage[0]);
 		} else {
-			mStage[0].setEffectiveMass(mStage[0].getMass());
+			mStage[0].setAdditionalMass(0.0);
 			Navigation.leapfrogStep(mStage[0]);
 
-			mStage[1].setEffectiveMass(mStage[1].getMass() + payload.getMass());
+			mStage[1].setAdditionalMass(payload.getMass());
 			Navigation.leapfrogStep(mStage[1]);
 		}
 
@@ -100,7 +100,11 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 			gravityTurn();
 		}
 		
-		onBoardClock += dt;		//TSR/mission clock
+		incrementClock();		//TSR/mission clock
+	}
+	
+	private void incrementClock() {
+		onBoardClock += dt;
 	}
 
 	@Override
@@ -206,7 +210,7 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 
 	@Override
 	public boolean reachesOrbitalVelocity() {
-		return mStage[1].vel() > sqrt(gravConstant*massOfEarth/(radiusOfEarth + alt()));
+		return mStage[1].absVel() > sqrt(gravConstant*massOfEarth/(radiusOfEarth + alt()));
 	}
 
 	@Override

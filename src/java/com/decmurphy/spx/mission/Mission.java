@@ -87,7 +87,7 @@ public class Mission {
 	}
 
 	public void outputFile(String simId) {
-		if (this.clock()%5.0 < dt) {
+		if (abs(clock())%5.0 < dt) {
 			this.LV.outputFile(simId);
 		}
 	}
