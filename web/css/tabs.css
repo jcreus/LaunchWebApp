@@ -1,4 +1,9 @@
-body, html {
+/* 
+    Created on : 13-Dec-2014, 15:42:06
+    Author     : declan
+*/
+
+#home {
   -webkit-font-smoothing: antialiased;
   font-weight: 100;
   text-align: center;
@@ -8,11 +13,24 @@ body, html {
   height:100%;
   top:0px;
   left:0px;
-  background: no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  background: no-repeat center center fixed;
+}
+
+#results {
+  -webkit-font-smoothing: antialiased;
+  font-weight: 100;
+  text-align: center;
+  font-family: helvetica;
+  //position:fixed;
+  //width:100%;
+  height:100%;
+  top:0px;
+  left:0px;
+  background: repeat-y;
 }
 
 .nav-tabs {

@@ -22,6 +22,7 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	protected double gravTurnTime;
 	boolean clampsReleased = false;
 	boolean beforeSep = true;
+  boolean landed = false;
 	private Mission mission = null;
 
 	public TwoStageRocket() {
@@ -129,7 +130,8 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 
 	@Override
 	public void outputFile(String id) {
-		mStage[0].outputFile(id);
+    if(!landed)
+      mStage[0].outputFile(id);
 		if (!beforeSep) {
 			mStage[1].outputFile(id);
 		}
@@ -222,7 +224,17 @@ public abstract class TwoStageRocket implements LaunchVehicle {
 	public void setLegs(boolean legs) {
 		mStage[0].setLegs(legs);
 	}
+  
+  @Override
+  public void setLanded(boolean b) {
+    landed = b;
+  }
 	
+  @Override
+  public boolean isLanded() {
+    return landed;
+  }
+  
 	@Override
 	public double alt() {
 		return mStage[1].alt();

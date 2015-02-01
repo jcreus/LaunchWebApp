@@ -1,5 +1,6 @@
 package com.decmurphy.spx;
 
+import com.decmurphy.spx.mission.Mission;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import static com.decmurphy.spx.servlet.InterfaceServlet.imagePath;
 import static com.decmurphy.spx.servlet.InterfaceServlet.resourcePath;
@@ -16,8 +17,12 @@ public class GnuplotFileBuilder {
 
   private String name;
   private String imgPath;
-
+  
   public GnuplotFileBuilder(String id, String phase) {
+    this(id, null, phase);
+  }
+
+  public GnuplotFileBuilder(String id, Mission mission, String phase) {
 
     this.name = id + "_" + System.currentTimeMillis() + ".gp";
     this.imgPath = id + "_" + System.currentTimeMillis() + ".png";
@@ -63,16 +68,6 @@ public class GnuplotFileBuilder {
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
 
-      } else if (phase.equalsIgnoreCase("aoa")) {
-
-        pw.printf("set key off\n");
-        pw.printf("set xlabel \"Time (s)\"\n");
-        pw.printf("set ylabel \"Angle of Attack (rads)\"\n");
-        pw.printf("set term pngcairo\n");
-        pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:7 w l, \"%s/%s_SecondStage.dat\" u 1:7 w l\n", outputPath, id, outputPath, id);
-        
-
       } else if (phase.equalsIgnoreCase("globe")) {
 
         pw.printf("set key off\n");
@@ -92,18 +87,28 @@ public class GnuplotFileBuilder {
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
         pw.printf("set ylabel \"Velocity (m/s)\"\n");
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("boost_start"), mission.Profile().getEventTime("boost_start"));
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("boost_end"), mission.Profile().getEventTime("boost_end"));
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("entry_start"), mission.Profile().getEventTime("entry_start"));
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("entry_end"), mission.Profile().getEventTime("entry_end"));
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("landing_start"), mission.Profile().getEventTime("landing_start"));
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:6 w l, \"%s/%s_SecondStage.dat\" u 1:6 w l\n", outputPath, id, outputPath, id);
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:6 w l u 1:6 w l\n", outputPath, id);
         
       } else if (phase.equalsIgnoreCase("altitude")) {
         
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
         pw.printf("set ylabel \"Altitude (km)\"\n");
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("boost_start"), mission.Profile().getEventTime("boost_start"));
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("boost_end"), mission.Profile().getEventTime("boost_end"));
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("entry_start"), mission.Profile().getEventTime("entry_start"));
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("entry_end"), mission.Profile().getEventTime("entry_end"));
+        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("landing_start"), mission.Profile().getEventTime("landing_start"));
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:5 w l, \"%s/%s_SecondStage.dat\" u 1:5 w l\n", outputPath, id, outputPath, id);
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:5 w l\n", outputPath, id);
 
       } else if (phase.equalsIgnoreCase("phase")) {
         
@@ -112,8 +117,27 @@ public class GnuplotFileBuilder {
         pw.printf("set ylabel \"Velocity (m/s)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("p \"%s/%s_BoosterStage.dat\" u 5:6 w l, \"%s/%s_SecondStage.dat\" u 5:6 w l\n", outputPath, id, outputPath, id);
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 5:6 w l\n", outputPath, id);
 
+      } else if (phase.equalsIgnoreCase("profile")) {
+
+        pw.printf("set key off\n");
+        pw.printf("set xlabel \"Downrange (km)\"\n");
+        pw.printf("set ylabel \"Altitude (km)\"\n");
+        pw.printf("set yrange[0:350]\n");
+        pw.printf("set term pngcairo\n");
+        pw.printf("set output \"%s\"\n", getImagePath());
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 7:5 w l\n", outputPath, id);        
+      
+      } else if (phase.equalsIgnoreCase("q")) {
+
+        pw.printf("set key off\n");
+        pw.printf("set xlabel \"Time (s)\"\n");
+        pw.printf("set ylabel \"Aerodynamic Pressure (kPa)\"\n");
+        pw.printf("set term pngcairo\n");
+        pw.printf("set output \"%s\"\n", getImagePath());
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:8 w l\n", outputPath, id);        
+      
       }
 
     } catch (IOException e) {

@@ -24,10 +24,12 @@ public class Launch {
 
 			if (!SECO && (mission.LaunchVehicle().reachesOrbitalVelocity() || mission.LaunchVehicle().depletesFuel())) {
 				mission.executeOverrideEvent(1, "SECO1");
-				dt = 0.1;
 				SECO = true;
 			}
 
+      if(SECO && mission.LaunchVehicle().isLanded())
+        dt = 0.1;
+      
 		} while (mission.LaunchVehicle().completedOrbits() < 1 && (!SECO || mission.LaunchVehicle().alt() > 0));
 
 	}

@@ -1,11 +1,14 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import java.io.*;
 import com.decmurphy.spx.engine.Engine;
+import static java.lang.Math.PI;
+import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 public class Stage {
 
@@ -139,8 +142,8 @@ public class Stage {
 		/*
 		 *	thrust angle starts off pointing straight up
 		 */
-		gamma[0] = Math.PI - beta[0];	//Math.atan2(Math.sqrt(pos[0]*pos[0] + pos[1]*pos[1]), pos[2]);
-		gamma[1] = Math.PI + beta[1];	//Math.atan2(pos[0], pos[1]);
+		gamma[0] = Math.PI - beta[0];
+		gamma[1] = Math.PI + beta[1];
 	}
 
 	/*
@@ -174,7 +177,7 @@ public class Stage {
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",
-							clock(), pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, getThrottle(), getPropMass());
+							clock(), pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, getDownrangeDistance()*1e-3, Q*1e-3);
 
 		} catch (IOException e) {
 		} finally {
@@ -327,6 +330,17 @@ public class Stage {
 	public double getFuelCapacity() {
 		return fuelCapacity;
 	}
+  
+  private double downrangeDistance;
+  public double getDownrangeDistance() {
+    double theta1 = PI - getParent().getMission().LaunchSite().getIncl();
+    double theta2 = beta[0];
+
+    double psi1 = getParent().getMission().LaunchSite().getLong();
+    double psi2 = beta[1] - PI;
+
+    return radiusOfEarth*acos(cos(theta1)*cos(theta2) + sin(theta1)*sin(theta2)*cos(psi1-psi2));
+  }
 
 	//////////////////////////////////////////////////////////////////////////////
 

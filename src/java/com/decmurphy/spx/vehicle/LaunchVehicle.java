@@ -29,5 +29,7 @@ public interface LaunchVehicle {
 	public void setLaunchSite(LaunchSite ls);
 	public void setMission(Mission m);
 	public Mission getMission();
+  public boolean isLanded();
+  public void setLanded(boolean b);
 	
 }
