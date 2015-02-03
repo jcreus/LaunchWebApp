@@ -48,6 +48,7 @@ public class Stage {
 	public double S, VR, VA, A;	// magnitudes of position, relV, absV, acceleration
 	public String name;
 	public boolean isMoving;
+	public boolean beforeSep;
 	
 	public Stage(String name) {
 		this.name = name;
@@ -55,6 +56,8 @@ public class Stage {
 		this.throttle = 0.0;
 		this.hasLegs = false;
 		this.isMoving = false;
+		this.beforeSep = true;
+    this.landed = false;
 		this.extraBurn = false;
 		this.landingBurn = false;
 		this.radius = 0.0;
@@ -87,6 +90,8 @@ public class Stage {
 		this.throttle = s.throttle;
 		this.hasLegs = s.hasLegs;
 		this.isMoving = s.isMoving;
+		this.beforeSep = s.beforeSep;
+    this.landed = s.landed;
 		this.extraBurn = s.extraBurn;
 		this.landingBurn = s.landingBurn;
 		this.radius = s.radius;
@@ -211,6 +216,14 @@ public class Stage {
 	public boolean landingBurnIsUnderway() {
 		return landingBurn;
 	}
+  
+  public boolean landed;
+  public void setLanded(boolean b) {
+    landed = b;
+  }
+  public boolean isLanded() {
+    return landed;
+  }
 
 	private LaunchVehicle parent;
 	public void setParent(LaunchVehicle lv) {

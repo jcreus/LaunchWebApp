@@ -1,7 +1,7 @@
 package com.decmurphy.spx.vehicle;
 
 import com.decmurphy.spx.engine.Merlin1C;
-import com.decmurphy.spx.engine.Merlin1Cv;
+import com.decmurphy.spx.engine.Merlin1CVac;
 import com.decmurphy.spx.payload.DragonV1;
 import com.decmurphy.spx.payload.Payload;
 
@@ -19,7 +19,7 @@ public class Falcon9 extends TwoStageRocket {
 	public Falcon9()	{
 		
 		Merlin1C M1C = new Merlin1C();
-		Merlin1Cv M1Cv = new Merlin1Cv();
+		Merlin1CVac M1Cv = new Merlin1CVac();
 
 		setPayload(new DragonV1());
 

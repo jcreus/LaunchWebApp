@@ -1,13 +1,11 @@
 package com.decmurphy.spx.vehicle;
 
 import com.decmurphy.spx.engine.Merlin1D;
-import com.decmurphy.spx.engine.Merlin1Dv;
+import com.decmurphy.spx.engine.Merlin1DVac;
 import com.decmurphy.spx.payload.DragonV1;
 import com.decmurphy.spx.payload.Payload;
 
 public class Falcon9_1 extends TwoStageRocket {
-
-	public boolean mLegsExtended;
 
 	public Falcon9_1(Payload payload) {
 		this();
@@ -17,7 +15,7 @@ public class Falcon9_1 extends TwoStageRocket {
 	public Falcon9_1() {
 
 		Merlin1D M1D = new Merlin1D();
-		Merlin1Dv M1Dv = new Merlin1Dv();
+		Merlin1DVac M1Dv = new Merlin1DVac();
 		
 		setPayload(new DragonV1());
 
@@ -33,13 +31,7 @@ public class Falcon9_1 extends TwoStageRocket {
 		mStage[1].setFuelCapacity(75700);
 		mStage[1].setPropMass(mStage[1].getFuelCapacity());
 
-		mLegsExtended = false;
-
 		this.gravTurnTime = 55.0;
 	}
-
-	public void extendLegs() {
-		mLegsExtended = true;
-	}
-
+  
 }
