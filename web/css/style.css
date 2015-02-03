@@ -2,9 +2,7 @@
     Created on : 13-Dec-2014, 15:42:06
     Author     : declan
 */
-.launch_button {
 
-}
 .bg {
   z-index: -2;
   position: fixed; 
@@ -34,6 +32,7 @@ video#bgvid {
 }
 
 #container {
+  max-width: 100%;
   min-height: 100%;
   margin-bottom: -4em;
 }
@@ -49,7 +48,7 @@ video#bgvid {
 }
 
 table.results {
-  width: 100%;
+  max-width: 100%;
 }
 
 table.results td {
@@ -64,23 +63,18 @@ table.results img {
 .table_left {
   float: left;
   min-width: 40%;
-  border-right: thick solid #000000;
 }
 
 .table_right {
-  padding: 10px;
   float: left;
   position: absolute;
   left: 50%;
 }
 
 .table_top {
-  padding: 10px;
-  border-bottom: thick solid #000000;
 }
 
 .table-bottom {
   position: absolute;
   left: 50px;
-  padding: 10px;
 }
