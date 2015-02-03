@@ -87,8 +87,10 @@ public abstract class LaunchVehicle {
 
   public void outputFile(String id) {
     for (int i = 0; i < numStages; i++) {
-      if (!mStage[i].landed && !mStage[i].beforeSep)
-        mStage[i].outputFile(id);
+      if (!mStage[i].landed) {
+        if(i==0 || !mStage[i-1].beforeSep)
+          mStage[i].outputFile(id);
+      }
     }
   }
 

@@ -77,9 +77,9 @@ public class Database {
         tabs.append("                  <tr><td>Landing Legs    </td><td>    </td><td><input type=\"text\" size=\"15\" name=\"legs\"				  value=\"").append(rs.getBoolean("Legs")? "Yes" : "No").append("\"/></td></tr>\n");
 				tabs.append("								   <tr><td>Coriolis Effect </td><td>    </td><td><input type=\"text\" size=\"15\" name=\"coriolis\"     value=\"On\"/>																										 </td></tr>\n");
         tabs.append("		  					 </table>\n");
-				tabs.append("				  			 <h3>Second Stage Course Corrections</h3><a class=\"add_field_button\" href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i></a>");
-				tabs.append("			  				 <table class=\"table_bottom\">\n");
-				tabs.append("						  	 </table>\n");
+//				tabs.append("				  			 <h3>Second Stage Course Corrections</h3><a class=\"add_field_button\" href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i></a>");
+//				tabs.append("			  				 <table class=\"table_bottom\">\n");
+//				tabs.append("						  	 </table>\n");
 				tabs.append("							 </div>");
         tabs.append("            </form>\n");
         tabs.append("          </div>\n");
