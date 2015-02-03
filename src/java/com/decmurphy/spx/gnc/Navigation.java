@@ -106,7 +106,7 @@ public class Navigation {
 		if (stage.alt() < 0) {
 			if (stage.landingBurnIsUnderway()) {
 				System.out.printf("T%+7.2f\t%.32s\n", stage.clock(), "Crash/Landing");
-        stage.getParent().setLanded(true);
+        stage.setLanded(true);
 			}
 
 			for (int i = 0; i < 3; i++) {
