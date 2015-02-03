@@ -39,6 +39,7 @@ public class LaunchVehicleConfig {
 			case "AS-6":
 			case "CRS-4":
 			case "CRS-5":
+			case "DSCOVR":
 				return new Falcon9_1();
 			default:
 				throw new LaunchVehicleException("No valid mission specified");

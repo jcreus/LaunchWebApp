@@ -40,6 +40,7 @@ public class PayloadConfig {
 			case "OG2-1":
 			case "AS-8":
 			case "AS-6":
+			case "DSCOVR":
 				p = new Satellite();
 				break;
 
