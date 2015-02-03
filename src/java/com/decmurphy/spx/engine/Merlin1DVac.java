@@ -2,9 +2,9 @@ package com.decmurphy.spx.engine;
 
 import static com.decmurphy.spx.Globals.g0;
 
-public class Merlin1Dv extends Engine
+public class Merlin1DVac extends Engine
 {
-	public Merlin1Dv()
+	public Merlin1DVac()
 	{
 		setIsp(0, 345);
 		setThrust(0, 801000);

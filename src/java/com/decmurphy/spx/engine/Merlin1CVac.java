@@ -6,9 +6,9 @@ import static com.decmurphy.spx.Globals.g0;
  *
  * @author dmurphy
  */
-public class Merlin1Cv extends Engine
+public class Merlin1CVac extends Engine
 {
-	public Merlin1Cv()
+	public Merlin1CVac()
 	{
 		setIsp(0, 342);
 		setThrust(0, 445000);
