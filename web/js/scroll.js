@@ -1,4 +1,14 @@
 
+$(document).ready (function() {
+
+  var style = window.getComputedStyle(document.getElementById("tabs"));
+  var lw = document.getElementById("tabs").scrollWidth;
+    
+  var limit = lw - $(window).width() + parseInt(style.marginLeft);
+  $('#tabs').animate({marginLeft: "-=" + limit + "px"}, "1");
+
+});
+
 $(function () {
   $("#left-button").click(function () {
     
