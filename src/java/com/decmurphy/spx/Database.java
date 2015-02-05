@@ -13,7 +13,7 @@ import java.util.Properties;
 public class Database {
 
   private Connection con = null;
-  private ResultSet rs, rs2 = null;
+  private ResultSet rs, rs2, rs3;
   private PreparedStatement pst = null;
 
   public Database() {
@@ -46,14 +46,20 @@ public class Database {
               + "INNER JOIN profiles "
               + "ON launches.launch_id=profiles.launch_id");
       rs2 = pst.executeQuery();
+      
+      Statement st = con.createStatement();
+      rs3 = st.executeQuery("SELECT COUNT(*) FROM profiles");
+      rs3.next();
+      int rowCount = rs3.getInt(1);
+      System.out.println("RowCount = " + rowCount);
 
       while (rs.next() && rs2.next()) {
 
         int id = rs.getInt("launch_id");
 
-        list.append("          <li").append(id == 1 ? " class=\"active\"" : "").append("><a href=\"#tab").append(id).append("\" data-toggle=\"tab\">").append(rs2.getString("code")).append("</a></li>\n");
+        list.append("          <li").append(id == rowCount ? " class=\"active\"" : "").append("><a href=\"#tab").append(id).append("\" data-toggle=\"tab\">").append(rs2.getString("code")).append("</a></li>\n");
 
-        tabs.append("          <div class=\"tab-pane").append(id == 1 ? " in active" : "").append("\" id=\"tab").append(id).append("\">\n");
+        tabs.append("          <div class=\"tab-pane").append(id == rowCount ? " in active" : "").append("\" id=\"tab").append(id).append("\">\n");
         tabs.append("            <form action=\"InterfaceServlet\" method=\"POST\">\n");
         tabs.append("              <input type=\"hidden\" name=\"flight_code\" value=\"").append(rs2.getString("code")).append("\"/>\n");
         tabs.append("              <table class=\"table_left\">\n");
@@ -75,7 +81,7 @@ public class Database {
 				tabs.append("							   <table class=\"table_top\">\n");
 				tabs.append("                  <tr><td>Payload Mass    </td><td>    </td><td><input type=\"text\" size=\"15\" name=\"payload_mass\" value=\"").append(rs.getInt("Mass")								 ).append("\"/>kg</td><td rowspan=\"3\"><input class=\"launch_button\" type=\"submit\" value=\"LAUNCH\"/></td></tr>\n");
         tabs.append("                  <tr><td>Landing Legs    </td><td>    </td><td><input type=\"text\" size=\"15\" name=\"legs\"				  value=\"").append(rs.getBoolean("Legs")? "Yes" : "No").append("\"/></td></tr>\n");
-				tabs.append("								   <tr><td>Coriolis Effect </td><td>    </td><td><input type=\"text\" size=\"15\" name=\"coriolis\"     value=\"On\"/>																										 </td></tr>\n");
+				tabs.append("								   <tr><td>Coriolis Effect </td><td>    </td><td><input type=\"text\" size=\"15\" name=\"coriolis\"     value=\"Off\"/>																										 </td></tr>\n");
         tabs.append("		  					 </table>\n");
 //				tabs.append("				  			 <h3>Second Stage Course Corrections</h3><a class=\"add_field_button\" href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i></a>");
 //				tabs.append("			  				 <table class=\"table_bottom\">\n");

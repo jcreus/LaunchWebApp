@@ -112,6 +112,10 @@ public abstract class LaunchVehicle {
 		return mStage[numStages-1].getPropMass() < 100;
 	}
   
+  public boolean failedToReachOrbit() {
+    return mStage[numStages-1].isLanded();
+  }
+  
 	public void setLegs(boolean legs) {
 		mStage[0].setLegs(legs);
 	}

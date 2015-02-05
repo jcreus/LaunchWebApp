@@ -27,10 +27,11 @@ public class Launch {
 				SECO = true;
 			}
 
-      if(SECO && mission.LaunchVehicle().isLanded())
-        dt = 0.1;
+      if(SECO && mission.LaunchVehicle().isLanded()) dt = 0.1;      
+      if(mission.LaunchVehicle().failedToReachOrbit()) break;
+      if(mission.LaunchVehicle().completedOrbits() >= 1) break;
       
-		} while (mission.LaunchVehicle().completedOrbits() < 1 && (!SECO || mission.LaunchVehicle().alt() > 0));
+		} while (true);
 
 	}
 }

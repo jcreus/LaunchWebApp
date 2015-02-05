@@ -100,15 +100,17 @@ public class Navigation {
 		 *	Introduce an upwards reaction force (Newton's 3rd law) which effectively cancels out gravity.
 		 *	There should be no more movement after this point.
 		 *
-		 *	I had to introduce the 'if(onBoardClock)' statement because for a split second at the very start,
+		 *	I had to introduce the 'if(stage.clock())' statement because for a split second at the very start,
 		 *	the stage falls before it rises. I'll find a more elegant solution to this problem soon.
 		 */
 		if (stage.alt() < 0) {
 			if (stage.landingBurnIsUnderway()) {
 				System.out.printf("T%+7.2f\t%.32s\n", stage.clock(), "Crash/Landing");
-        stage.setLanded(true);
 			}
 
+      if(stage.clock() > 5.0)
+        stage.setLanded(true);
+      
 			for (int i = 0; i < 3; i++) {
 				stage.pos[i] -= stage.absVel[i] * dt;
 				stage.filepos[i] -= stage.relVel[i] * dt;

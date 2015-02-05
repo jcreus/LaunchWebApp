@@ -181,8 +181,8 @@ public class Stage {
 			File outputFile = new File(outputPath, "/" + id + "_" + name + ".dat");
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
-			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\n",
-							clock(), pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, getDownrangeDistance()*1e-3, Q*1e-3);
+			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\n",
+							clock(), pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, getDownrangeDistance()*1e-3, Q*1e-3, getPropMass());
 
 		} catch (IOException e) {
 		} finally {

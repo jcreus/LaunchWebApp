@@ -22,7 +22,7 @@ public class DisplayResults extends HttpServlet {
 
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
-
+    
 		if (body != null && !body.isEmpty()) {
 			out.println(body);
 		} else {
