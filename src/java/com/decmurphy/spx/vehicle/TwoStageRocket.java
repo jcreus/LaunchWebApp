@@ -4,6 +4,7 @@ import static com.decmurphy.spx.Globals.dt;
 import com.decmurphy.spx.event.Event;
 import static com.decmurphy.spx.gnc.HoverSlam.updateLandingThrottle;
 import com.decmurphy.spx.gnc.Navigation;
+
 public abstract class TwoStageRocket extends SSTO {
 
 	public TwoStageRocket() {
@@ -70,31 +71,37 @@ public abstract class TwoStageRocket extends SSTO {
 			mStage[0].setThrottle(1.0);
 			mStage[0].setExtraBurnIsUnderway(true);
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Boostback Start");
+      mStage[0].outputFile(getMission().getMissionId(), true);
 		}
 		else if (e.getName().equalsIgnoreCase("boost_end")) {
 			mStage[0].setThrottle(0.0);
 			mStage[0].setExtraBurnIsUnderway(false);
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Boostback End");
+      mStage[0].outputFile(getMission().getMissionId(), true);
 		}
 		else if (e.getName().equalsIgnoreCase("entry_start")) {
 			mStage[0].setEngines(3);
 			mStage[0].setThrottle(1.0);
 			mStage[0].setExtraBurnIsUnderway(true);
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "ReEntry Burn Start");
+      mStage[0].outputFile(getMission().getMissionId(), true);
 		}
 		else if (e.getName().equalsIgnoreCase("entry_end")) {
 			mStage[0].setThrottle(0.0);
 			mStage[0].setExtraBurnIsUnderway(false);
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "ReEntry Burn End");
+      mStage[0].outputFile(getMission().getMissionId(), true);
 		}
 		else if (e.getName().equalsIgnoreCase("landing_start")) {
 			mStage[0].setEngines(1);
 			mStage[0].executeLandingBurn();
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Landing Burn Start");
+      mStage[0].outputFile(getMission().getMissionId(), true);
 		}
 		else if (e.getName().equalsIgnoreCase("SECO1")) {
 			mStage[(int)e.getValueOf("stage")].setThrottle(0.0);
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "SECO-1");
+      mStage[(int)e.getValueOf("stage")].outputFile(getMission().getMissionId(), true);
 		}
 		else if (e.getName().equalsIgnoreCase("secondStageSep")) {
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "Second Stage Separation");

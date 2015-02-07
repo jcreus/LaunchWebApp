@@ -22,25 +22,22 @@ public class FalconHeavy extends ThreeStageRocket {
 	}
 	
 	public FalconHeavy() {
-
-		Merlin1D M1D = new Merlin1D();
-		Merlin1DVac M1Dv = new Merlin1DVac();
 		
 		setPayload(new DragonV1());
 
-		mStage[0].setEngines(18, M1D);
+		mStage[0].setEngines(18, new Merlin1D());
 		mStage[0].setAeroProperties(1.83, 0.3);
 		mStage[0].setDryMass(mStage[0].hasLegs() ? 40000 : 36000);
 		mStage[0].setFuelCapacity(780000);
 		mStage[0].setPropMass(2*mStage[0].getFuelCapacity());
 
-		mStage[1].setEngines(9, M1D);
+		mStage[1].setEngines(9, new Merlin1D());
 		mStage[1].setAeroProperties(1.83, 0.3);
 		mStage[1].setDryMass(mStage[0].hasLegs() ? 20000 : 18000);
 		mStage[1].setFuelCapacity(390000);
 		mStage[1].setPropMass(mStage[1].getFuelCapacity());
     
-		mStage[2].setEngines(1, M1Dv);
+		mStage[2].setEngines(1, new Merlin1DVac());
 		mStage[2].setAeroProperties(1.83, 0.3);
 		mStage[2].setDryMass(4900);
 		mStage[2].setFuelCapacity(75700);

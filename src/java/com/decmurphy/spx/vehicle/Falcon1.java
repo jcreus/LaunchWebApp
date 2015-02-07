@@ -17,19 +17,16 @@ public class Falcon1 extends TwoStageRocket {
 	}
 	
 	public Falcon1() {
-
-		Merlin1C M1C = new Merlin1C();
-		Kestrel Kes = new Kestrel();
 		
 		setPayload(new Satellite(500));
 
-		mStage[0].setEngines(1, M1C);
+		mStage[0].setEngines(1, new Merlin1C());
 		mStage[0].setAeroProperties(0.85, 0.3);
 		mStage[0].setDryMass(5110);
 		mStage[0].setFuelCapacity(29000);
 		mStage[0].setPropMass(mStage[0].getFuelCapacity());
 
-		mStage[1].setEngines(1, Kes);
+		mStage[1].setEngines(1, new Kestrel());
 		mStage[1].setAeroProperties(0.85, 0.3);
 		mStage[1].setDryMass(665);
 		mStage[1].setFuelCapacity(3780);

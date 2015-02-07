@@ -31,6 +31,7 @@ public class Stage {
 	 */
 	public double[] alpha,	// angle of attack 		(drag acts through this angle)
 									beta,		// angle of position	(gravity acts through this one - points towards earth's centre)
+                  beta2,  // angle of position  (for first stage with coriolis effect on)
 									gamma;  // angle of thrust		(guess what acts through this one)
 
 	/*
@@ -39,7 +40,7 @@ public class Stage {
 	 *	I'll think about it. It would make the leapfrog	function a lot simpler, that's for sure.
 	 */
 	public double[] pos,		// cartesian position
-									filepos,// (experimental)
+                  relPos, // For looking at first stage landing with coriolis on
 									relVel, // relative velocity	(relative to earth's surface. Starts at 0)
 									absVel, // absolute velocity	(Starts at earth velocity at launch pad. Gives a nice boost closer to equator)
 									accel,	// acceleration
@@ -68,10 +69,11 @@ public class Stage {
 
 		this.alpha = new double[2];
 		this.beta = new double[2];
+		this.beta2 = new double[2];
 		this.gamma = new double[2];
 
 		this.pos = new double[3];
-		this.filepos = new double[3];
+		this.relPos = new double[3];
 		this.absVel = new double[3];
 		this.relVel = new double[3];
 		this.accel = new double[3];
@@ -112,10 +114,11 @@ public class Stage {
 
 		this.alpha = new double[]{s.alpha[0], s.alpha[1]};
 		this.beta = new double[]{s.beta[0], s.beta[1]};
+		this.beta2 = new double[]{s.beta2[0], s.beta2[1]};
 		this.gamma = new double[]{s.gamma[0], s.gamma[1]};
 
 		this.pos = new double[]{s.pos[0], s.pos[1], s.pos[2]};
-		this.filepos = new double[]{s.filepos[0], s.filepos[1], s.filepos[2]};
+		this.relPos = new double[]{s.relPos[0], s.relPos[1], s.relPos[2]};
 		this.absVel = new double[]{s.absVel[0], s.absVel[1], s.absVel[2]};
 		this.relVel = new double[]{s.relVel[0], s.relVel[1], s.relVel[2]};
 		this.accel = new double[]{s.accel[0], s.accel[1], s.accel[2]};
@@ -132,9 +135,9 @@ public class Stage {
 		pos[1] = radiusOfEarth * Math.sin(incl) * Math.cos(lon);
 		pos[2] = radiusOfEarth * Math.cos(incl);
 
-		filepos[0] = radiusOfEarth * Math.sin(incl) * Math.sin(lon);
-		filepos[1] = radiusOfEarth * Math.sin(incl) * Math.cos(lon);
-		filepos[2] = radiusOfEarth * Math.cos(incl);
+		relPos[0] = pos[0];
+		relPos[1] = pos[1];
+		relPos[2] = pos[2];
 
 		S = radiusOfEarth;
 
@@ -143,6 +146,9 @@ public class Stage {
 		 */
 		beta[0] = Math.PI - Math.atan2(Math.sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
 		beta[1] = Math.PI + Math.atan2(pos[0], pos[1]);
+    
+		beta2[0] = Math.PI - Math.atan2(Math.sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
+		beta2[1] = Math.PI + Math.atan2(pos[0], pos[1]);    
 
 		/*
 		 *	thrust angle starts off pointing straight up
@@ -168,22 +174,30 @@ public class Stage {
 
 		System.arraycopy(stage.alpha, 0, this.alpha, 0, stage.alpha.length);
 		System.arraycopy(stage.beta, 0, this.beta, 0, stage.beta.length);
+		System.arraycopy(stage.beta2, 0, this.beta2, 0, stage.beta2.length);
 		System.arraycopy(stage.gamma, 0, this.gamma, 0, stage.gamma.length);
 	}
 
 	/*
 	 *	Output telemetry to file. Nothing interesting happens here.
 	 */
-	public void outputFile(String id) {
+	public void outputFile(String id, boolean b) {
 		PrintWriter pw = null;
 
 		try {
 			File outputFile = new File(outputPath, "/" + id + "_" + name + ".dat");
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
-			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\n",
-							clock(), pos[0] * 1e-3, pos[1] * 1e-3, pos[2] * 1e-3, (S - radiusOfEarth) * 1e-3, VR, getDownrangeDistance()*1e-3, Q*1e-3, getPropMass());
+			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\t%9.3f\t%9.3f\t%9.3f\n",
+				clock(), pos[0]*1e-3, pos[1]*1e-3, pos[2]*1e-3, (S-radiusOfEarth)*1e-3, VR, getDownrangeDistance()*1e-3, Q*1e-3, getPropMass(), relPos[0]*1e-3, relPos[1]*1e-3, relPos[2]*1e-3);
 
+      if(b) {
+        File eventPointsFile = new File(outputPath, "/" + id + "_" + name + "_events.dat");
+        pw = new PrintWriter(new FileWriter(eventPointsFile, true));
+
+        pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\t%9.3f\t%9.3f\t%9.3f\n\n",
+          clock(), pos[0]*1e-3, pos[1]*1e-3, pos[2]*1e-3, (S-radiusOfEarth)*1e-3, VR, getDownrangeDistance()*1e-3, Q*1e-3, getPropMass(), relPos[0]*1e-3, relPos[1]*1e-3, relPos[2]*1e-3);
+      }
 		} catch (IOException e) {
 		} finally {
 			if (pw != null) {
@@ -344,7 +358,6 @@ public class Stage {
 		return fuelCapacity;
 	}
   
-  private double downrangeDistance;
   public double getDownrangeDistance() {
     double theta1 = PI - getParent().getMission().LaunchSite().getIncl();
     double theta2 = beta[0];

@@ -85,11 +85,11 @@ public abstract class LaunchVehicle {
     }
   }
 
-  public void outputFile(String id) {
+  public void outputFile() {
     for (int i = 0; i < numStages; i++) {
       if (!mStage[i].landed) {
         if(i==0 || !mStage[i-1].beforeSep)
-          mStage[i].outputFile(id);
+          mStage[i].outputFile(mission.getMissionId(), false);
       }
     }
   }
@@ -127,7 +127,7 @@ public abstract class LaunchVehicle {
   }
   
 	public double alt() {
-		return mStage[1].alt();
+		return mStage[numStages-1].alt();
 	}
 	
 	public void setLaunchSite(LaunchSite ls) {

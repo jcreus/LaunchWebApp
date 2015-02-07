@@ -57,6 +57,7 @@ public class SSTO extends LaunchVehicle {
 		else if (e.getName().equalsIgnoreCase("MECO1")) {
 			mStage[(int)e.getValueOf("stage")].setThrottle(0.0);
 			System.out.printf("T%+7.2f\t%.32s\n", e.getTime(), "MECO-1");
+      mStage[(int)e.getValueOf("stage")].outputFile(getMission().getMissionId(), true);
 		}
 	}
   
