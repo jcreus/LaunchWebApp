@@ -9,8 +9,7 @@ public class Launch {
 
 	public static void execute(Mission mission, String[] args) {
 
-		String simId = args[0];
-		Planet Earth = new Earth(0, 0, 0, simId);
+		Planet Earth = new Earth(0, 0, 0, mission.getMissionId());
 
 		boolean SECO = false;
 		mission.setClock(-60.0);
@@ -20,7 +19,7 @@ public class Launch {
 			mission.executeEvents();
 			mission.invokeProfile();
 			mission.leapfrogStep();
-			mission.outputFile(simId);
+			mission.outputFile();
 
 			if (!SECO && (mission.LaunchVehicle().reachesOrbitalVelocity() || mission.LaunchVehicle().depletesFuel())) {
 				mission.executeOverrideEvent(1, "SECO1");

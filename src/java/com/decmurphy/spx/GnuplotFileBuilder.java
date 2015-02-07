@@ -47,7 +47,7 @@ public class GnuplotFileBuilder {
         pw.printf("set view 98,107,1.7\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 10:11:12 w l ls 8, \"%s/%s_SecondStage.dat\" u 10:11:12 w l ls 9, ", outputPath, id, outputPath, id);
+        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
         pw.printf("\"%s/finecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
@@ -65,7 +65,7 @@ public class GnuplotFileBuilder {
         pw.printf("set view 85,75,1.7\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 10:11:12 w l ls 8, \"%s/%s_SecondStage.dat\" u 10:11:12 w l ls 9, ", outputPath, id, outputPath, id);
+        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
         pw.printf("\"%s/finecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);

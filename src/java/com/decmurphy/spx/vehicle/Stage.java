@@ -46,7 +46,7 @@ public class Stage {
 									accel,	// acceleration
 									force;	// force
 
-	public double S, VR, VA, A;	// magnitudes of position, relV, absV, acceleration
+	public double relS, S, VR, VA, A;	// magnitudes of position, relV, absV, acceleration
 	public String name;
 	public boolean isMoving;
 	public boolean beforeSep;
@@ -65,7 +65,7 @@ public class Stage {
 		this.dryMass = 0.0;
 		this.propMass = 0.0;
 
-		this.S = this.VR = this.VA = this.A = 0.0;
+		this.S = this.relS = this.VR = this.VA = this.A = 0.0;
 
 		this.alpha = new double[2];
 		this.beta = new double[2];
@@ -104,6 +104,7 @@ public class Stage {
 		this.numEngines = s.numEngines;
 
 		this.S = s.S;
+    this.relS = s.relS;
 		this.VR = s.VR;
 		this.VA = s.VA;
 		this.A = s.A;

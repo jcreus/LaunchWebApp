@@ -36,24 +36,24 @@ public class Navigation {
 		} catch (IllegalArgumentException e) {
 		}
 
-		stage.force[0] = thrustForce * sin(stage.gamma[0]) * sin(stage.gamma[1]) + gravityForce * sin(stage.beta[0]) * sin(stage.beta[1]);
-		stage.force[1] = thrustForce * sin(stage.gamma[0]) * cos(stage.gamma[1]) + gravityForce * sin(stage.beta[0]) * cos(stage.beta[1]);
-		stage.force[2] = thrustForce * cos(stage.gamma[0]) + gravityForce * cos(stage.beta[0]);
+		stage.force[0] = thrustForce*sin(stage.gamma[0])*sin(stage.gamma[1]) + gravityForce*sin(stage.beta[0]) * sin(stage.beta[1]);
+		stage.force[1] = thrustForce*sin(stage.gamma[0])*cos(stage.gamma[1]) + gravityForce*sin(stage.beta[0]) * cos(stage.beta[1]);
+		stage.force[2] = thrustForce*cos(stage.gamma[0])                     + gravityForce*cos(stage.beta[0]);
 
 		stage.accel[0] = stage.force[0] / stage.getEffectiveMass();
 		stage.accel[1] = stage.force[1] / stage.getEffectiveMass();
 		stage.accel[2] = stage.force[2] / stage.getEffectiveMass();
 
-		stage.absVel[0] = stage.accel[0] * dt / 2 - earthVel * sin(stage.beta[0]) * cos(stage.beta[1]);
-		stage.absVel[1] = stage.accel[1] * dt / 2 - earthVel * sin(stage.beta[0]) * sin(stage.beta[1]);
-		stage.absVel[2] = stage.accel[2] * dt / 2;
+		stage.absVel[0] = stage.accel[0]*dt / 2 - earthVel*sin(stage.beta[0])*cos(stage.beta[1]);
+		stage.absVel[1] = stage.accel[1]*dt / 2 - earthVel*sin(stage.beta[0])*sin(stage.beta[1]);
+		stage.absVel[2] = stage.accel[2]*dt / 2;
 
 		stage.relVel[0] = 0;
 		stage.relVel[1] = 0;
 		stage.relVel[2] = 0;
 
-		stage.S = sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]);
-		stage.A = sqrt(stage.accel[0] * stage.accel[0] + stage.accel[1] * stage.accel[1] + stage.accel[2] * stage.accel[2]);
+		stage.S = sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1] + stage.pos[2]*stage.pos[2]);
+		stage.A = sqrt(stage.accel[0]*stage.accel[0] + stage.accel[1]*stage.accel[1] + stage.accel[2]*stage.accel[2]);
 
 		stage.isMoving = true;
 
@@ -71,12 +71,22 @@ public class Navigation {
 		double dragForce = 0.0;
 		double gravityForce = 0.0;
 
+		stage.pos[0] += stage.absVel[0]*dt;
+		stage.pos[1] += stage.absVel[1]*dt;
+		stage.pos[2] += stage.absVel[2]*dt;
+		stage.S = sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1] + stage.pos[2]*stage.pos[2]);
+
+		stage.relPos[0] += stage.relVel[0]*dt;
+		stage.relPos[1] += stage.relVel[1]*dt;
+		stage.relPos[2] += stage.relVel[2]*dt;
+		stage.relS = sqrt(stage.relPos[0]*stage.relPos[0] + stage.relPos[1]*stage.relPos[1] + stage.relPos[2]*stage.relPos[2]);
+
 		try {
-			stage.setQ(0.5 * densityAtAltitude(stage.alt()) * stage.VR * stage.VR);
+			stage.setQ(0.5*densityAtAltitude(stage.alt())*stage.VR*stage.VR);
 			if (stage.getPropMass() < 500) stage.setThrottle(0.0);
 
 			if (stage.isMoving) {
-				dragForce = stage.getQ() * stage.getAeroProp("Cd") * stage.getAeroProp("XA");
+				dragForce = stage.getQ()*stage.getAeroProp("Cd")*stage.getAeroProp("XA");
 				thrustForce = stage.getPropMass() > 500 ? stage.getThrustAtAltitude(stage.alt()) : 0.0;
 				gravityForce = stage.getEffectiveMass() * gravityAtRadius(radiusOfEarth + stage.alt());
 			} else {
@@ -84,16 +94,6 @@ public class Navigation {
 			}
 		} catch (IllegalArgumentException e) {
 		}
-
-		stage.pos[0] += stage.absVel[0] * dt;
-		stage.pos[1] += stage.absVel[1] * dt;
-		stage.pos[2] += stage.absVel[2] * dt;
-
-		stage.filepos[0] += stage.relVel[0] * dt;
-		stage.filepos[1] += stage.relVel[1] * dt;
-		stage.filepos[2] += stage.relVel[2] * dt;
-
-		stage.S = sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]);
 
 		/*
 		 *	If a crash happens (i.e if distance from earth's centre < earth's radius) then turn off engines.
@@ -113,10 +113,11 @@ public class Navigation {
       
 			for (int i = 0; i < 3; i++) {
 				stage.pos[i] -= stage.absVel[i] * dt;
-				stage.filepos[i] -= stage.relVel[i] * dt;
+				stage.relPos[i] -= stage.relVel[i] * dt;
 				stage.absVel[i] = 0.0;
 			}
-			stage.S = sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1] + stage.pos[2] * stage.pos[2]);
+  		stage.relS = sqrt(stage.relPos[0]*stage.relPos[0] + stage.relPos[1]*stage.relPos[1] + stage.relPos[2]*stage.relPos[2]);
+			stage.S = sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1] + stage.pos[2]*stage.pos[2]);
 			if (stage.clock() > 100.0) {
 				stage.setThrottle(0.0);
 			}
@@ -128,38 +129,32 @@ public class Navigation {
 			dragForce = 0.0;
 		}
 
-		stage.force[0] = thrustForce * sin(stage.gamma[0]) * sin(stage.gamma[1])
-						+ dragForce * sin(stage.alpha[0]) * sin(stage.alpha[1])
-						+ gravityForce * sin(stage.beta[0]) * sin(stage.beta[1]);
-		stage.force[1] = thrustForce * sin(stage.gamma[0]) * cos(stage.gamma[1])
-						+ dragForce * sin(stage.alpha[0]) * cos(stage.alpha[1])
-						+ gravityForce * sin(stage.beta[0]) * cos(stage.beta[1]);
-		stage.force[2] = thrustForce * cos(stage.gamma[0])
-						+ dragForce * cos(stage.alpha[0])
-						+ gravityForce * cos(stage.beta[0]);
+		stage.force[0] = thrustForce*sin(stage.gamma[0])*sin(stage.gamma[1]) + dragForce*sin(stage.alpha[0])*sin(stage.alpha[1])	+ gravityForce*sin(stage.beta[0])*sin(stage.beta[1]);
+		stage.force[1] = thrustForce*sin(stage.gamma[0])*cos(stage.gamma[1]) + dragForce*sin(stage.alpha[0])*cos(stage.alpha[1])	+ gravityForce*sin(stage.beta[0])*cos(stage.beta[1]);
+		stage.force[2] = thrustForce*cos(stage.gamma[0])                     + dragForce*cos(stage.alpha[0])                    	+ gravityForce*cos(stage.beta[0]);
 
 		stage.accel[0] = stage.force[0] / stage.getEffectiveMass();
 		stage.accel[1] = stage.force[1] / stage.getEffectiveMass();
 		stage.accel[2] = stage.force[2] / stage.getEffectiveMass();
-		stage.A = sqrt(stage.accel[0] * stage.accel[0] + stage.accel[1] * stage.accel[1] + stage.accel[2] * stage.accel[2]);
+		stage.A = sqrt(stage.accel[0]*stage.accel[0] + stage.accel[1]*stage.accel[1] + stage.accel[2]*stage.accel[2]);
 
-		stage.absVel[0] += stage.accel[0] * dt;
-		stage.absVel[1] += stage.accel[1] * dt;
-		stage.absVel[2] += stage.accel[2] * dt;
-		stage.VA = sqrt(stage.absVel[0] * stage.absVel[0] + stage.absVel[1] * stage.absVel[1] + stage.absVel[2] * stage.absVel[2]);
+		stage.absVel[0] += stage.accel[0]*dt;
+		stage.absVel[1] += stage.accel[1]*dt;
+		stage.absVel[2] += stage.accel[2]*dt;
+		stage.VA = sqrt(stage.absVel[0]*stage.absVel[0] + stage.absVel[1]*stage.absVel[1] + stage.absVel[2]*stage.absVel[2]);
 
-		stage.relVel[0] = stage.absVel[0] + earthVel * sin(stage.beta[0]) * cos(stage.beta[1]);
-		stage.relVel[1] = stage.absVel[1] + earthVel * sin(stage.beta[0]) * sin(stage.beta[1]);
+		stage.relVel[0] = stage.absVel[0] + earthVel*sin(stage.beta[0])*cos(stage.beta[1]);
+		stage.relVel[1] = stage.absVel[1] + earthVel*sin(stage.beta[0])*sin(stage.beta[1]);
 		stage.relVel[2] = stage.absVel[2];
-		stage.VR = sqrt(stage.relVel[0] * stage.relVel[0] + stage.relVel[1] * stage.relVel[1] + stage.relVel[2] * stage.relVel[2]);
+		stage.VR = sqrt(stage.relVel[0]*stage.relVel[0] + stage.relVel[1]*stage.relVel[1] + stage.relVel[2]*stage.relVel[2]);
 
-		stage.alpha[0] = PI - atan2(sqrt(stage.relVel[0] * stage.relVel[0] + stage.relVel[1] * stage.relVel[1]), stage.relVel[2]);
+		stage.alpha[0] = PI - atan2(sqrt(stage.relVel[0]*stage.relVel[0] + stage.relVel[1]*stage.relVel[1]), stage.relVel[2]);
 		stage.alpha[1] = PI + atan2(stage.relVel[0], stage.relVel[1]);
 
-		stage.beta[0] = PI - atan2(sqrt(stage.pos[0] * stage.pos[0] + stage.pos[1] * stage.pos[1]), stage.pos[2]);
+		stage.beta[0] = PI - atan2(sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1]), stage.pos[2]);
 		stage.beta[1] = PI + atan2(stage.pos[0], stage.pos[1]);
 
-		stage.setPropMass(stage.getPropMass() - stage.getThrottle() * stage.getNumEngines() * stage.getEngine().getMdot() * dt);
+		stage.setPropMass(stage.getPropMass() - stage.getThrottle()*stage.getNumEngines()*stage.getEngine().getMdot()*dt);
 
 	}
 
@@ -180,13 +175,12 @@ public class Navigation {
 		double incl = acos(stage.pos[2] / radiusOfEarth);
 		double lon = atan2(stage.pos[0], stage.pos[1]);
 
-		stage.gamma[0] = Math.acos(Math.cos(pitch) * Math.cos(incl) - Math.sin(pitch) * Math.sin(yaw) * Math.sin(incl));
+		stage.gamma[0] = Math.acos(Math.cos(pitch)*Math.cos(incl) - Math.sin(pitch)*Math.sin(yaw)*Math.sin(incl));
 
-		cs = Math.sin(pitch) * Math.cos(yaw) / Math.sin(stage.gamma[0]);
-		sn = (Math.sin(pitch) * Math.sin(yaw) * Math.cos(incl) + Math.cos(pitch) * Math.sin(incl)) / Math.sin(stage.gamma[0]);
+		cs = Math.sin(pitch)*Math.cos(yaw) / Math.sin(stage.gamma[0]);
+		sn = (Math.sin(pitch)*Math.sin(yaw)*Math.cos(incl) + Math.cos(pitch)*Math.sin(incl)) / Math.sin(stage.gamma[0]);
 
 		stage.gamma[1] = Math.atan2(sn, cs);
-
 		stage.gamma[1] -= (Math.PI / 2 - lon);
 	}
 
@@ -196,9 +190,9 @@ public class Navigation {
 		double incl = acos(stage.pos[2] / radiusOfEarth);
 		int r = (dir == Transform.FORWARD) ? 1 : -1;
 
-		arr[0] = acos(cos(x) * cos(r * incl) - sin(x) * sin(y) * sin(r * incl));
-		cs = sin(x) * cos(y) / sin(arr[0]);
-		sn = (sin(x) * sin(y) * cos(r * incl) + cos(x) * sin(r * incl)) / sin(arr[0]);
+		arr[0] = acos(cos(x)*cos(r*incl) - sin(x)*sin(y)*sin(r*incl));
+		cs = sin(x)*cos(y) / sin(arr[0]);
+		sn = (sin(x)*sin(y)*cos(r*incl) + cos(x)*sin(r*incl)) / sin(arr[0]);
 		arr[1] = atan2(sn, cs);
 
 	}
@@ -211,7 +205,7 @@ public class Navigation {
 		vectorTransform(stage, stage.gamma, pitch, yaw, Transform.BACKWARD);
 		vectorTransform(stage, stage.beta, temp1, temp2, Transform.BACKWARD);
 
-		pitch = (3 * PI / 2 - stage.beta[0]) - delP;
+		pitch = (3*PI / 2 - stage.beta[0]) - delP;
 		yaw = stage.gamma[1];
 
 		temp1 = stage.beta[0];
