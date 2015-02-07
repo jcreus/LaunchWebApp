@@ -27,6 +27,8 @@ public class GnuplotFileBuilder {
     this.name = id + "_" + System.currentTimeMillis() + ".gp";
     this.imgPath = id + "_" + System.currentTimeMillis() + ".png";
     PrintWriter pw = null;
+    
+    Double t;
 
     try {
       File outputFile = new File(getPath());
@@ -45,7 +47,7 @@ public class GnuplotFileBuilder {
         pw.printf("set view 98,107,1.7\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
+        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 10:11:12 w l ls 8, \"%s/%s_SecondStage.dat\" u 10:11:12 w l ls 9, ", outputPath, id, outputPath, id);
         pw.printf("\"%s/finecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
@@ -63,7 +65,7 @@ public class GnuplotFileBuilder {
         pw.printf("set view 85,75,1.7\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
+        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 10:11:12 w l ls 8, \"%s/%s_SecondStage.dat\" u 10:11:12 w l ls 9, ", outputPath, id, outputPath, id);
         pw.printf("\"%s/finecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
@@ -82,53 +84,86 @@ public class GnuplotFileBuilder {
         pw.printf("\"%s/coarsecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
         pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5\n", outputPath, id);
 
-      } else if (phase.equalsIgnoreCase("velocity")) {
+      } else if (phase.equalsIgnoreCase("velocity1")) {
         
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
         pw.printf("set ylabel \"Velocity (m/s)\"\n");
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("boost_start"), mission.Profile().getEventTime("boost_start"));
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("boost_end"), mission.Profile().getEventTime("boost_end"));
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("entry_start"), mission.Profile().getEventTime("entry_start"));
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("entry_end"), mission.Profile().getEventTime("entry_end"));
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("landing_start"), mission.Profile().getEventTime("landing_start"));
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:6 w l u 1:6 w l\n", outputPath, id);
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:6 w l, \\\n", outputPath, id);
+        pw.printf("\"%s/%s_BoosterStage_events.dat\" u 1:6 w p ls 3\n", outputPath, id);
+
+      } else if (phase.equalsIgnoreCase("velocity2")) {
         
-      } else if (phase.equalsIgnoreCase("altitude")) {
+        pw.printf("set key off\n");
+        pw.printf("set xlabel \"Time (s)\"\n");
+        pw.printf("set ylabel \"Velocity (m/s)\"\n");
+        pw.printf("set term pngcairo\n");
+        pw.printf("set output \"%s\"\n", getImagePath());
+        pw.printf("p \"%s/%s_SecondStage.dat\" u 1:6 w l, \\\n", outputPath, id);
+        pw.printf("\"%s/%s_SecondStage_events.dat\" u 1:6 w p ls 3\n", outputPath, id);
+                
+      } else if (phase.equalsIgnoreCase("altitude1")) {
         
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
         pw.printf("set ylabel \"Altitude (km)\"\n");
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("boost_start"), mission.Profile().getEventTime("boost_start"));
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("boost_end"), mission.Profile().getEventTime("boost_end"));
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("entry_start"), mission.Profile().getEventTime("entry_start"));
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("entry_end"), mission.Profile().getEventTime("entry_end"));
-        pw.printf("set arrow from %g,graph(0,0) to %g,graph(1,1) nohead lt 5\n", mission.Profile().getEventTime("landing_start"), mission.Profile().getEventTime("landing_start"));
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:5 w l\n", outputPath, id);
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:5 w l, \\\n", outputPath, id);
+        pw.printf("\"%s/%s_BoosterStage_events.dat\" u 1:5 w p ls 3\n", outputPath, id);
+        
+      } else if (phase.equalsIgnoreCase("altitude2")) {
+        
+        pw.printf("set key off\n");
+        pw.printf("set xlabel \"Time (s)\"\n");
+        pw.printf("set ylabel \"Altitude (km)\"\n");
+        pw.printf("set term pngcairo\n");
+        pw.printf("set output \"%s\"\n", getImagePath());
+        pw.printf("p \"%s/%s_SecondStage.dat\" u 1:5 w l, \\\n", outputPath, id);
+        pw.printf("\"%s/%s_SecondStage_events.dat\" u 1:5 w p ls 3\n", outputPath, id);
 
-      } else if (phase.equalsIgnoreCase("phase")) {
+      } else if (phase.equalsIgnoreCase("phase1")) {
         
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Altitude (km)\"\n");
         pw.printf("set ylabel \"Velocity (m/s)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("p \"%s/%s_BoosterStage.dat\" u 5:6 w l\n", outputPath, id);
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 5:6 w l, \\\n", outputPath, id);
+        pw.printf("\"%s/%s_BoosterStage_events.dat\" u 5:6 w p ls 3\n", outputPath, id);
 
-      } else if (phase.equalsIgnoreCase("profile")) {
+      } else if (phase.equalsIgnoreCase("phase2")) {
+        
+        pw.printf("set key off\n");
+        pw.printf("set xlabel \"Altitude (km)\"\n");
+        pw.printf("set ylabel \"Velocity (m/s)\"\n");
+        pw.printf("set term pngcairo\n");
+        pw.printf("set output \"%s\"\n", getImagePath());
+        pw.printf("p \"%s/%s_SecondStage.dat\" u 5:6 w l, \\\n", outputPath, id);
+        pw.printf("\"%s/%s_SecondStage_events.dat\" u 5:6 w p ls 3\n", outputPath, id);
+
+      } else if (phase.equalsIgnoreCase("profile1")) {
 
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Downrange (km)\"\n");
         pw.printf("set ylabel \"Altitude (km)\"\n");
-        pw.printf("set yrange[0:350]\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("p \"%s/%s_BoosterStage.dat\" u 7:5 w l\n", outputPath, id);        
-      
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 7:5 w l, \\\n", outputPath, id);        
+        pw.printf("\"%s/%s_BoosterStage_events.dat\" u 7:5 w p ls 3\n", outputPath, id);        
+
+      } else if (phase.equalsIgnoreCase("profile2")) {
+
+        pw.printf("set key off\n");
+        pw.printf("set xlabel \"Downrange (km)\"\n");
+        pw.printf("set ylabel \"Altitude (km)\"\n");
+        pw.printf("set term pngcairo\n");
+        pw.printf("set output \"%s\"\n", getImagePath());
+        pw.printf("p \"%s/%s_SecondStage.dat\" u 7:5 w l, \\\n", outputPath, id);        
+        pw.printf("\"%s/%s_SecondStage_events.dat\" u 7:5 w p ls 3\n", outputPath, id);        
+            
       } else if (phase.equalsIgnoreCase("q")) {
 
         pw.printf("set key off\n");
