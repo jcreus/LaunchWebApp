@@ -24,17 +24,22 @@ public class ExecuteLaunch extends HttpServlet {
 		Mission mission = (Mission) request.getSession().getAttribute(ID);
 
 		if (mission != null) {
-			String[] args = {ID};
-			Launch.execute(mission, args);
+      String[] args = {};
+      mission.setMissionId(ID);
+      Launch.execute(mission, args);
 		}
 
 		GnuplotFileBuilder gp_landing = null,
 						gp_globe = null,
-						gp_alt = null,
+						gp_alt1 = null,
+            gp_alt2 = null,
 						gp_landing2 = null,
-						gp_velocity = null,
-						gp_phase = null,
-            gp_profile = null,
+						gp_velocity1 = null,
+						gp_velocity2 = null,
+						gp_phase1 = null,
+						gp_phase2 = null,
+            gp_profile1 = null,
+            gp_profile2 = null,
             gp_q = null;
 
 		try {
@@ -48,9 +53,9 @@ public class ExecuteLaunch extends HttpServlet {
 			//Process p2 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_globe.getPath());
 			p2.waitFor();
 
-			gp_alt = new GnuplotFileBuilder(ID, mission, "altitude");
-			Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_alt.getPath());
-			//Process p3 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_alt.getPath());
+			gp_alt1 = new GnuplotFileBuilder(ID, mission, "altitude1");
+			Process p3 = Runtime.getRuntime().exec("gnuplot " + gp_alt1.getPath());
+			//Process p3 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_alt1.getPath());
 			p3.waitFor();
 
 			gp_landing2 = new GnuplotFileBuilder(ID, "landing2");
@@ -58,25 +63,45 @@ public class ExecuteLaunch extends HttpServlet {
 			//Process p4 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_landing2.getPath());
 			p4.waitFor();
 
-			gp_velocity = new GnuplotFileBuilder(ID, mission, "velocity");
-			Process p5 = Runtime.getRuntime().exec("gnuplot " + gp_velocity.getPath());
-			//Process p5 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_velocity.getPath());
+			gp_velocity1 = new GnuplotFileBuilder(ID, mission, "velocity1");
+			Process p5 = Runtime.getRuntime().exec("gnuplot " + gp_velocity1.getPath());
+			//Process p5 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_velocity1.getPath());
 			p5.waitFor();
 
-			gp_phase = new GnuplotFileBuilder(ID, "phase");
-			Process p6 = Runtime.getRuntime().exec("gnuplot " + gp_phase.getPath());
-			//Process p6 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_phase.getPath());
+			gp_phase1 = new GnuplotFileBuilder(ID, "phase1");
+			Process p6 = Runtime.getRuntime().exec("gnuplot " + gp_phase1.getPath());
+			//Process p6 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_phase1.getPath());
 			p6.waitFor();
 			
-      gp_profile = new GnuplotFileBuilder(ID, mission, "profile");
-			Process p7 = Runtime.getRuntime().exec("gnuplot " + gp_profile.getPath());
-			//Process p7 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_profile.getPath());
+      gp_profile1 = new GnuplotFileBuilder(ID, mission, "profile1");
+			Process p7 = Runtime.getRuntime().exec("gnuplot " + gp_profile1.getPath());
+			//Process p7 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_profile1.getPath());
 			p7.waitFor();
 			
       gp_q = new GnuplotFileBuilder(ID, "q");
 			Process p8 = Runtime.getRuntime().exec("gnuplot " + gp_q.getPath());
 			//Process p8 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_q.getPath());
 			p8.waitFor();
+
+			gp_alt2 = new GnuplotFileBuilder(ID, mission, "altitude2");
+			Process p9 = Runtime.getRuntime().exec("gnuplot " + gp_alt2.getPath());
+			//Process p9 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_alt.getPath());
+			p9.waitFor();
+
+			gp_velocity2 = new GnuplotFileBuilder(ID, mission, "velocity2");
+			Process p10 = Runtime.getRuntime().exec("gnuplot " + gp_velocity2.getPath());
+			//Process p10 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_velocity.getPath());
+			p10.waitFor();
+
+			gp_phase2 = new GnuplotFileBuilder(ID, "phase2");
+			Process p11 = Runtime.getRuntime().exec("gnuplot " + gp_phase2.getPath());
+			//Process p11 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_phase2.getPath());
+			p11.waitFor();
+			
+      gp_profile2 = new GnuplotFileBuilder(ID, mission, "profile2");
+			Process p12 = Runtime.getRuntime().exec("gnuplot " + gp_profile2.getPath());
+			//Process p12 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_profile2.getPath());
+			p12.waitFor();
       
 		} catch (InterruptedException e) {
 		}
@@ -98,22 +123,29 @@ public class ExecuteLaunch extends HttpServlet {
 						+ "     <img src=\"images/background.jpg\" alt=\"background\" />\n"
 						+ "   </div>\n"
 						+ "   <div class=\"container\">\n"
-						+ "			<table class=\"results\">\n"
-						+ "				<tr>\n"
-						+ "					<td><img src=\"" + gp_globe.getImgPath() + "\" alt=\"wide-view\"/></td>\n"
-						+ "					<td><img src=\"" + gp_landing.getImgPath() + "\" alt=\"first-stage-trajectory\"/></td>\n"
-						+ "					<td><img src=\"" + gp_alt.getImgPath() + "\" alt=\"altitude\"/></td>\n"
-						+ "				</tr>\n"
-						+ "				<tr>\n"
-						+ "	        <td><img src=\"" + gp_phase.getImgPath() + "\" alt=\"phase-space\"/></td>\n"
-						+ "					<td><img src=\"" + gp_landing2.getImgPath() + "\" alt=\"alt-first-stage-trajectory\"/></td>\n"
-						+ "					<td><img src=\"" + gp_profile.getImgPath() + "\" alt=\"profile\"/></td>\n"
-						+ "			  </tr>\n"
-						+ "				<tr>\n"
-						+ "		      <td><img src=\"" + gp_velocity.getImgPath() + "\" alt=\"velocity\"/></td>\n"
-						+ "		      <td><img src=\"" + gp_q.getImgPath() + "\" alt=\"aeroPressure\"/></td>\n"
-						+ "				</tr>\n"
-						+ "			</table>\n"
+						+ "     <table class=\"results\">\n"
+						+ "	      <tr>\n"
+						+ "         <td><img src=\"" + gp_globe.getImgPath() + "\" alt=\"wide-view\"/></td>\n"
+						+ "	        <td><img src=\"" + gp_alt1.getImgPath() + "\" alt=\"altitude1\"/></td>\n"
+						+ "	        <td><img src=\"" + gp_alt2.getImgPath() + "\" alt=\"altitude2\"/></td>\n"
+						+ "	      </tr>\n"
+						+ "       <tr>\n"
+						+ "	        <td><img src=\"" + gp_landing.getImgPath() + "\" alt=\"first-stage-trajectory\"/></td>\n"
+						+ "	        <td><img src=\"" + gp_landing2.getImgPath() + "\" alt=\"alt-first-stage-trajectory\"/></td>\n"
+						+ "	        <td><img src=\"" + gp_profile1.getImgPath() + "\" alt=\"profile1\"/></td>\n"
+						+ "	      </tr>\n"
+						+ "	      <tr>\n"
+						+ "	        <td><img src=\"" + gp_velocity1.getImgPath() + "\" alt=\"velocity1\"/></td>\n"
+						+ "         <td><img src=\"" + gp_velocity2.getImgPath() + "\" alt=\"velocity2\"/></td>\n"
+						+ "	        <td><img src=\"" + gp_profile2.getImgPath() + "\" alt=\"profile2\"/></td>\n"
+						+ "	      </tr>\n"
+						+ "	      <tr>\n"
+						+ "         <td><img src=\"" + gp_q.getImgPath() + "\" alt=\"aero-pressure\"/></td>\n"
+						+ "         <td><img src=\"" + gp_phase1.getImgPath() + "\" alt=\"phase-space1\"/></td>\n"
+						+ "         <td><img src=\"" + gp_phase2.getImgPath() + "\" alt=\"phase-space2\"/></td>\n"
+						+ "	      </tr>\n"
+						+ "	    </table>\n"
+            + "   </div>\n"
 						+ " </body>\n"
 						+ "</html>");
 		String body = sb.toString();
