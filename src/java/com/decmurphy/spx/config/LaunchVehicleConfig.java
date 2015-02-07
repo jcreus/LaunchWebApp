@@ -1,6 +1,7 @@
 package com.decmurphy.spx.config;
 
 import com.decmurphy.spx.exceptions.LaunchVehicleException;
+import com.decmurphy.spx.vehicle.DragonV2;
 import com.decmurphy.spx.vehicle.Falcon1;
 import com.decmurphy.spx.vehicle.Falcon9;
 import com.decmurphy.spx.vehicle.Falcon9_1;
@@ -41,6 +42,8 @@ public class LaunchVehicleConfig {
 			case "CRS-5":
 			case "DSCOVR":
 				return new Falcon9_1();
+      case "PAD-ABORT":
+        return new DragonV2();
 			default:
 				throw new LaunchVehicleException("No valid mission specified");
 		}

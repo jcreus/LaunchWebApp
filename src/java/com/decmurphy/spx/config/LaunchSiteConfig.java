@@ -39,6 +39,7 @@ public class LaunchSiteConfig {
 			case "CRS-4":
 			case "CRS-5":
 			case "DSCOVR":
+      case "PAD-ABORT":
 				return SLC40.get();
 			case "CASS":
 				return SLC4E.get();
