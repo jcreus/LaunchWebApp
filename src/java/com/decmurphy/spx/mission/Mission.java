@@ -18,6 +18,7 @@ public class Mission {
 	private Payload payload;
 	private Profile profile;
 	private LaunchSite LS;
+  private String missionId; 
 
 	public void addLaunchVehicle(LaunchVehicle LV) {
 		this.LV = LV;
@@ -35,6 +36,10 @@ public class Mission {
 		this.LS = launchSite;
 		LaunchVehicle().setLaunchSite(launchSite);
 	}
+  
+  public void setMissionId(String id) {
+    this.missionId = id;
+  }
 
 	public void setClock(double t) {
 		LV.setClock(t);
@@ -55,6 +60,10 @@ public class Mission {
 	public LaunchSite LaunchSite() {
 		return LS;
 	}
+  
+  public String getMissionId() {
+    return missionId;
+  }
 
 	public double clock() {
 		return LV.clock();
@@ -86,9 +95,9 @@ public class Mission {
 		LV.leapfrogStep();
 	}
 
-	public void outputFile(String simId) {
+	public void outputFile() {
 		if (abs(clock())%5.0 < dt) {
-			this.LV.outputFile(simId);
+			this.LV.outputFile();
 		}
 	}
 
