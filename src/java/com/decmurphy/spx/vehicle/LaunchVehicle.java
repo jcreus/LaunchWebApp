@@ -122,8 +122,8 @@ public abstract class LaunchVehicle {
   
   public boolean isLanded() {
     for(int i=0;i<numStages-1;i++)
-      if(!mStage[i].isLanded()) return false;   // only true if all stages have landed (except final stage which ends up in orbit)
-    return true;
+      if(!mStage[i].isLanded()) return false;   // only true if all stages have landed
+    return true;                                // (except final stage which ends up in orbit)
   }
   
 	public double alt() {

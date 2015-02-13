@@ -10,7 +10,7 @@ public class KSC39A extends LaunchSite {
 
 	private KSC39A() {
 		setName("KSC Pad 39-A");
-		setCoordinates(new double[]{toRad(90-28.61), toRad(80.6)});
+		setCoordinates(new double[]{toRad(61.39), toRad(-80.6)});
 	}
 
 	public LaunchSite get() {
