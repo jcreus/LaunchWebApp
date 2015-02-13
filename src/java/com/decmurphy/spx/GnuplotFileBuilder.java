@@ -41,10 +41,10 @@ public class GnuplotFileBuilder {
         pw.printf("unset ytics\n");
         pw.printf("unset ztics\n");
         pw.printf("unset border\n");
-        pw.printf("set xrange[5000:5880]\n");
-        pw.printf("set yrange[800:1500]\n");
-        pw.printf("set zrange[2900:3500]\n");
-        pw.printf("set view 98,107,1.7\n");
+        pw.printf("set xrange[800:1500]\n");
+        pw.printf("set yrange[-7000:0]\n");
+        pw.printf("set zrange[2900:3700]\n");
+        pw.printf("set view 90,0,1.7\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
@@ -59,10 +59,10 @@ public class GnuplotFileBuilder {
         pw.printf("unset ytics\n");
         pw.printf("unset ztics\n");
         pw.printf("unset border\n");
-        pw.printf("set xrange[5000:5880]\n");
-        pw.printf("set yrange[800:1900]\n");
-        pw.printf("set zrange[2700:3400]\n");
-        pw.printf("set view 85,75,1.7\n");
+        pw.printf("set xrange[800:2000]\n");
+        pw.printf("set yrange[-7000:0]\n");
+        pw.printf("set zrange[2500:3500]\n");
+        pw.printf("set view 90,0,1.7\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
@@ -77,7 +77,7 @@ public class GnuplotFileBuilder {
         pw.printf("unset ytics\n");
         pw.printf("unset ztics\n");
         pw.printf("unset border\n");
-        pw.printf("set view 90,90,1.7\n");
+        pw.printf("set view 90,0,1.3,1.4\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 7, ", outputPath, id, outputPath, id);
