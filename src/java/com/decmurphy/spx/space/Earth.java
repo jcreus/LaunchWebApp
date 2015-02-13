@@ -11,6 +11,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import static java.lang.Math.PI;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 /**
  *
@@ -42,13 +45,13 @@ public final class Earth extends Planet {
 			pw = new PrintWriter(new FileWriter(outputFile, false));
 
 			double x, y, z;
-			double theta, psi, dt = Math.PI / 36, dp = Math.PI / 36;
+			double theta, psi, dt = PI/36, dp = PI/36;
 
-			for (theta = 0; theta < Math.PI; theta += dt) {
-				z = radius * Math.cos(theta);
-				for (psi = 0; psi < 2 * Math.PI; psi += dp) {
-					x = radius * Math.sin(theta) * Math.sin(psi);
-					y = radius * Math.sin(theta) * Math.cos(psi);
+			for (theta=0; theta<PI; theta+=dt) {
+				z = radius*cos(theta);
+				for (psi=0; psi<2*PI; psi+=dp) {
+					x = radius*sin(theta)*cos(psi);
+					y = radius*sin(theta)*sin(psi);
 
 					pw.print(x * 1e-3 + "\t" + y * 1e-3 + "\t" + z * 1e-3 + "\n");
 				}
@@ -81,9 +84,9 @@ public final class Earth extends Planet {
 				if (!line.isEmpty()) {
 					String[] parts = line.split("\\s+");
 
-					psi = (360 - Double.parseDouble(parts[0])) * Math.PI / 180;
-					theta = (90 - Double.parseDouble(parts[1])) * Math.PI / 180;
-					pw.print(R * Math.sin(theta) * Math.sin(psi) + "\t" + R * Math.sin(theta) * Math.cos(psi) + "\t" + R * Math.cos(theta) + "\n");
+					psi = Double.parseDouble(parts[0])*PI/180;
+					theta = (90 - Double.parseDouble(parts[1]))*PI/180;
+					pw.print(R*sin(theta)*cos(psi) + "\t" + R*sin(theta)*sin(psi) + "\t" + R*cos(theta) + "\n");
 				} else {
 					pw.print("\n");
 				}
