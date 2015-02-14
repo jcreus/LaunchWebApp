@@ -182,7 +182,7 @@ public class Navigation {
 		double lon = atan2(stage.pos[1], stage.pos[0]);
 
     double[] attitude = new double[3];
-    convertSphericalToCartesian(new double[]{pitch, yaw}, attitude);
+    convertSphericalToCartesian(new double[]{pitch, PI/2-yaw}, attitude);
     
 		rotateY(attitude, incl);
     rotateZ(attitude, lon);
