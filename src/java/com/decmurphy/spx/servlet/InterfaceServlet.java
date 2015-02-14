@@ -65,7 +65,7 @@ public class InterfaceServlet extends HttpServlet {
           switch (paramName) {
 
             case "coriolis":
-              earthVel = paramValues[0].equalsIgnoreCase("on") ? radiusOfEarth * 2 * PI / (24 * 60 * 60) : // ~464 m/s at the equator
+              earthVel = paramValues[0].equalsIgnoreCase("on") ? radiusOfEarth*2*PI/(24*60*60) : // ~464 m/s at the equator
                          paramValues[0].equalsIgnoreCase("off") ? 0.0 : -1.0;
               if (earthVel < 0.0) {
                 throw new IllegalArgumentException("Illegal value for Coriolis Effect. \"On\" or \"Off\"");

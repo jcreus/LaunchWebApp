@@ -1,7 +1,7 @@
 package com.decmurphy.spx.engine;
 
 import static com.decmurphy.spx.Globals.*;
-import static com.decmurphy.spx.gnc.Physics.pressureAtAltitude;
+import static com.decmurphy.spx.Physics.pressureAtAltitude;
 
 public abstract class Engine {
 	
