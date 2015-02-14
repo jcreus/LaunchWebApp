@@ -1,8 +1,10 @@
-package com.decmurphy.spx.gnc;
+package com.decmurphy.spx;
 
 import static com.decmurphy.spx.Globals.gravConstant;
 import static com.decmurphy.spx.Globals.massOfEarth;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
+import static java.lang.Math.exp;
+import static java.lang.Math.log;
 import static java.lang.Math.pow;
 
 /**
@@ -12,28 +14,28 @@ import static java.lang.Math.pow;
 public class Physics {
   
   public static double gravityAtAltitude(double alt) {
-	return gravConstant * massOfEarth / pow(alt+radiusOfEarth, 2);
+	return gravConstant*massOfEarth/pow(alt+radiusOfEarth, 2);
   }
 
   public static double gravityAtRadius(double radius) {
 	if (radius < 0.0) {
 	  throw new IllegalArgumentException();
 	}
-	return gravConstant * massOfEarth / pow(radius, 2);
+	return gravConstant*massOfEarth/pow(radius, 2);
   }
 
   public static double densityAtAltitude(double altitude) {
 	if ((int) (altitude) < 0.0) {
 	  throw new IllegalArgumentException();
 	}
-	return 1.21147 * Math.exp(altitude * -1.12727e-4);
+	return 1.21147*exp(altitude*-1.12727e-4);
   }
 
   public static double pressureAtAltitude(double altitude) {
 	if ((int) (altitude) < 0.0) {
 	  throw new IllegalArgumentException();
 	}
-	return -517.18 * Math.log(0.012833 * Math.log(6.0985e28 * altitude + 2.0981e28));
+	return -517.18*log(0.012833*log(6.0985e28*altitude + 2.0981e28));
   }
 
 }
