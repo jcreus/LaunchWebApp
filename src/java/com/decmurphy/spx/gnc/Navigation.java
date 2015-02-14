@@ -3,8 +3,13 @@ package com.decmurphy.spx.gnc;
 import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.Globals.earthVel;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
-import static com.decmurphy.spx.gnc.Physics.densityAtAltitude;
-import static com.decmurphy.spx.gnc.Physics.gravityAtRadius;
+import static com.decmurphy.spx.Maths.convertCartesianToSpherical;
+import static com.decmurphy.spx.Maths.convertSphericalToCartesian;
+import static com.decmurphy.spx.Maths.magnitudeOf;
+import static com.decmurphy.spx.Maths.rotateY;
+import static com.decmurphy.spx.Maths.rotateZ;
+import static com.decmurphy.spx.Physics.densityAtAltitude;
+import static com.decmurphy.spx.Physics.gravityAtRadius;
 import com.decmurphy.spx.vehicle.Stage;
 import static java.lang.Math.PI;
 import static java.lang.Math.acos;
@@ -32,38 +37,38 @@ public class Navigation {
 
 		try {
 			thrustForce = stage.getThrustAtAltitude(stage.alt());
-			gravityForce = stage.getEffectiveMass() * gravityAtRadius(radiusOfEarth + stage.alt());
+			gravityForce = stage.getEffectiveMass()*gravityAtRadius(radiusOfEarth + stage.alt());
 		} catch (IllegalArgumentException e) {
 		}
 
-		stage.force[0] = thrustForce*sin(stage.gamma[0])*sin(stage.gamma[1]) + gravityForce*sin(stage.beta[0]) * sin(stage.beta[1]);
-		stage.force[1] = thrustForce*sin(stage.gamma[0])*cos(stage.gamma[1]) + gravityForce*sin(stage.beta[0]) * cos(stage.beta[1]);
+		stage.force[0] = thrustForce*sin(stage.gamma[0])*cos(stage.gamma[1]) + gravityForce*sin(stage.beta[0])*cos(stage.beta[1]);
+		stage.force[1] = thrustForce*sin(stage.gamma[0])*sin(stage.gamma[1]) + gravityForce*sin(stage.beta[0])*sin(stage.beta[1]);
 		stage.force[2] = thrustForce*cos(stage.gamma[0])                     + gravityForce*cos(stage.beta[0]);
 
-		stage.accel[0] = stage.force[0] / stage.getEffectiveMass();
-		stage.accel[1] = stage.force[1] / stage.getEffectiveMass();
-		stage.accel[2] = stage.force[2] / stage.getEffectiveMass();
+		stage.accel[0] = stage.force[0]/stage.getEffectiveMass();
+		stage.accel[1] = stage.force[1]/stage.getEffectiveMass();
+		stage.accel[2] = stage.force[2]/stage.getEffectiveMass();
 
-		stage.absVel[0] = stage.accel[0]*dt / 2 - earthVel*sin(stage.beta[0])*cos(stage.beta[1]);
-		stage.absVel[1] = stage.accel[1]*dt / 2 - earthVel*sin(stage.beta[0])*sin(stage.beta[1]);
-		stage.absVel[2] = stage.accel[2]*dt / 2;
+		stage.absVel[0] = stage.accel[0]*dt/2 + earthVel*sin(stage.beta[0])*sin(stage.beta[1]);
+		stage.absVel[1] = stage.accel[1]*dt/2 + earthVel*sin(stage.beta[0])*cos(stage.beta[1]);
+		stage.absVel[2] = stage.accel[2]*dt/2;
 
 		stage.relVel[0] = 0;
 		stage.relVel[1] = 0;
 		stage.relVel[2] = 0;
 
-		stage.S = sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1] + stage.pos[2]*stage.pos[2]);
-		stage.A = sqrt(stage.accel[0]*stage.accel[0] + stage.accel[1]*stage.accel[1] + stage.accel[2]*stage.accel[2]);
+		stage.S = magnitudeOf(stage.pos);
+		stage.A = magnitudeOf(stage.accel);
 
 		stage.isMoving = true;
 
 	}
 
 	/*
-	 *	This function is where the magic happens. Evaluate forces on vehicle, update accelerations, velocities, positions.
-	 *	Update angles.
-	 *	Execute gravity turn starting at T+0:55
-	 *	And don't forget to remove the appropriate amount of mass from the system.
+	 *	This function is where the magic happens. Evaluate forces on vehicle, update
+   *  accelerations, velocities, positions.	Update angles. Execute gravity turn
+   *  starting at T+0:55. And don't forget to remove the appropriate amount of mass
+   *  from the system.
 	 */
 	public static void leapfrogStep(Stage stage) {
 
@@ -74,12 +79,12 @@ public class Navigation {
 		stage.pos[0] += stage.absVel[0]*dt;
 		stage.pos[1] += stage.absVel[1]*dt;
 		stage.pos[2] += stage.absVel[2]*dt;
-		stage.S = sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1] + stage.pos[2]*stage.pos[2]);
+		stage.S = magnitudeOf(stage.pos);
 
 		stage.relPos[0] += stage.relVel[0]*dt;
 		stage.relPos[1] += stage.relVel[1]*dt;
 		stage.relPos[2] += stage.relVel[2]*dt;
-		stage.relS = sqrt(stage.relPos[0]*stage.relPos[0] + stage.relPos[1]*stage.relPos[1] + stage.relPos[2]*stage.relPos[2]);
+		stage.relS = magnitudeOf(stage.relPos);
 
 		try {
 			stage.setQ(0.5*densityAtAltitude(stage.alt())*stage.VR*stage.VR);
@@ -88,7 +93,7 @@ public class Navigation {
 			if (stage.isMoving) {
 				dragForce = stage.getQ()*stage.getAeroProp("Cd")*stage.getAeroProp("XA");
 				thrustForce = stage.getPropMass() > 500 ? stage.getThrustAtAltitude(stage.alt()) : 0.0;
-				gravityForce = stage.getEffectiveMass() * gravityAtRadius(radiusOfEarth + stage.alt());
+				gravityForce = stage.getEffectiveMass()*gravityAtRadius(radiusOfEarth + stage.alt());
 			} else {
 				dragForce = thrustForce = gravityForce = 0.0;
 			}
@@ -112,12 +117,12 @@ public class Navigation {
         stage.setLanded(true);
       
 			for (int i = 0; i < 3; i++) {
-				stage.pos[i] -= stage.absVel[i] * dt;
-				stage.relPos[i] -= stage.relVel[i] * dt;
+				stage.pos[i] -= stage.absVel[i]*dt;
+				stage.relPos[i] -= stage.relVel[i]*dt;
 				stage.absVel[i] = 0.0;
 			}
-  		stage.relS = sqrt(stage.relPos[0]*stage.relPos[0] + stage.relPos[1]*stage.relPos[1] + stage.relPos[2]*stage.relPos[2]);
-			stage.S = sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1] + stage.pos[2]*stage.pos[2]);
+  		stage.relS = magnitudeOf(stage.relPos);
+			stage.S = magnitudeOf(stage.pos);
 			if (stage.clock() > 100.0) {
 				stage.setThrottle(0.0);
 			}
@@ -129,30 +134,30 @@ public class Navigation {
 			dragForce = 0.0;
 		}
 
-		stage.force[0] = thrustForce*sin(stage.gamma[0])*sin(stage.gamma[1]) + dragForce*sin(stage.alpha[0])*sin(stage.alpha[1])	+ gravityForce*sin(stage.beta[0])*sin(stage.beta[1]);
-		stage.force[1] = thrustForce*sin(stage.gamma[0])*cos(stage.gamma[1]) + dragForce*sin(stage.alpha[0])*cos(stage.alpha[1])	+ gravityForce*sin(stage.beta[0])*cos(stage.beta[1]);
+		stage.force[0] = thrustForce*sin(stage.gamma[0])*cos(stage.gamma[1]) + dragForce*sin(stage.alpha[0])*cos(stage.alpha[1])	+ gravityForce*sin(stage.beta[0])*cos(stage.beta[1]);
+		stage.force[1] = thrustForce*sin(stage.gamma[0])*sin(stage.gamma[1]) + dragForce*sin(stage.alpha[0])*sin(stage.alpha[1])	+ gravityForce*sin(stage.beta[0])*sin(stage.beta[1]);
 		stage.force[2] = thrustForce*cos(stage.gamma[0])                     + dragForce*cos(stage.alpha[0])                    	+ gravityForce*cos(stage.beta[0]);
 
-		stage.accel[0] = stage.force[0] / stage.getEffectiveMass();
-		stage.accel[1] = stage.force[1] / stage.getEffectiveMass();
-		stage.accel[2] = stage.force[2] / stage.getEffectiveMass();
-		stage.A = sqrt(stage.accel[0]*stage.accel[0] + stage.accel[1]*stage.accel[1] + stage.accel[2]*stage.accel[2]);
+		stage.accel[0] = stage.force[0]/stage.getEffectiveMass();
+		stage.accel[1] = stage.force[1]/stage.getEffectiveMass();
+		stage.accel[2] = stage.force[2]/stage.getEffectiveMass();
+		stage.A = magnitudeOf(stage.accel);
 
 		stage.absVel[0] += stage.accel[0]*dt;
 		stage.absVel[1] += stage.accel[1]*dt;
 		stage.absVel[2] += stage.accel[2]*dt;
-		stage.VA = sqrt(stage.absVel[0]*stage.absVel[0] + stage.absVel[1]*stage.absVel[1] + stage.absVel[2]*stage.absVel[2]);
+		stage.VA = magnitudeOf(stage.absVel);
 
-		stage.relVel[0] = stage.absVel[0] + earthVel*sin(stage.beta[0])*cos(stage.beta[1]);
-		stage.relVel[1] = stage.absVel[1] + earthVel*sin(stage.beta[0])*sin(stage.beta[1]);
+		stage.relVel[0] = stage.absVel[0] - earthVel*sin(stage.beta[0])*cos(stage.beta[1]);
+		stage.relVel[1] = stage.absVel[1] - earthVel*sin(stage.beta[0])*sin(stage.beta[1]);
 		stage.relVel[2] = stage.absVel[2];
-		stage.VR = sqrt(stage.relVel[0]*stage.relVel[0] + stage.relVel[1]*stage.relVel[1] + stage.relVel[2]*stage.relVel[2]);
+		stage.VR = magnitudeOf(stage.relVel);
 
 		stage.alpha[0] = PI - atan2(sqrt(stage.relVel[0]*stage.relVel[0] + stage.relVel[1]*stage.relVel[1]), stage.relVel[2]);
-		stage.alpha[1] = PI + atan2(stage.relVel[0], stage.relVel[1]);
+		stage.alpha[1] = PI + atan2(stage.relVel[1], stage.relVel[0]);
 
 		stage.beta[0] = PI - atan2(sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1]), stage.pos[2]);
-		stage.beta[1] = PI + atan2(stage.pos[0], stage.pos[1]);
+		stage.beta[1] = PI + atan2(stage.pos[1], stage.pos[0]);
 
 		stage.setPropMass(stage.getPropMass() - stage.getThrottle()*stage.getNumEngines()*stage.getEngine().getMdot()*dt);
 
@@ -160,28 +165,29 @@ public class Navigation {
 
 	/*
 	 *	3D is hard. Honestly it's like an order of magnitude harder than 2D.
-	 *	My current method for any kind of operation is to transform it into an easier-to-work-with coordinate system,
-	 *	do the operation, and then transform back. For the pitch kick I can skip the first step. So rotate (pitch, yaw) by 'pi/2 - incl'
-	 *	degrees about the y-axis and then rotate by 'pi/2 - longitude' degrees about the z-axis.
+	 *	My current method for any kind of operation is to transform it into an 
+   *  easier-to-work-with coordinate system, do the operation, and then transform
+   *  back. For the pitch kick I can skip the first step. So rotate (pitch, yaw)
+   *  by theta degrees about the y-axis and then rotate by phi degrees about the z-axis.
 	 *
-	 *	For Cape Canaveral, this is rotating (pitch, yaw) by 61.51 degrees about y, and then by 9.42 degrees about z.
-	 *	Voila. That's your heading after pitch-kick.
+	 *	For Cape Canaveral, this is rotating (pitch, yaw) by -61.51 degrees about y,
+   *  and then by -80.58 degrees about z.	Voila. That's your heading after pitch-kick.
+   *  Hint: Use the right-hand rule!
 	 */
 	public static void pitchKick(Stage stage, double pitch, double yaw) {
 
 		// A higher value for pitch gives a more extreme pitch-kick
 		// A positive yaw aims south, a negative yaw aims north.
-		double cs, sn;
-		double incl = acos(stage.pos[2] / radiusOfEarth);
-		double lon = atan2(stage.pos[0], stage.pos[1]);
+		double incl = acos(stage.pos[2]/radiusOfEarth);
+		double lon = atan2(stage.pos[1], stage.pos[0]);
 
-		stage.gamma[0] = Math.acos(Math.cos(pitch)*Math.cos(incl) - Math.sin(pitch)*Math.sin(yaw)*Math.sin(incl));
-
-		cs = Math.sin(pitch)*Math.cos(yaw) / Math.sin(stage.gamma[0]);
-		sn = (Math.sin(pitch)*Math.sin(yaw)*Math.cos(incl) + Math.cos(pitch)*Math.sin(incl)) / Math.sin(stage.gamma[0]);
-
-		stage.gamma[1] = Math.atan2(sn, cs);
-		stage.gamma[1] -= (Math.PI / 2 - lon);
+    double[] attitude = new double[3];
+    convertSphericalToCartesian(new double[]{pitch, yaw}, attitude);
+    
+		rotateY(attitude, incl);
+    rotateZ(attitude, lon);
+    
+    convertCartesianToSpherical(attitude, stage.gamma);
 	}
 
 	private static void vectorTransform(Stage stage, double[] arr, double x, double y, Transform dir) {
@@ -205,7 +211,7 @@ public class Navigation {
 		vectorTransform(stage, stage.gamma, pitch, yaw, Transform.BACKWARD);
 		vectorTransform(stage, stage.beta, temp1, temp2, Transform.BACKWARD);
 
-		pitch = (3*PI / 2 - stage.beta[0]) - delP;
+		pitch = (3*PI/2 - stage.beta[0]) - delP;
 		yaw = stage.gamma[1];
 
 		temp1 = stage.beta[0];
@@ -221,12 +227,13 @@ public class Navigation {
 	 */
 	public static void gravityTurn(Stage stage) {
 
-		if (stage.extraBurnIsUnderway()) {		// Fly retrograde
+		if (stage.extraBurnIsUnderway()) {    // Fly retrograde
 			stage.gamma[0] = stage.alpha[0];
 			stage.gamma[1] = stage.alpha[1];
-		} else {												// Gravity turn
+		} else {                              // Gravity turn
 			stage.gamma[0] = PI - stage.alpha[0];
 			stage.gamma[1] = PI + stage.alpha[1];
 		}
 	}
+
 }

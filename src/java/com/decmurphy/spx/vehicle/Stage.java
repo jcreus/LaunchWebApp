@@ -9,6 +9,7 @@ import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import static java.lang.Math.sqrt;
 
 public class Stage {
 
@@ -132,9 +133,9 @@ public class Stage {
 	}
 
 	final void setCoordinates(double incl, double lon) {
-		pos[0] = radiusOfEarth * Math.sin(incl) * Math.sin(lon);
-		pos[1] = radiusOfEarth * Math.sin(incl) * Math.cos(lon);
-		pos[2] = radiusOfEarth * Math.cos(incl);
+		pos[0] = radiusOfEarth*sin(incl)*cos(lon);
+		pos[1] = radiusOfEarth*sin(incl)*sin(lon);
+		pos[2] = radiusOfEarth*cos(incl);
 
 		relPos[0] = pos[0];
 		relPos[1] = pos[1];
@@ -145,17 +146,17 @@ public class Stage {
 		/*
 		 *	gravity angle always points towards the centre of the planet
 		 */
-		beta[0] = Math.PI - Math.atan2(Math.sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
-		beta[1] = Math.PI + Math.atan2(pos[0], pos[1]);
+		beta[0] = PI - atan2(sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
+		beta[1] = PI + atan2(pos[1], pos[0]);
     
-		beta2[0] = Math.PI - Math.atan2(Math.sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
-		beta2[1] = Math.PI + Math.atan2(pos[0], pos[1]);    
+		beta2[0] = PI - atan2(sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
+		beta2[1] = PI + atan2(pos[1], pos[0]);    
 
 		/*
 		 *	thrust angle starts off pointing straight up
 		 */
-		gamma[0] = Math.PI - beta[0];
-		gamma[1] = Math.PI + beta[1];
+		gamma[0] = PI - beta[0];
+		gamma[1] = PI + beta[1];
 	}
 
 	/*
@@ -251,10 +252,10 @@ public class Stage {
 	private int completedOrbits;
 	private double newtheta, oldtheta;
 	public int completedOrbits() {
-		newtheta = atan2(this.pos[0], this.pos[1]);
+		newtheta = atan2(this.pos[1], this.pos[0]);
 
-		if (oldtheta > parent.getMission().LaunchSite().getLong()
-						&& newtheta < parent.getMission().LaunchSite().getLong()) {
+		if (oldtheta < parent.getMission().LaunchSite().getLong()
+						&& newtheta > parent.getMission().LaunchSite().getLong()) {
 			completedOrbits++;
 		}
 		oldtheta = newtheta;
@@ -372,7 +373,7 @@ public class Stage {
 	//////////////////////////////////////////////////////////////////////////////
 
 	public double getThrustAtAltitude(double altitude) {
-		return getThrottle() * getNumEngines() * engine.getThrustAtAltitude(altitude);
+		return getThrottle()*getNumEngines()*engine.getThrustAtAltitude(altitude);
 	}
 	
 	public double getDragCoefficientAtAltitude(double altitude) {
