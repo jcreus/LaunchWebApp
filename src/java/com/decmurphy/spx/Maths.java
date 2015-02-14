@@ -14,7 +14,7 @@ public class Maths {
   
   public static void rotateX(double[] vector, double angle) {
     assert(vector.length==3);
-    double[] tempVector = vector;
+    double[] tempVector = new double[]{vector[0], vector[1], vector[2]};
     
     vector[0] = 1*tempVector[0] + 0*tempVector[1]          + 0*tempVector[2];
     vector[1] = 0*tempVector[0] + cos(angle)*tempVector[1] - sin(angle)*tempVector[2];
@@ -26,13 +26,13 @@ public class Maths {
     double[] tempVector = new double[]{vector[0], vector[1], vector[2]};
     
     vector[0] = cos(angle)*tempVector[0]  + 0*tempVector[1] + sin(angle)*tempVector[2];
-    vector[1] = 0*tempVector[0]           + 1*tempVector[1] - 0*tempVector[2];
+    vector[1] = 0*tempVector[0]           + 1*tempVector[1] + 0*tempVector[2];
     vector[2] = -sin(angle)*tempVector[0] + 0*tempVector[1] + cos(angle)*tempVector[2];
   }
     
   public static void rotateZ(double[] vector, double angle) {
     assert(vector.length==3);
-    double[] tempVector = vector;
+    double[] tempVector = new double[]{vector[0], vector[1], vector[2]};
     
     vector[0] = cos(angle)*tempVector[0] - sin(angle)*tempVector[1] + 0*tempVector[2];
     vector[1] = sin(angle)*tempVector[0] + cos(angle)*tempVector[1] + 0*tempVector[2];
@@ -51,8 +51,8 @@ public class Maths {
   public static void convertCartesianToSpherical(double[] cart, double[] sph) {
     assert(sph.length==2 && cart.length==3);
 
-    sph[0] = atan2(cart[1], cart[0]);
-    sph[1] = acos(cart[2]);
+    sph[0] = acos(cart[2]);
+    sph[1] = atan2(cart[1], cart[0]);
     
   }
   
