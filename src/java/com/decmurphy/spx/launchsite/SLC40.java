@@ -1,5 +1,7 @@
 package com.decmurphy.spx.launchsite;
 
+import static java.lang.Math.toRadians;
+
 /**
  *
  * @author declan
@@ -11,7 +13,7 @@ public class SLC40 extends LaunchSite {
 		setName("CCAFS SLC-40");
     // See http://en.wikipedia.org/wiki/Spherical_coordinate_system#mediaviewer/File:3D_Spherical.svg
     // First coordinate is theta, second is phi. phi=0 is the prime meridian
-		setCoordinates(new double[]{toRad(61.44),toRad(-80.57)});
+		setCoordinates(new double[]{toRadians(61.44),toRadians(-80.57)});
 	}
 	
 	public static LaunchSite get() {

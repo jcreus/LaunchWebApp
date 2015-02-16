@@ -47,8 +47,4 @@ public abstract class LaunchSite {
 		this.name = name;
 	}
 	
-	protected double toRad(double x) {
-		return x * PI / 180;
-	}
-	
 }
