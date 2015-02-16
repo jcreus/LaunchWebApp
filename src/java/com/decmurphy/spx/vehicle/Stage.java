@@ -1,6 +1,7 @@
 package com.decmurphy.spx.vehicle;
 
 import static com.decmurphy.spx.Globals.radiusOfEarth;
+import static com.decmurphy.spx.Physics.gravityAtRadius;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import java.io.*;
 import com.decmurphy.spx.engine.Engine;
@@ -34,7 +35,6 @@ public class Stage {
 									beta,		// angle of position	(gravity acts through this one - points towards earth's centre)
                   beta2,  // angle of position  (for first stage with coriolis effect on)
 									gamma;  // angle of thrust		(guess what acts through this one)
-
 	/*
 	 *	These ones are in cartesian coordinates. It's started off easier to visualize but I never thought
 	 *	about whether they should be cartesian or spherical. Should I put these in spherical coordinates too?
@@ -68,10 +68,9 @@ public class Stage {
 
 		this.S = this.relS = this.VR = this.VA = this.A = 0.0;
 
-		this.alpha = new double[2];
-		this.beta = new double[2];
-		this.beta2 = new double[2];
-		this.gamma = new double[2];
+		this.alpha = new double[3];
+		this.beta = new double[3];
+		this.gamma = new double[3];
 
 		this.pos = new double[3];
 		this.relPos = new double[3];
@@ -114,10 +113,9 @@ public class Stage {
 		this.XA = s.XA;
 		this.additionalMass = s.additionalMass;
 
-		this.alpha = new double[]{s.alpha[0], s.alpha[1]};
-		this.beta = new double[]{s.beta[0], s.beta[1]};
-		this.beta2 = new double[]{s.beta2[0], s.beta2[1]};
-		this.gamma = new double[]{s.gamma[0], s.gamma[1]};
+		this.alpha = new double[]{s.alpha[0], s.alpha[1], s.alpha[2]};
+		this.beta = new double[]{s.beta[0], s.beta[1], s.beta[2]};
+		this.gamma = new double[]{s.gamma[0], s.gamma[1], s.gamma[2]};
 
 		this.pos = new double[]{s.pos[0], s.pos[1], s.pos[2]};
 		this.relPos = new double[]{s.relPos[0], s.relPos[1], s.relPos[2]};
@@ -146,17 +144,16 @@ public class Stage {
 		/*
 		 *	gravity angle always points towards the centre of the planet
 		 */
-		beta[0] = PI - atan2(sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
-		beta[1] = PI + atan2(pos[1], pos[0]);
-    
-		beta2[0] = PI - atan2(sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
-		beta2[1] = PI + atan2(pos[1], pos[0]);    
+    beta[0] = getEffectiveMass()*gravityAtRadius(radiusOfEarth + alt());
+		beta[1] = PI - atan2(sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
+		beta[2] = PI + atan2(pos[1], pos[0]);   
 
 		/*
 		 *	thrust angle starts off pointing straight up
 		 */
-		gamma[0] = PI - beta[0];
-		gamma[1] = PI + beta[1];
+    gamma[0] = 0.0;
+		gamma[1] = PI - beta[1];
+		gamma[2] = PI + beta[2];
 	}
 
 	/*
@@ -176,7 +173,6 @@ public class Stage {
 
 		System.arraycopy(stage.alpha, 0, this.alpha, 0, stage.alpha.length);
 		System.arraycopy(stage.beta, 0, this.beta, 0, stage.beta.length);
-		System.arraycopy(stage.beta2, 0, this.beta2, 0, stage.beta2.length);
 		System.arraycopy(stage.gamma, 0, this.gamma, 0, stage.gamma.length);
 	}
 
@@ -362,10 +358,10 @@ public class Stage {
   
   public double getDownrangeDistance() {
     double theta1 = PI - getParent().getMission().LaunchSite().getIncl();
-    double theta2 = beta[0];
+    double theta2 = beta[1];
 
     double psi1 = getParent().getMission().LaunchSite().getLong();
-    double psi2 = beta[1] - PI;
+    double psi2 = beta[2] - PI;
 
     return radiusOfEarth*acos(cos(theta1)*cos(theta2) + sin(theta1)*sin(theta2)*cos(psi1-psi2));
   }
