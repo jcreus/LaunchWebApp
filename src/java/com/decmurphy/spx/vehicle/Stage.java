@@ -33,17 +33,17 @@ public class Stage {
 	 */
 	public double[] alpha,	// angle of attack 		(drag acts through this angle)
 									beta,		// angle of position	(gravity acts through this one - points towards earth's centre)
-                  beta2,  // angle of position  (for first stage with coriolis effect on)
 									gamma;  // angle of thrust		(guess what acts through this one)
 	/*
 	 *	These ones are in cartesian coordinates. It's started off easier to visualize but I never thought
 	 *	about whether they should be cartesian or spherical. Should I put these in spherical coordinates too?
 	 *	I'll think about it. It would make the leapfrog	function a lot simpler, that's for sure.
 	 */
-	public double[] pos,		// cartesian position
+	public double[] tempPos, //
+                  pos,	  // cartesian position
                   relPos, // For looking at first stage landing with coriolis on
-									relVel, // relative velocity	(relative to earth's surface. Starts at 0)
 									absVel, // absolute velocity	(Starts at earth velocity at launch pad. Gives a nice boost closer to equator)
+									relVel, // relative velocity	(relative to earth's surface. Starts at 0)
 									accel,	// acceleration
 									force;	// force
 
@@ -72,6 +72,7 @@ public class Stage {
 		this.beta = new double[3];
 		this.gamma = new double[3];
 
+		this.tempPos = new double[3];
 		this.pos = new double[3];
 		this.relPos = new double[3];
 		this.absVel = new double[3];
@@ -117,6 +118,7 @@ public class Stage {
 		this.beta = new double[]{s.beta[0], s.beta[1], s.beta[2]};
 		this.gamma = new double[]{s.gamma[0], s.gamma[1], s.gamma[2]};
 
+		this.tempPos = new double[]{s.tempPos[0], s.tempPos[1], s.tempPos[2]};
 		this.pos = new double[]{s.pos[0], s.pos[1], s.pos[2]};
 		this.relPos = new double[]{s.relPos[0], s.relPos[1], s.relPos[2]};
 		this.absVel = new double[]{s.absVel[0], s.absVel[1], s.absVel[2]};
@@ -145,7 +147,7 @@ public class Stage {
 		 *	gravity angle always points towards the centre of the planet
 		 */
     beta[0] = getEffectiveMass()*gravityAtRadius(radiusOfEarth + alt());
-		beta[1] = PI - atan2(sqrt(pos[0] * pos[0] + pos[1] * pos[1]), pos[2]);
+		beta[1] = PI - atan2(sqrt(pos[0]*pos[0] + pos[1]*pos[1]), pos[2]);
 		beta[2] = PI + atan2(pos[1], pos[0]);   
 
 		/*

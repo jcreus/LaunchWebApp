@@ -46,17 +46,17 @@ public class Navigation {
 		stage.accel[0] = stage.force[0]/stage.getEffectiveMass();
 		stage.accel[1] = stage.force[1]/stage.getEffectiveMass();
 		stage.accel[2] = stage.force[2]/stage.getEffectiveMass();
+		stage.A = magnitudeOf(stage.accel);
 
+    // sx = sin(2) ; vx = cos(2)
+    // sy = cos(2) ; vy = -sin(2)
 		stage.absVel[0] = stage.accel[0]*dt/2 + earthVel*sin(stage.beta[1])*sin(stage.beta[2]);
-		stage.absVel[1] = stage.accel[1]*dt/2 + earthVel*sin(stage.beta[1])*cos(stage.beta[2]);
+		stage.absVel[1] = stage.accel[1]*dt/2 - earthVel*sin(stage.beta[1])*cos(stage.beta[2]);
 		stage.absVel[2] = stage.accel[2]*dt/2;
 
-		stage.relVel[0] = 0;
-		stage.relVel[1] = 0;
-		stage.relVel[2] = 0;
-
-		stage.S = magnitudeOf(stage.pos);
-		stage.A = magnitudeOf(stage.accel);
+		stage.relVel[0] = stage.accel[0]*dt/2;
+		stage.relVel[1] = stage.accel[1]*dt/2;
+		stage.relVel[2] = stage.accel[2]*dt/2;
 
 		stage.isMoving = true;
 
@@ -146,8 +146,8 @@ public class Navigation {
 		stage.absVel[2] += stage.accel[2]*dt;
 		stage.VA = magnitudeOf(stage.absVel);
 
-		stage.relVel[0] = stage.absVel[0] - earthVel*sin(stage.beta[1])*cos(stage.beta[2]);
-		stage.relVel[1] = stage.absVel[1] - earthVel*sin(stage.beta[1])*sin(stage.beta[2]);
+		stage.relVel[0] = stage.absVel[0] - earthVel*sin(stage.beta[1])*sin(stage.beta[2]);
+		stage.relVel[1] = stage.absVel[1] + earthVel*sin(stage.beta[1])*cos(stage.beta[2]);
 		stage.relVel[2] = stage.absVel[2];
 		stage.VR = magnitudeOf(stage.relVel);
 
