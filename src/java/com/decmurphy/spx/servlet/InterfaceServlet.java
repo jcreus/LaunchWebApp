@@ -1,6 +1,7 @@
 package com.decmurphy.spx.servlet;
 
 import com.decmurphy.spx.Globals;
+import static com.decmurphy.spx.Globals.earthAngVel;
 import static com.decmurphy.spx.Globals.flightCode;
 import static com.decmurphy.spx.Globals.earthVel;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
@@ -65,8 +66,9 @@ public class InterfaceServlet extends HttpServlet {
           switch (paramName) {
 
             case "coriolis":
-              earthVel = paramValues[0].equalsIgnoreCase("on") ? radiusOfEarth*2*PI/(24*60*60) : // ~464 m/s at the equator
+              earthAngVel = paramValues[0].equalsIgnoreCase("on") ? 2*PI/(24*60*60) : 
                          paramValues[0].equalsIgnoreCase("off") ? 0.0 : -1.0;
+							earthVel = radiusOfEarth*earthAngVel;  // ~464 m/s at the equator
               if (earthVel < 0.0) {
                 throw new IllegalArgumentException("Illegal value for Coriolis Effect. \"On\" or \"Off\"");
               }
