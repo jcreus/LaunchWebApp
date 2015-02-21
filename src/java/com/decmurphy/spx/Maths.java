@@ -24,6 +24,7 @@ public class Maths {
     }    
 		public CartesianCoordinates(double[] x) {
       this(x[0], x[1], x[2]);
+			assert(x.length==3);
     }
     public CartesianCoordinates(double x, double y, double z) {
       coords = new double[]{x, y, z};
@@ -68,15 +69,6 @@ public class Maths {
     public double[] getValues() {
       return coords;
     }
-    
-    public void setValues(double[] arr) {
-      assert(arr.length==coords.length);
-      coords = arr;
-    }
-    
-    public int length() {
-      return coords.length;
-    }
   }
 
   public static class SphericalCoordinates {
@@ -88,6 +80,7 @@ public class Maths {
     }
 		public SphericalCoordinates(double[] x) {
 			this(x[0], x[1], x[2]);
+			assert(x.length==3);
 		}		
     public SphericalCoordinates(double r, double theta, double phi) {
       coords = new double[]{r, theta, phi};
@@ -108,15 +101,6 @@ public class Maths {
     public double[] getValues() {
       return coords;
     }
-    
-    public void setValues(double[] arr) {
-      assert(arr.length==coords.length);
-      coords = arr;
-    }
-    
-    public int length() {
-      return coords.length;
-    }
   }
 
   public static double magnitudeOf(double[] vector) {
@@ -132,10 +116,11 @@ public class Maths {
 		private double[] coords = null;
 				
 		public CartesianVelocity() {
-			coords = new double[]{0, 0, 0};
+			this(0, 0, 0);
 		}
 		public CartesianVelocity(double[] x) {
-			coords = new double[]{x[0], x[1], x[2]};
+			this(x[0], x[1], x[2]);
+			assert(x.length==3);
 		}		
 		public CartesianVelocity(double x, double y, double z) {
 			coords = new double[]{x, y, z};
@@ -151,11 +136,25 @@ public class Maths {
 			
 			double Cx = 1/magnitudeOf(car);
 			double Cy = Cx*Cx/sqrt(car[0]*car[0] + car[1]*car[1]);
-			double Cz = 1/(car[0]*car[0] + car[1]*car[1]);
+			double Cz = -1/(car[0]*car[0] + car[1]*car[1]);
 			
-			double[][] arr = {{Cx*car[0],        Cx*car[1],        Cx*car[2]},
-												{Cy*car[0]*car[2], Cy*car[1]*car[2], -Cy*(car[0]*car[0] + car[1]*car[1])},
-												{-Cz*car[1],       Cz*car[0],        0}};
+			/*
+				DiagMatrix C = {Cx, Cy, Cz};
+			
+				double[][] arr = {
+					{car[0],        car[1],         car[2]},
+					{car[0]*car[2], car[1]*car[2], -(car[0]*car[0] + car[1]*car[1])},
+					{car[1],       -car[0],         0}
+				};
+		
+				Matrix C2SV = DiagMatrix.times(new Matrix(arr));
+			*/
+			
+			double[][] arr = {
+				{Cx*car[0],        Cx*car[1],         Cx*car[2]},
+        {Cy*car[0]*car[2], Cy*car[1]*car[2], -Cy*(car[0]*car[0] + car[1]*car[1])},
+        {Cz*car[1],       -Cz*car[0],         0}
+			};
 		
 			Matrix C2SV = new Matrix(arr);
 			Matrix carVel = new Matrix(coords, 1);
@@ -191,9 +190,23 @@ public class Maths {
 			double Ky = Kx;
 			double Kz = cos(sph[1]);
 			
-			double[][] arr = {{Kx*tan(sph[1]),             Kx*sph[0],              -Kx*sph[0]*tan(sph[1])*tan(sph[2])},
-												{Ky*tan(sph[1])*tan(sph[2]), Ky*sph[0]*tan(sph[2]),  Ky*sph[0]*tan(sph[1])},
-												{Kz*1,                       -Kz*sph[0]*tan(sph[1]), 0}};
+			/*
+				DiagMatrix K = {Kx, Ky, Kz};		
+			
+				double[][] arr = {
+					{tan(sph[1]),             sph[0],            -sph[0]*tan(sph[1])*tan(sph[2])},
+					{tan(sph[1])*tan(sph[2]), sph[0]*tan(sph[2]), sph[0]*tan(sph[1])},
+					{1,                      -sph[0]*tan(sph[1]), 0}
+				};
+		
+				Matrix S2CV = DiagMatrix.times(new Matrix(arr));
+			*/
+			
+			double[][] arr = {
+				{Kx*tan(sph[1]),             Kx*sph[0],            -Kx*sph[0]*tan(sph[1])*tan(sph[2])},
+				{Ky*tan(sph[1])*tan(sph[2]), Ky*sph[0]*tan(sph[2]), Ky*sph[0]*tan(sph[1])},
+				{Kz*1,                      -Kz*sph[0]*tan(sph[1]), 0}
+			};
 		
 			Matrix S2CV = new Matrix(arr);
 			Matrix sphVel = new Matrix(coords, 1);

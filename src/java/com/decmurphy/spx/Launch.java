@@ -28,7 +28,7 @@ public class Launch {
 
       if(SECO && mission.LaunchVehicle().isLanded()) dt = 0.1;      
       if(mission.LaunchVehicle().failedToReachOrbit()) break;
-      if(mission.LaunchVehicle().completedOrbits() >= 5) break;
+      if(mission.LaunchVehicle().completedOrbits() >= 2) break;
       
 		} while (true);
 
