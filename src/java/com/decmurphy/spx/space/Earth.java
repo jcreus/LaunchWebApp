@@ -14,6 +14,7 @@ import java.io.PrintWriter;
 import static java.lang.Math.PI;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
+import static java.lang.Math.toRadians;
 
 /**
  *
@@ -84,8 +85,8 @@ public final class Earth extends Planet {
 				if (!line.isEmpty()) {
 					String[] parts = line.split("\\s+");
 
-					psi = Double.parseDouble(parts[0])*PI/180;
-					theta = (90 - Double.parseDouble(parts[1]))*PI/180;
+					psi = toRadians(Double.parseDouble(parts[0]));
+					theta = toRadians(90 - Double.parseDouble(parts[1]));
 					pw.print(R*sin(theta)*cos(psi) + "\t" + R*sin(theta)*sin(psi) + "\t" + R*cos(theta) + "\n");
 				} else {
 					pw.print("\n");
