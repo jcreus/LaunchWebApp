@@ -1,15 +1,15 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.Globals.dt;
-import static com.decmurphy.spx.Globals.gravConstant;
-import static com.decmurphy.spx.Globals.massOfEarth;
-import static com.decmurphy.spx.Globals.radiusOfEarth;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.launchsite.LaunchSite;
 import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
+import static com.decmurphy.utils.Globals.dt;
+import static com.decmurphy.utils.Globals.gravConstant;
+import static com.decmurphy.utils.Globals.massOfEarth;
+import static com.decmurphy.utils.Globals.radiusOfEarth;
 import static java.lang.Math.sqrt;
 
 /**

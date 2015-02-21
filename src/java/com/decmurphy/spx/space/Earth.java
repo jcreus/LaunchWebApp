@@ -2,9 +2,9 @@ package com.decmurphy.spx.space;
 
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import static com.decmurphy.spx.servlet.InterfaceServlet.resourcePath;
-import com.decmurphy.spx.Globals;
-import static com.decmurphy.spx.Globals.massOfEarth;
-import static com.decmurphy.spx.Globals.radiusOfEarth;
+import com.decmurphy.utils.Globals;
+import static com.decmurphy.utils.Globals.massOfEarth;
+import static com.decmurphy.utils.Globals.radiusOfEarth;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;

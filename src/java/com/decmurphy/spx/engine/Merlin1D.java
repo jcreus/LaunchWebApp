@@ -1,6 +1,6 @@
 package com.decmurphy.spx.engine;
 
-import static com.decmurphy.spx.Globals.g0;
+import static com.decmurphy.utils.Globals.g0;
 
 public class Merlin1D extends Engine
 {

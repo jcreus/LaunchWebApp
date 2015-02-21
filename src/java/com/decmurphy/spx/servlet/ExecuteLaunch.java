@@ -1,9 +1,9 @@
 package com.decmurphy.spx.servlet;
 
-import com.decmurphy.spx.Globals;
-import com.decmurphy.spx.GnuplotFileBuilder;
 import com.decmurphy.spx.Launch;
 import com.decmurphy.spx.mission.Mission;
+import com.decmurphy.utils.Globals;
+import com.decmurphy.utils.GnuplotFileBuilder;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

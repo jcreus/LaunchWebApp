@@ -1,7 +1,7 @@
-package com.decmurphy.spx;
+package com.decmurphy.utils;
 
 import Jama.Matrix;
-import static com.decmurphy.spx.Globals.earthAngVel;
+import static com.decmurphy.utils.Globals.earthAngVel;
 import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
 import static java.lang.Math.cos;

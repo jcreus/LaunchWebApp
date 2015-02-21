@@ -1,11 +1,11 @@
 package com.decmurphy.spx.mission;
 
-import static com.decmurphy.spx.Globals.dt;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.launchsite.LaunchSite;
 import com.decmurphy.spx.payload.Payload;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.vehicle.LaunchVehicle;
+import static com.decmurphy.utils.Globals.dt;
 import static java.lang.Math.abs;
 
 /**

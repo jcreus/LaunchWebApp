@@ -1,15 +1,15 @@
 package com.decmurphy.spx.gnc;
 
-import static com.decmurphy.spx.Globals.dt;
-import static com.decmurphy.spx.Globals.earthVel;
-import static com.decmurphy.spx.Globals.radiusOfEarth;
-import com.decmurphy.spx.Maths.CartesianCoordinates;
-import com.decmurphy.spx.Maths.CartesianVelocity;
-import com.decmurphy.spx.Maths.SphericalCoordinates;
-import static com.decmurphy.spx.Maths.magnitudeOf;
-import static com.decmurphy.spx.Physics.densityAtAltitude;
-import static com.decmurphy.spx.Physics.gravityAtRadius;
 import com.decmurphy.spx.vehicle.Stage;
+import static com.decmurphy.utils.Globals.dt;
+import static com.decmurphy.utils.Globals.earthVel;
+import static com.decmurphy.utils.Globals.radiusOfEarth;
+import com.decmurphy.utils.Maths.CartesianCoordinates;
+import com.decmurphy.utils.Maths.CartesianVelocity;
+import com.decmurphy.utils.Maths.SphericalCoordinates;
+import static com.decmurphy.utils.Maths.magnitudeOf;
+import static com.decmurphy.utils.Physics.densityAtAltitude;
+import static com.decmurphy.utils.Physics.gravityAtRadius;
 import static java.lang.Math.PI;
 import static java.lang.Math.acos;
 import static java.lang.Math.atan2;

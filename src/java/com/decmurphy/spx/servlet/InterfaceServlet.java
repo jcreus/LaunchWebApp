@@ -1,9 +1,9 @@
 package com.decmurphy.spx.servlet;
 
-import com.decmurphy.spx.Globals;
-import static com.decmurphy.spx.Globals.flightCode;
 import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.mission.MissionBuilder;
+import com.decmurphy.utils.Globals;
+import static com.decmurphy.utils.Globals.flightCode;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;

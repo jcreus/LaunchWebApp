@@ -1,8 +1,8 @@
-package com.decmurphy.spx;
+package com.decmurphy.utils;
 
-import static com.decmurphy.spx.Globals.gravConstant;
-import static com.decmurphy.spx.Globals.massOfEarth;
-import static com.decmurphy.spx.Globals.radiusOfEarth;
+import static com.decmurphy.utils.Globals.gravConstant;
+import static com.decmurphy.utils.Globals.massOfEarth;
+import static com.decmurphy.utils.Globals.radiusOfEarth;
 import static java.lang.Math.exp;
 import static java.lang.Math.log;
 import static java.lang.Math.pow;

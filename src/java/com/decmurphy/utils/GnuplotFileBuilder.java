@@ -1,4 +1,4 @@
-package com.decmurphy.spx;
+package com.decmurphy.utils;
 
 import com.decmurphy.spx.mission.Mission;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;

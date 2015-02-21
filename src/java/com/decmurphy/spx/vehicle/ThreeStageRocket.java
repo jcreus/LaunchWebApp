@@ -1,8 +1,8 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.gnc.HoverSlam.updateLandingThrottle;
 import com.decmurphy.spx.gnc.Navigation;
+import static com.decmurphy.utils.Globals.dt;
 
 /**
  *

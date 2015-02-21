@@ -1,9 +1,9 @@
 package com.decmurphy.spx;
 
-import static com.decmurphy.spx.Globals.dt;
 import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.space.Earth;
 import com.decmurphy.spx.space.Planet;
+import static com.decmurphy.utils.Globals.dt;
 
 public class Launch {
 

@@ -1,4 +1,4 @@
-package com.decmurphy.spx;
+package com.decmurphy.utils;
 
 import static java.lang.Math.PI;
 

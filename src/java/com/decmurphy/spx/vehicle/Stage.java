@@ -1,12 +1,12 @@
 package com.decmurphy.spx.vehicle;
 
-import static com.decmurphy.spx.Globals.earthVel;
-import static com.decmurphy.spx.Globals.radiusOfEarth;
-import static com.decmurphy.spx.Maths.magnitudeOf;
-import static com.decmurphy.spx.Physics.gravityAtRadius;
-import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
-import java.io.*;
 import com.decmurphy.spx.engine.Engine;
+import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
+import static com.decmurphy.utils.Globals.earthVel;
+import static com.decmurphy.utils.Globals.radiusOfEarth;
+import static com.decmurphy.utils.Maths.magnitudeOf;
+import static com.decmurphy.utils.Physics.gravityAtRadius;
+import java.io.*;
 import static java.lang.Math.PI;
 import static java.lang.Math.acos;
 import static java.lang.Math.atan2;
