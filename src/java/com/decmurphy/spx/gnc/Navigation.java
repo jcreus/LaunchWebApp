@@ -146,17 +146,19 @@ public class Navigation {
 		stage.absVel[1] += stage.accel[1]*dt;
 		stage.absVel[2] += stage.accel[2]*dt;
 		stage.VA = magnitudeOf(stage.absVel);
-		
-		stage.relVel = new CartesianVelocity(stage.absVel)
+	
+    double[] vel = new CartesianVelocity(stage.absVel)
 										.convertToSpherical(new CartesianCoordinates(stage.pos))
 										.rotateEarth()
 										.convertToCartesian(new CartesianCoordinates(stage.relPos).convertToSpherical())
 										.getValues();
-/*
-		stage.relVel[0] = stage.absVel[0] - earthVel*sin(stage.beta[1])*sin(stage.beta[2]);
-		stage.relVel[1] = stage.absVel[1] + earthVel*sin(stage.beta[1])*cos(stage.beta[2]);
-		stage.relVel[2] = stage.absVel[2];
-*/  stage.VR = magnitudeOf(stage.relVel);
+
+		//stage.relVel[0] = stage.absVel[0] - earthVel*sin(stage.beta[1])*sin(stage.beta[2]);
+		//stage.relVel[1] = stage.absVel[1] + earthVel*sin(stage.beta[1])*cos(stage.beta[2]);
+		//stage.relVel[2] = stage.absVel[2];
+    
+    System.arraycopy(vel, 0, stage.relVel, 0, 3);
+    stage.VR = magnitudeOf(stage.relVel);
 
 		stage.alpha[1] = PI - atan2(sqrt(stage.relVel[0]*stage.relVel[0] + stage.relVel[1]*stage.relVel[1]), stage.relVel[2]);
 		stage.alpha[2] = PI + atan2(stage.relVel[1], stage.relVel[0]);
