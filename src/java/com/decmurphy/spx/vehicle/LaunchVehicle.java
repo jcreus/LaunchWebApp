@@ -4,7 +4,6 @@ import static com.decmurphy.spx.Globals.dt;
 import static com.decmurphy.spx.Globals.gravConstant;
 import static com.decmurphy.spx.Globals.massOfEarth;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
-import static com.decmurphy.spx.Globals.simTime;
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
 import com.decmurphy.spx.launchsite.LaunchSite;
@@ -64,13 +63,13 @@ public abstract class LaunchVehicle {
 
   public void incrementClock() {
     onBoardClock += dt;
-    simTime += dt;
   }
 
   public void invoke(Profile p) {
     /*
-     Want to make sure any attitude changes keep effect permanently - not just for the moment they are initiated.
-     By 'permanently', I of course mean until it's replaced by the next attitude change.
+     Want to make sure any attitude changes keep effect permanently - not just 
+     for the moment they are initiated. By 'permanently', I of course mean until
+     it's replaced by the next attitude change.
      */
     Event event;
     if ((event = p.getEvent(onBoardClock)) != null) {

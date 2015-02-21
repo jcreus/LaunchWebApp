@@ -71,10 +71,6 @@ public class Navigation {
 	 */
 	public static void leapfrogStep(Stage stage) {
 
-		stage.gamma[0] = 0.0;
-		stage.alpha[0] = 0.0;
-		stage.beta[0] = 0.0;
-
 		stage.pos[0] += stage.absVel[0]*dt;
 		stage.pos[1] += stage.absVel[1]*dt;
 		stage.pos[2] += stage.absVel[2]*dt;
@@ -84,54 +80,8 @@ public class Navigation {
 		stage.relPos[1] += stage.relVel[1]*dt;
 		stage.relPos[2] += stage.relVel[2]*dt;
 		stage.relS = magnitudeOf(stage.relPos);
-
-		try {
-			stage.setQ(0.5*densityAtAltitude(stage.alt())*stage.VR*stage.VR);
-			if (stage.getPropMass() < 500) stage.setThrottle(0.0);
-
-			if (stage.isMoving) {
-				stage.alpha[0] = stage.getQ()*stage.getAeroProp("Cd")*stage.getAeroProp("XA");
-				stage.gamma[0] = stage.getPropMass() > 500 ? stage.getThrustAtAltitude(stage.alt()) : 0.0;
-				stage.beta[0] = stage.getEffectiveMass()*gravityAtRadius(radiusOfEarth + stage.alt());
-			} else {
-				stage.alpha[0] = stage.gamma[0] = stage.beta[0] = 0.0;
-			}
-		} catch (IllegalArgumentException e) {
-		}
-
-		/*
-		 *	If a crash happens (i.e if distance from earth's centre < earth's radius) then turn off engines.
-		 *	Introduce an upwards reaction force (Newton's 3rd law) which effectively cancels out gravity.
-		 *	There should be no more movement after this point.
-		 *
-		 *	I had to introduce the 'if(stage.clock())' statement because for a split second at the very start,
-		 *	the stage falls before it rises. I'll find a more elegant solution to this problem soon.
-		 */
-		if (stage.alt() < 0) {
-			if (stage.landingBurnIsUnderway()) {
-				System.out.printf("T%+7.2f\t%.32s\n", stage.clock(), "Crash/Landing");
-			}
-
-      if(stage.clock() > 5.0)
-        stage.setLanded(true);
-      
-			for (int i = 0; i < 3; i++) {
-				stage.pos[i] -= stage.absVel[i]*dt;
-				stage.relPos[i] -= stage.relVel[i]*dt;
-				stage.absVel[i] = 0.0;
-			}
-  		stage.relS = magnitudeOf(stage.relPos);
-			stage.S = magnitudeOf(stage.pos);
-			if (stage.clock() > 100.0) {
-				stage.setThrottle(0.0);
-			}
-			stage.setLandingBurnIsUnderway(false);
-			stage.isMoving = false;
-
-			stage.gamma[0] = 0.0;
-			stage.beta[0] = 0.0;
-			stage.alpha[0] = 0.0;
-		}
+    
+    executeBoundaryConditions(stage);
 
 		stage.force[0] = stage.gamma[0]*sin(stage.gamma[1])*cos(stage.gamma[2]) + stage.alpha[0]*sin(stage.alpha[1])*cos(stage.alpha[2])	+ stage.beta[0]*sin(stage.beta[1])*cos(stage.beta[2]);
 		stage.force[1] = stage.gamma[0]*sin(stage.gamma[1])*sin(stage.gamma[2]) + stage.alpha[0]*sin(stage.alpha[1])*sin(stage.alpha[2])	+ stage.beta[0]*sin(stage.beta[1])*sin(stage.beta[2]);
@@ -147,26 +97,16 @@ public class Navigation {
 		stage.absVel[2] += stage.accel[2]*dt;
 		stage.VA = magnitudeOf(stage.absVel);
 	
-    double[] vel = new CartesianVelocity(stage.absVel)
+    stage.relVel = new CartesianVelocity(stage.absVel)
 										.convertToSpherical(new CartesianCoordinates(stage.pos))
 										.rotateEarth()
 										.convertToCartesian(new CartesianCoordinates(stage.relPos).convertToSpherical())
 										.getValues();
 
-		//stage.relVel[0] = stage.absVel[0] - earthVel*sin(stage.beta[1])*sin(stage.beta[2]);
-		//stage.relVel[1] = stage.absVel[1] + earthVel*sin(stage.beta[1])*cos(stage.beta[2]);
-		//stage.relVel[2] = stage.absVel[2];
-    
-    System.arraycopy(vel, 0, stage.relVel, 0, 3);
     stage.VR = magnitudeOf(stage.relVel);
-
-		stage.alpha[1] = PI - atan2(sqrt(stage.relVel[0]*stage.relVel[0] + stage.relVel[1]*stage.relVel[1]), stage.relVel[2]);
-		stage.alpha[2] = PI + atan2(stage.relVel[1], stage.relVel[0]);
-
-		stage.beta[1] = PI - atan2(sqrt(stage.pos[0]*stage.pos[0] + stage.pos[1]*stage.pos[1]), stage.pos[2]);
-		stage.beta[2] = PI + atan2(stage.pos[1], stage.pos[0]);
-
-		stage.setPropMass(stage.getPropMass() - stage.getThrottle()*stage.getNumEngines()*stage.getEngine().getMdot()*dt);
+    
+    updateVectors(stage);
+    removeMassFromSystem(stage);
 
 	}
 
@@ -253,5 +193,74 @@ public class Navigation {
 			stage.gamma[2] = PI + stage.alpha[2];
 		}
 	}
+  
+  private static void executeBoundaryConditions(Stage s) {
+    
+		try {
+			s.setQ(0.5*densityAtAltitude(s.alt())*s.VR*s.VR);
+			if (s.getPropMass() < 500) s.setThrottle(0.0);
 
+			if (s.isMoving) {
+				s.alpha[0] = s.getQ()*s.getAeroProp("Cd")*s.getAeroProp("XA");
+				s.gamma[0] = s.getPropMass() > 500 ? s.getThrustAtAltitude(s.alt()) : 0.0;
+				s.beta[0] = s.getEffectiveMass()*gravityAtRadius(radiusOfEarth + s.alt());
+			} else {
+				s.alpha[0] = s.gamma[0] = s.beta[0] = 0.0;
+			}
+		} catch (IllegalArgumentException e) {
+		}
+
+		/*
+		 *	If a crash happens (i.e if distance from earth's centre < earth's radius)
+     *  then turn off engines. 	Introduce an upwards reaction force (Newton's 3rd
+     *  law) which effectively cancels out gravity.	There should be no more
+     *  movement after this point.
+		 *
+		 *	I had to introduce the 'if(s.clock())' statement because for a split
+     *  second at the very start, the s falls before it rises. I'll find a
+     *  more elegant solution to this problem soon.
+		 */
+		if (s.alt() < 0) {
+			if (s.landingBurnIsUnderway()) {
+				System.out.printf("T%+7.2f\t%.32s\n", s.clock(), "Crash/Landing");
+			}
+
+      if(s.clock() > 5.0)
+        s.setLanded(true);
+      
+			for (int i = 0; i < 3; i++) {
+				s.pos[i] -= s.absVel[i]*dt;
+				s.relPos[i] -= s.relVel[i]*dt;
+				s.absVel[i] = 0.0;
+			}
+  		s.relS = magnitudeOf(s.relPos);
+			s.S = magnitudeOf(s.pos);
+			if (s.clock() > 100.0) {
+				s.setThrottle(0.0);
+			}
+			s.setLandingBurnIsUnderway(false);
+			s.isMoving = false;
+
+			s.gamma[0] = 0.0;
+			s.beta[0] = 0.0;
+			s.alpha[0] = 0.0;
+		}
+
+  }
+  
+  private static void updateVectors(Stage s) {
+    
+		s.alpha[1] = PI - atan2(sqrt(s.relVel[0]*s.relVel[0] + s.relVel[1]*s.relVel[1]), s.relVel[2]);
+		s.alpha[2] = PI + atan2(s.relVel[1], s.relVel[0]);
+
+		s.beta[1] = PI - atan2(sqrt(s.pos[0]*s.pos[0] + s.pos[1]*s.pos[1]), s.pos[2]);
+		s.beta[2] = PI + atan2(s.pos[1], s.pos[0]);
+
+  }
+
+  private static void removeMassFromSystem(Stage s) {
+    double dm = s.getThrottle()*s.getNumEngines()*s.getEngine().getMdot()*dt;
+    double newMass = s.getPropMass() - dm;
+ 		s.setPropMass(newMass);
+  }
 }
