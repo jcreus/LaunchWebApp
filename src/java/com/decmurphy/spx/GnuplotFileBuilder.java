@@ -88,7 +88,7 @@ public class GnuplotFileBuilder {
         
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
-        pw.printf("set ylabel \"Velocity (m/s)\"\n");
+        pw.printf("set ylabel \"Stage 1 Velocity (m/s)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:6 w l, \\\n", outputPath, id);
@@ -98,7 +98,7 @@ public class GnuplotFileBuilder {
         
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
-        pw.printf("set ylabel \"Velocity (m/s)\"\n");
+        pw.printf("set ylabel \"Stage 2 Velocity (m/s)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_SecondStage.dat\" u 1:6 w l, \\\n", outputPath, id);
@@ -108,7 +108,7 @@ public class GnuplotFileBuilder {
         
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
-        pw.printf("set ylabel \"Altitude (km)\"\n");
+        pw.printf("set ylabel \"Stage 1 Altitude (km)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:5 w l, \\\n", outputPath, id);
@@ -118,7 +118,7 @@ public class GnuplotFileBuilder {
         
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
-        pw.printf("set ylabel \"Altitude (km)\"\n");
+        pw.printf("set ylabel \"Stage 2 Altitude (km)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_SecondStage.dat\" u 1:5 w l, \\\n", outputPath, id);
@@ -127,8 +127,8 @@ public class GnuplotFileBuilder {
       } else if (phase.equalsIgnoreCase("phase1")) {
         
         pw.printf("set key off\n");
-        pw.printf("set xlabel \"Altitude (km)\"\n");
-        pw.printf("set ylabel \"Velocity (m/s)\"\n");
+        pw.printf("set xlabel \"Stage 1 Altitude (km)\"\n");
+        pw.printf("set ylabel \"Stage 1 Velocity (m/s)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_BoosterStage.dat\" u 5:6 w l, \\\n", outputPath, id);
@@ -137,8 +137,8 @@ public class GnuplotFileBuilder {
       } else if (phase.equalsIgnoreCase("phase2")) {
         
         pw.printf("set key off\n");
-        pw.printf("set xlabel \"Altitude (km)\"\n");
-        pw.printf("set ylabel \"Velocity (m/s)\"\n");
+        pw.printf("set xlabel \"Stage 2 Altitude (km)\"\n");
+        pw.printf("set ylabel \"Stage 2 Velocity (m/s)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_SecondStage.dat\" u 5:6 w l, \\\n", outputPath, id);
@@ -147,8 +147,8 @@ public class GnuplotFileBuilder {
       } else if (phase.equalsIgnoreCase("profile1")) {
 
         pw.printf("set key off\n");
-        pw.printf("set xlabel \"Downrange (km)\"\n");
-        pw.printf("set ylabel \"Altitude (km)\"\n");
+        pw.printf("set xlabel \"Stage 1 Downrange (km)\"\n");
+        pw.printf("set ylabel \"Stage 2 Altitude (km)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_BoosterStage.dat\" u 7:5 w l, \\\n", outputPath, id);        
@@ -157,8 +157,8 @@ public class GnuplotFileBuilder {
       } else if (phase.equalsIgnoreCase("profile2")) {
 
         pw.printf("set key off\n");
-        pw.printf("set xlabel \"Downrange (km)\"\n");
-        pw.printf("set ylabel \"Altitude (km)\"\n");
+        pw.printf("set xlabel \"Stage 2 Downrange (km)\"\n");
+        pw.printf("set ylabel \"Stage 2 Altitude (km)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_SecondStage.dat\" u 7:5 w l, \\\n", outputPath, id);        
@@ -168,7 +168,7 @@ public class GnuplotFileBuilder {
 
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Time (s)\"\n");
-        pw.printf("set ylabel \"Aerodynamic Pressure (kPa)\"\n");
+        pw.printf("set ylabel \"Stage 1 Aerodynamic Pressure (kPa)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:8 w l\n", outputPath, id);        
