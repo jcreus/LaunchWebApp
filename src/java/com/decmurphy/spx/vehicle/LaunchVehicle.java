@@ -134,5 +134,9 @@ public abstract class LaunchVehicle {
 	public void setLaunchSite(LaunchSite ls) {
 		setCoordinates(ls.getIncl(), ls.getLong());
 	}
+  
+  public boolean hasLaunched() {
+    return clampsReleased;
+  }
 
 }

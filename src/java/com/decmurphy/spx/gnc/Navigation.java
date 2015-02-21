@@ -29,37 +29,37 @@ public class Navigation {
 		BACKWARD
 	}
 
-	public static void leapfrogFirstStep(Stage stage) {
+	public static void leapfrogFirstStep(Stage s) {
 
-		stage.beta[0] = 0.0;
-		stage.gamma[0] = 0.0;
+		s.beta[0] = 0.0;
+		s.gamma[0] = 0.0;
 
 		try {
-			stage.beta[0] = stage.getEffectiveMass()*gravityAtRadius(radiusOfEarth + stage.alt());
-			stage.gamma[0] = stage.getThrustAtAltitude(stage.alt());
+			s.beta[0] = s.getEffectiveMass()*gravityAtRadius(radiusOfEarth + s.alt());
+			s.gamma[0] = s.getThrustAtAltitude(s.alt());
 		} catch (IllegalArgumentException e) {
 		}
 
-		stage.force[0] = stage.gamma[0]*sin(stage.gamma[1])*cos(stage.gamma[2]) + stage.beta[0]*sin(stage.beta[1])*cos(stage.beta[2]);
-		stage.force[1] = stage.gamma[0]*sin(stage.gamma[1])*sin(stage.gamma[2]) + stage.beta[0]*sin(stage.beta[1])*sin(stage.beta[2]);
-		stage.force[2] = stage.gamma[0]*cos(stage.gamma[1])                     + stage.beta[0]*cos(stage.beta[1]);
+		s.force[0] = s.gamma[0]*sin(s.gamma[1])*cos(s.gamma[2]) + s.beta[0]*sin(s.beta[1])*cos(s.beta[2]);
+		s.force[1] = s.gamma[0]*sin(s.gamma[1])*sin(s.gamma[2]) + s.beta[0]*sin(s.beta[1])*sin(s.beta[2]);
+		s.force[2] = s.gamma[0]*cos(s.gamma[1])                 + s.beta[0]*cos(s.beta[1]);
 
-		stage.accel[0] = stage.force[0]/stage.getEffectiveMass();
-		stage.accel[1] = stage.force[1]/stage.getEffectiveMass();
-		stage.accel[2] = stage.force[2]/stage.getEffectiveMass();
-		stage.A = magnitudeOf(stage.accel);
+		s.accel[0] = s.force[0]/s.getEffectiveMass();
+		s.accel[1] = s.force[1]/s.getEffectiveMass();
+		s.accel[2] = s.force[2]/s.getEffectiveMass();
+		s.A = magnitudeOf(s.accel);
 
     // sx = sin(2) ; vx = cos(2)
     // sy = cos(2) ; vy = -sin(2)
-		stage.absVel[0] = stage.accel[0]*dt/2 + earthVel*sin(stage.beta[1])*sin(stage.beta[2]);
-		stage.absVel[1] = stage.accel[1]*dt/2 - earthVel*sin(stage.beta[1])*cos(stage.beta[2]);
-		stage.absVel[2] = stage.accel[2]*dt/2;
+		s.absVel[0] += s.accel[0]*dt/2;
+		s.absVel[1] += s.accel[1]*dt/2;
+		s.absVel[2] += s.accel[2]*dt/2;
 
-		stage.relVel[0] = stage.accel[0]*dt/2;
-		stage.relVel[1] = stage.accel[1]*dt/2;
-		stage.relVel[2] = stage.accel[2]*dt/2;
+		s.relVel[0] += s.accel[0]*dt/2;
+		s.relVel[1] += s.accel[1]*dt/2;
+		s.relVel[2] += s.accel[2]*dt/2;
 
-		stage.isMoving = true;
+		s.isMoving = true;
 
 	}
 
@@ -69,44 +69,51 @@ public class Navigation {
    *  starting at T+0:55. And don't forget to remove the appropriate amount of mass
    *  from the system.
 	 */
-	public static void leapfrogStep(Stage stage) {
+	public static void leapfrogStep(Stage s) {
 
-		stage.pos[0] += stage.absVel[0]*dt;
-		stage.pos[1] += stage.absVel[1]*dt;
-		stage.pos[2] += stage.absVel[2]*dt;
-		stage.S = magnitudeOf(stage.pos);
+		s.pos[0] += s.absVel[0]*dt;
+		s.pos[1] += s.absVel[1]*dt;
+		s.pos[2] += s.absVel[2]*dt;
+		s.S = magnitudeOf(s.pos);
 
-		stage.relPos[0] += stage.relVel[0]*dt;
-		stage.relPos[1] += stage.relVel[1]*dt;
-		stage.relPos[2] += stage.relVel[2]*dt;
-		stage.relS = magnitudeOf(stage.relPos);
+		s.relPos[0] += s.relVel[0]*dt;
+		s.relPos[1] += s.relVel[1]*dt;
+		s.relPos[2] += s.relVel[2]*dt;
+		s.relS = magnitudeOf(s.relPos);
     
-    executeBoundaryConditions(stage);
+    executeBoundaryConditions(s);
 
-		stage.force[0] = stage.gamma[0]*sin(stage.gamma[1])*cos(stage.gamma[2]) + stage.alpha[0]*sin(stage.alpha[1])*cos(stage.alpha[2])	+ stage.beta[0]*sin(stage.beta[1])*cos(stage.beta[2]);
-		stage.force[1] = stage.gamma[0]*sin(stage.gamma[1])*sin(stage.gamma[2]) + stage.alpha[0]*sin(stage.alpha[1])*sin(stage.alpha[2])	+ stage.beta[0]*sin(stage.beta[1])*sin(stage.beta[2]);
-		stage.force[2] = stage.gamma[0]*cos(stage.gamma[1])                     + stage.alpha[0]*cos(stage.alpha[1])                    	+ stage.beta[0]*cos(stage.beta[1]);
+		s.force[0] = s.gamma[0]*sin(s.gamma[1])*cos(s.gamma[2]) + s.alpha[0]*sin(s.alpha[1])*cos(s.alpha[2])	+ s.beta[0]*sin(s.beta[1])*cos(s.beta[2]);
+		s.force[1] = s.gamma[0]*sin(s.gamma[1])*sin(s.gamma[2]) + s.alpha[0]*sin(s.alpha[1])*sin(s.alpha[2])	+ s.beta[0]*sin(s.beta[1])*sin(s.beta[2]);
+		s.force[2] = s.gamma[0]*cos(s.gamma[1])                 + s.alpha[0]*cos(s.alpha[1])                  + s.beta[0]*cos(s.beta[1]);
 
-		stage.accel[0] = stage.force[0]/stage.getEffectiveMass();
-		stage.accel[1] = stage.force[1]/stage.getEffectiveMass();
-		stage.accel[2] = stage.force[2]/stage.getEffectiveMass();
-		stage.A = magnitudeOf(stage.accel);
+		s.accel[0] = s.force[0]/s.getEffectiveMass();
+		s.accel[1] = s.force[1]/s.getEffectiveMass();
+		s.accel[2] = s.force[2]/s.getEffectiveMass();
+		s.A = magnitudeOf(s.accel);
 
-		stage.absVel[0] += stage.accel[0]*dt;
-		stage.absVel[1] += stage.accel[1]*dt;
-		stage.absVel[2] += stage.accel[2]*dt;
-		stage.VA = magnitudeOf(stage.absVel);
+    if(!s.getParent().hasLaunched()) {
+      s.absVel[0] =  earthVel*sin(s.beta[1])*sin(s.beta[2]);
+      s.absVel[1] = -earthVel*sin(s.beta[1])*cos(s.beta[2]);
+      s.absVel[2] = 0.0;
+    }
+    else {
+      s.absVel[0] += s.accel[0]*dt;
+      s.absVel[1] += s.accel[1]*dt;
+      s.absVel[2] += s.accel[2]*dt;
+    }
+    s.VA = magnitudeOf(s.absVel);
 	
-    stage.relVel = new CartesianVelocity(stage.absVel)
-										.convertToSpherical(new CartesianCoordinates(stage.pos))
+    s.relVel = new CartesianVelocity(s.absVel)
+										.convertToSpherical(new CartesianCoordinates(s.pos))
 										.rotateEarth()
-										.convertToCartesian(new CartesianCoordinates(stage.relPos).convertToSpherical())
+										.convertToCartesian(new CartesianCoordinates(s.relPos).convertToSpherical())
 										.getValues();
 
-    stage.VR = magnitudeOf(stage.relVel);
+    s.VR = magnitudeOf(s.relVel);
     
-    updateVectors(stage);
-    removeMassFromSystem(stage);
+    updateVectors(s);
+    removeMassFromSystem(s);
 
 	}
 
@@ -117,7 +124,7 @@ public class Navigation {
    *  back. For the pitch kick I can skip the first step. So rotate (pitch, yaw)
    *  by theta degrees about the y-axis and then rotate by phi degrees about the z-axis.
 	 *
-	 *	For Cape Canaveral, this is rotating (pitch, yaw) by -61.51 degrees about y,
+	 *	For Cape Canaveral, this is rotating (pitch, yaw) by 61.51 degrees about y,
    *  and then by -80.58 degrees about z.	Voila. That's your heading after pitch-kick.
    *  Hint: Use the right-hand rule!
 	 */
@@ -151,8 +158,9 @@ public class Navigation {
     
     // arr is in Spherical form already, but we create an explicit object here
     // to make rotations and conversions easier. 
-    SphericalCoordinates sph = new SphericalCoordinates(arr[0], arr[1], arr[2]);
-    CartesianCoordinates newVector = sph.convertToCartesian();
+    CartesianCoordinates newVector = 
+            new SphericalCoordinates(arr[0], arr[1], arr[2])
+            .convertToCartesian();
     
     int r;
     switch (dir) {
@@ -167,30 +175,30 @@ public class Navigation {
  
 	}
 
-	public static void adjustPitch(Stage stage, double delP) {
+	public static void adjustPitch(Stage s, double delP) {
 
-    if(stage.gamma[0]>0.0) {
-      vectorTransform(stage, stage.gamma, Transform.BACKWARD);
-      vectorTransform(stage, stage.beta, Transform.BACKWARD);
+    if(s.gamma[0]>0.0) {
+      vectorTransform(s, s.gamma, Transform.BACKWARD);
+      vectorTransform(s, s.beta, Transform.BACKWARD);
     
-		  stage.gamma[1] = (3*PI/2 - stage.beta[1]) - delP;
+		  s.gamma[1] = (3*PI/2 - s.beta[1]) - delP;
 
-      vectorTransform(stage, stage.gamma, Transform.FORWARD);
-      vectorTransform(stage, stage.beta, Transform.FORWARD);
+      vectorTransform(s, s.gamma, Transform.FORWARD);
+      vectorTransform(s, s.beta, Transform.FORWARD);
     }
 	}
 
 	/*
 	 *	Flying prograde
 	 */
-	public static void gravityTurn(Stage stage) {
+	public static void gravityTurn(Stage s) {
 
-		if (stage.extraBurnIsUnderway()) {    // Fly retrograde
-			stage.gamma[1] = stage.alpha[1];
-			stage.gamma[2] = stage.alpha[2];
-		} else {                              // Gravity turn
-			stage.gamma[1] = PI - stage.alpha[1];
-			stage.gamma[2] = PI + stage.alpha[2];
+		if (s.extraBurnIsUnderway()) {    // Fly retrograde
+			s.gamma[1] = s.alpha[1];
+			s.gamma[2] = s.alpha[2];
+		} else {                          // Gravity turn
+			s.gamma[1] = PI - s.alpha[1];
+			s.gamma[2] = PI + s.alpha[2];
 		}
 	}
   

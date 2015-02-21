@@ -1,6 +1,8 @@
 package com.decmurphy.spx.vehicle;
 
+import static com.decmurphy.spx.Globals.earthVel;
 import static com.decmurphy.spx.Globals.radiusOfEarth;
+import static com.decmurphy.spx.Maths.magnitudeOf;
 import static com.decmurphy.spx.Physics.gravityAtRadius;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import java.io.*;
@@ -136,12 +138,12 @@ public class Stage {
 		pos[0] = radiusOfEarth*sin(incl)*cos(lon);
 		pos[1] = radiusOfEarth*sin(incl)*sin(lon);
 		pos[2] = radiusOfEarth*cos(incl);
+    S = magnitudeOf(pos);
 
 		relPos[0] = pos[0];
 		relPos[1] = pos[1];
 		relPos[2] = pos[2];
-
-		S = radiusOfEarth;
+    relS = magnitudeOf(relPos);
 
 		/*
 		 *	gravity angle always points towards the centre of the planet
@@ -156,6 +158,17 @@ public class Stage {
     gamma[0] = 0.0;
 		gamma[1] = PI - beta[1];
 		gamma[2] = PI + beta[2];
+    
+    absVel[0] =  earthVel*sin(beta[1])*sin(beta[2]);
+    absVel[1] = -earthVel*sin(beta[1])*cos(beta[2]);
+    absVel[2] = 0.0;
+    VA = magnitudeOf(absVel);
+    
+    relVel[0] = 0.0;
+    relVel[1] = 0.0;
+    relVel[2] = 0.0;
+    VR = magnitudeOf(relVel);
+
 	}
 
 	/*
