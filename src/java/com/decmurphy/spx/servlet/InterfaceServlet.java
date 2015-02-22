@@ -24,12 +24,9 @@ public class InterfaceServlet extends HttpServlet {
           throws ServletException, IOException {
 
     resourcePath = getServletContext().getRealPath("/resource");
-    //resourcePath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\build\\\\web\\\\resource";
     outputPath = getServletContext().getRealPath("/output");
-    //outputPath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\build\\\\web\\\\output";
     //imagePath = "/var/lib/tomcat8/webapps/LaunchWebApp/output";
 		imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
-    //imagePath = "C:\\\\Users\\\\dmurphy\\\\Documents\\\\GitHub\\\\LaunchWebApp\\\\web\\\\output";
 
     HttpSession session = request.getSession(false);
     if (session != null) {

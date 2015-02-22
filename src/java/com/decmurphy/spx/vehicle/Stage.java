@@ -41,15 +41,14 @@ public class Stage {
 	 *	about whether they should be cartesian or spherical. Should I put these in spherical coordinates too?
 	 *	I'll think about it. It would make the leapfrog	function a lot simpler, that's for sure.
 	 */
-	public double[] tempPos, //
-                  pos,	  // cartesian position
+	public double[] pos,	  // cartesian position
                   relPos, // For looking at first stage landing with coriolis on
 									absVel, // absolute velocity	(Starts at earth velocity at launch pad. Gives a nice boost closer to equator)
 									relVel, // relative velocity	(relative to earth's surface. Starts at 0)
 									accel,	// acceleration
 									force;	// force
 
-	public double relS, S, VR, VA, A;	// magnitudes of position, relV, absV, acceleration
+	public double relS, S, VR, VA;	// magnitudes of position, relV, absV, acceleration
 	public String name;
 	public boolean isMoving;
 	public boolean beforeSep;
@@ -68,13 +67,12 @@ public class Stage {
 		this.dryMass = 0.0;
 		this.propMass = 0.0;
 
-		this.S = this.relS = this.VR = this.VA = this.A = 0.0;
+		this.S = this.relS = this.VR = this.VA = 0.0;
 
 		this.alpha = new double[3];
 		this.beta = new double[3];
 		this.gamma = new double[3];
 
-		this.tempPos = new double[3];
 		this.pos = new double[3];
 		this.relPos = new double[3];
 		this.absVel = new double[3];
@@ -110,7 +108,6 @@ public class Stage {
     this.relS = s.relS;
 		this.VR = s.VR;
 		this.VA = s.VA;
-		this.A = s.A;
 		
 		this.Cd = s.Cd;
 		this.XA = s.XA;
@@ -120,7 +117,6 @@ public class Stage {
 		this.beta = new double[]{s.beta[0], s.beta[1], s.beta[2]};
 		this.gamma = new double[]{s.gamma[0], s.gamma[1], s.gamma[2]};
 
-		this.tempPos = new double[]{s.tempPos[0], s.tempPos[1], s.tempPos[2]};
 		this.pos = new double[]{s.pos[0], s.pos[1], s.pos[2]};
 		this.relPos = new double[]{s.relPos[0], s.relPos[1], s.relPos[2]};
 		this.absVel = new double[]{s.absVel[0], s.absVel[1], s.absVel[2]};
@@ -183,6 +179,7 @@ public class Stage {
 		 */
 
 		System.arraycopy(stage.pos, 0, this.pos, 0, stage.pos.length);
+		System.arraycopy(stage.relPos, 0, this.relPos, 0, stage.relPos.length);
 		System.arraycopy(stage.relVel, 0, this.relVel, 0, stage.relVel.length);
 		System.arraycopy(stage.absVel, 0, this.absVel, 0, stage.absVel.length);
 
@@ -333,7 +330,7 @@ public class Stage {
 	public void setAeroProperties(double radius, double dragCoefficient) {
 		this.Cd = dragCoefficient;
 		this.radius = radius;
-		this.XA = Math.PI * radius * radius;
+		this.XA = PI*radius*radius;
 	}
 	public double getAeroProp(String s) {
 		s = s.toLowerCase();
@@ -419,10 +416,6 @@ public class Stage {
 	
 	public double relVel() {
 		return VR;
-	}
-
-	public double[] vectorVel() {
-		return relVel;
 	}
 
 }

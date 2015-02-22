@@ -47,7 +47,6 @@ public class Navigation {
 		s.accel[0] = s.force[0]/s.getEffectiveMass();
 		s.accel[1] = s.force[1]/s.getEffectiveMass();
 		s.accel[2] = s.force[2]/s.getEffectiveMass();
-		s.A = magnitudeOf(s.accel);
 
     // sx = sin(2) ; vx = cos(2)
     // sy = cos(2) ; vy = -sin(2)
@@ -90,7 +89,6 @@ public class Navigation {
 		s.accel[0] = s.force[0]/s.getEffectiveMass();
 		s.accel[1] = s.force[1]/s.getEffectiveMass();
 		s.accel[2] = s.force[2]/s.getEffectiveMass();
-		s.A = magnitudeOf(s.accel);
 
     if(!s.getParent().hasLaunched()) {
       s.absVel[0] =  earthVel*sin(s.beta[1])*sin(s.beta[2]);

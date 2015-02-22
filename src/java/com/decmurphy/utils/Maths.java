@@ -43,27 +43,45 @@ public class Maths {
     }
 
     public void rotateX(double angle) {
-      double[] tempVector = new double[]{coords[0], coords[1], coords[2]};
 
-      coords[0] = 1*tempVector[0] + 0*tempVector[1]          + 0*tempVector[2];
-      coords[1] = 0*tempVector[0] + cos(angle)*tempVector[1] - sin(angle)*tempVector[2];
-      coords[2] = 0*tempVector[0] + sin(angle)*tempVector[1] + cos(angle)*tempVector[2];
+			double[][] arr = {{1, 0         ,  0         },
+                        {0, cos(angle), -sin(angle)},
+                        {0, sin(angle),  cos(angle)}};
+			
+			Matrix rX = new Matrix(arr);
+			Matrix v = new Matrix(coords, 1).transpose();
+			Matrix V = rX.times(v);
+
+			for(int i=0;i<coords.length;i++)
+				coords[i] = V.get(i,0);
     }
 
     public void rotateY(double angle) {
-      double[] tempVector = new double[]{coords[0], coords[1], coords[2]};
 
-      coords[0] =  cos(angle)*tempVector[0] + 0*tempVector[1] + sin(angle)*tempVector[2];
-      coords[1] =  0*tempVector[0]          + 1*tempVector[1] + 0*tempVector[2];
-      coords[2] = -sin(angle)*tempVector[0] + 0*tempVector[1] + cos(angle)*tempVector[2];
+			double[][] arr = {{ cos(angle), 0, sin(angle)},
+				                { 0         , 1, 0         }, 
+                        {-sin(angle), 0, cos(angle)}};
+			
+			Matrix rY = new Matrix(arr);
+			Matrix v = new Matrix(coords, 1).transpose();
+			Matrix V = rY.times(v);
+
+			for(int i=0;i<coords.length;i++)
+				coords[i] = V.get(i,0);
     }
 
     public void rotateZ(double angle) {
-      double[] tempVector = new double[]{coords[0], coords[1], coords[2]};
 
-      coords[0] = cos(angle)*tempVector[0] - sin(angle)*tempVector[1] + 0*tempVector[2];
-      coords[1] = sin(angle)*tempVector[0] + cos(angle)*tempVector[1] + 0*tempVector[2];
-      coords[2] = 0*tempVector[0]          + 0*tempVector[1]          + 1*tempVector[2];
+			double[][] arr = {{cos(angle), -sin(angle), 0},
+                        {sin(angle),  cos(angle), 0},
+                        {0         ,  0         , 1}};
+			
+			Matrix rZ = new Matrix(arr);
+			Matrix v = new Matrix(coords, 1).transpose();
+			Matrix V = rZ.times(v);
+
+			for(int i=0;i<coords.length;i++)
+				coords[i] = V.get(i,0);
     }
     
     public double[] getValues() {

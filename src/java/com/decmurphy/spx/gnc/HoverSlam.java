@@ -4,18 +4,8 @@ import static com.decmurphy.spx.gnc.Navigation.gravityTurn;
 import static com.decmurphy.spx.gnc.Navigation.leapfrogStep;
 import com.decmurphy.spx.vehicle.Stage;
 import static com.decmurphy.utils.Globals.dt;
-import static com.decmurphy.utils.Globals.earthVel;
-import static com.decmurphy.utils.Globals.radiusOfEarth;
-import static com.decmurphy.utils.Maths.magnitudeOf;
-import static com.decmurphy.utils.Physics.densityAtAltitude;
-import static com.decmurphy.utils.Physics.gravityAtRadius;
-import static java.lang.Math.PI;
 import static java.lang.Math.abs;
-import static java.lang.Math.atan2;
-import static java.lang.Math.cos;
 import static java.lang.Math.max;
-import static java.lang.Math.sin;
-import static java.lang.Math.sqrt;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
@@ -80,9 +70,15 @@ public class HoverSlam {
 			S = copyStage.alt();
 
 		} while (vel <= 0.0 && S >= 0.0 && copyStage.getPropMass() > 500.0);
-
+		/*
+		if(copyStage.getPropMass() <= 500) {
+			throw new FuelException()
+		}
+*/
 		copyStage = null;
 		return S;
+
+//		return 0;
 	}
 
 }
