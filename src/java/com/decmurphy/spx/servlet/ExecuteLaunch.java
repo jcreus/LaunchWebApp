@@ -40,8 +40,9 @@ public class ExecuteLaunch extends HttpServlet {
 						gp_phase2 = null,
             gp_profile1 = null,
             gp_profile2 = null,
-            gp_q = null;
-
+            gp_q = null,
+						gp_prop = null;
+		
 		try {
 			gp_landing = new GnuplotFileBuilder(ID, "landing");
 			Process p1 = Runtime.getRuntime().exec("gnuplot " + gp_landing.getPath());
@@ -102,6 +103,11 @@ public class ExecuteLaunch extends HttpServlet {
 			Process p12 = Runtime.getRuntime().exec("gnuplot " + gp_profile2.getPath());
 			//Process p12 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_profile2.getPath());
 			p12.waitFor();
+			
+      gp_prop = new GnuplotFileBuilder(ID, mission, "prop");
+			Process p13 = Runtime.getRuntime().exec("gnuplot " + gp_prop.getPath());
+			//Process p13 = Runtime.getRuntime().exec("C:\\cygwin64\\bin\\gnuplot.exe " + gp_prop.getPath());
+			p13.waitFor();			
       
 		} catch (InterruptedException e) {
 		}
@@ -137,7 +143,7 @@ public class ExecuteLaunch extends HttpServlet {
 						+ "	      <tr>\n"
 						+ "	        <td><img src=\"" + gp_velocity1.getImgPath() + "\" alt=\"velocity1\"/></td>\n"
 						+ "         <td><img src=\"" + gp_velocity2.getImgPath() + "\" alt=\"velocity2\"/></td>\n"
-						+ "	        <td><img src=\"" + gp_profile2.getImgPath() + "\" alt=\"profile2\"/></td>\n"
+						+ "	        <td><img src=\"" + gp_prop.getImgPath() + "\" alt=\"prop\"/></td>\n"
 						+ "	      </tr>\n"
 						+ "	      <tr>\n"
 						+ "         <td><img src=\"" + gp_q.getImgPath() + "\" alt=\"aero-pressure\"/></td>\n"

@@ -47,10 +47,10 @@ public class GnuplotFileBuilder {
         pw.printf("set view 90,0,1.7\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
+        pw.printf("splot \"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/finecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
-        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
-        pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
+        pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9, ", outputPath, id);
+        pw.printf("\"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9\n", outputPath, id, outputPath, id);
 
       } else if (phase.equalsIgnoreCase("landing2")) {
 
@@ -65,10 +65,10 @@ public class GnuplotFileBuilder {
         pw.printf("set view 90,0,1.7\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9, ", outputPath, id, outputPath, id);
+        pw.printf("splot \"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/finecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
-        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
-        pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9\n", outputPath, id);
+        pw.printf("\"%s/%s_hazard.output.txt\" u 1:2:3 w l ls 9, ", outputPath, id);
+        pw.printf("\"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 9\n", outputPath, id, outputPath, id);
 
       } else if (phase.equalsIgnoreCase("globe")) {
 
@@ -80,9 +80,9 @@ public class GnuplotFileBuilder {
         pw.printf("set view 90,0,1.3,1.4\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
-        pw.printf("splot \"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 7, ", outputPath, id, outputPath, id);
+        pw.printf("splot \"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/coarsecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
-        pw.printf("\"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5\n", outputPath, id);
+        pw.printf("\"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 7\n", outputPath, id, outputPath, id);
 
       } else if (phase.equalsIgnoreCase("velocity1")) {
         
@@ -173,7 +173,17 @@ public class GnuplotFileBuilder {
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:8 w l\n", outputPath, id);        
       
-      }
+      } else if(phase.equalsIgnoreCase("prop")) {
+
+        pw.printf("set key off\n");
+        pw.printf("set xlabel \"Time (s)\"\n");
+        pw.printf("set ylabel \"Propellant Mass (tons)\"\n");
+        pw.printf("set logscale xy 10\n");
+        pw.printf("set term pngcairo\n");
+        pw.printf("set output \"%s\"\n", getImagePath());
+        pw.printf("p \"%s/%s_BoosterStage.dat\" u 1:9 w l, \"%s/%s_SecondStage.dat\" u 1:9 w l\n", outputPath, id, outputPath, id);
+				
+			}
 
     } catch (IOException e) {
     } finally {
