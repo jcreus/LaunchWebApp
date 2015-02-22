@@ -27,6 +27,9 @@ public class MissionBuilder {
 
 	public Mission createMission(LaunchVehicle LV, Payload pl, Profile pr, LaunchSite ls) {
 		Mission m = new Mission();
+		
+		pr.clean();
+
 		m.addLaunchVehicle(LV);
 		m.addPayload(pl);
 		m.addProfile(pr);
@@ -51,6 +54,8 @@ public class MissionBuilder {
 			payload = PayloadConfig.getPayload(code);
 			profile = ProfileConfig.getProfile(code);
 			launchSite = LaunchSiteConfig.getLaunchSite(code);
+			
+			profile.clean();
 			
 		} catch (LaunchVehicleException | PayloadException | ProfileException | LaunchSiteException ex) {
 			Logger.getLogger(MissionBuilder.class.getName()).log(Level.SEVERE, null, ex);

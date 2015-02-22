@@ -111,7 +111,12 @@ public class InterfaceServlet extends HttpServlet {
             case "mei4_time":
               mission.Profile().addEvent("landing_start", Double.parseDouble(paramValues[0]));
               break;
-
+						case "correction":
+								mission.Profile().addEvent("adjustCourse", Double.parseDouble(paramValues[1]))
+										.addExtraInfo("stage", 1)
+										.addExtraInfo(paramValues[0], Double.parseDouble(paramValues[2]));
+								break;
+							
             case "legs":
               mission.LaunchVehicle().setLegs(paramValues[0].equalsIgnoreCase("YES"));
               break;
