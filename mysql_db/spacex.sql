@@ -52,7 +52,7 @@ INSERT INTO `corrections` VALUES (15,NULL);
 INSERT INTO `corrections` VALUES (16,NULL);
 INSERT INTO `corrections` VALUES (17,NULL);
 INSERT INTO `corrections` VALUES (18,'310:pitch:-0.5;365:throttle:80;510:pitch:-0.3');
-INSERT INTO `corrections` VALUES (19,'300:pitch:0.1');
+INSERT INTO `corrections` VALUES (19,'275:pitch:0.1;350:pitch:0.0');
 INSERT INTO `corrections` VALUES (20,NULL);
 INSERT INTO `corrections` VALUES (21,NULL);
 /*!40000 ALTER TABLE `corrections` ENABLE KEYS */;
@@ -173,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-22  1:11:44
+-- Dump completed on 2015-02-22 23:39:45
