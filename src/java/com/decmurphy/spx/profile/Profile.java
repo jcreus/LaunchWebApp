@@ -8,13 +8,24 @@ import java.util.List;
  *
  * @author declan
  */
-public abstract class Profile {
+public class Profile {
 
-	protected List<Event> events;
+	private static final Profile instance = new Profile();
 
-	protected Profile() {
+	private Profile() {
 		this.events = new ArrayList();
 	}
+
+  public static Profile getNew() {
+		instance.clean();
+		return get();
+	}
+	
+	public static Profile get() {
+		return instance;
+	}
+		
+	protected List<Event> events;
 
 	public final List<Event> events() {
 		return events;
