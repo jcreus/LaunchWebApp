@@ -310,6 +310,15 @@ public class Stage {
 		return hasLegs;
 	}
 	
+	private boolean throttleTest = false;
+	public void setThrottleTest(boolean b) {
+		throttleTest = b;
+	}
+	public boolean isThrottleTest() {
+		return throttleTest;
+	}
+
+	
 	private double Q;
 	public void setQ(double q) {
 		Q = q;

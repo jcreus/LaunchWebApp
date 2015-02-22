@@ -228,32 +228,33 @@ public class Navigation {
      *  second at the very start, the s falls before it rises. I'll find a
      *  more elegant solution to this problem soon.
 		 */
-		if (s.alt() < 0) {
-			if (s.landingBurnIsUnderway()) {
-				System.out.printf("T%+7.2f\t%.32s\n", s.clock(), "Crash/Landing");
-			}
+		if(!s.isThrottleTest()) {
+			if (s.alt() < 0) {
+				if (s.landingBurnIsUnderway()) {
+					System.out.printf("T%+7.2f\t%.32s\n", s.clock(), "Crash/Landing");
+				}
 
-      if(s.clock() > 5.0)
-        s.setLanded(true);
+				if(s.clock() > 5.0)
+					s.setLanded(true);
       
-			for (int i = 0; i < 3; i++) {
-				s.pos[i] -= s.absVel[i]*dt;
-				s.relPos[i] -= s.relVel[i]*dt;
-				s.absVel[i] = 0.0;
-			}
-  		s.relS = magnitudeOf(s.relPos);
-			s.S = magnitudeOf(s.pos);
-			if (s.clock() > 100.0) {
-				s.setThrottle(0.0);
-			}
-			s.setLandingBurnIsUnderway(false);
-			s.isMoving = false;
+				for (int i = 0; i < 3; i++) {
+					s.pos[i] -= s.absVel[i]*dt;
+					s.relPos[i] -= s.relVel[i]*dt;
+					s.absVel[i] = 0.0;
+				}
+	  		s.relS = magnitudeOf(s.relPos);
+				s.S = magnitudeOf(s.pos);
+				if (s.clock() > 100.0) {
+					s.setThrottle(0.0);
+				}
+				s.setLandingBurnIsUnderway(false);
+				s.isMoving = false;
 
-			s.gamma[0] = 0.0;
-			s.beta[0] = 0.0;
-			s.alpha[0] = 0.0;
+				s.gamma[0] = 0.0;
+				s.beta[0] = 0.0;
+				s.alpha[0] = 0.0;
+			}
 		}
-
   }
   
   private static void updateVectors(Stage s) {

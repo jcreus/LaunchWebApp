@@ -110,7 +110,7 @@ public abstract class LaunchVehicle {
 	}
 
 	public boolean depletesFuel() {
-		return mStage[numStages-1].getPropMass() < 100;
+		return mStage[numStages-1].getPropMass() < 500;
 	}
   
   public boolean failedToReachOrbit() {
