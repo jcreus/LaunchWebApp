@@ -13,7 +13,7 @@ import java.util.Properties;
 public class Database {
 
   private Connection con = null;
-  private ResultSet rs, rs2, rs3;
+  private ResultSet rs, rs2, rs3, rs4;
   private PreparedStatement pst = null;
 
   public Database() {
@@ -46,14 +46,20 @@ public class Database {
               + "INNER JOIN profiles "
               + "ON launches.launch_id=profiles.launch_id");
       rs2 = pst.executeQuery();
+			pst = con.prepareStatement(
+							"SELECT corrections.correction FROM corrections "
+							+ "INNER JOIN profiles "
+							+ "ON corrections.launch_id=profiles.launch_id");
+			rs3 = pst.executeQuery();
       
       Statement st = con.createStatement();
-      rs3 = st.executeQuery("SELECT COUNT(*) FROM profiles");
-      rs3.next();
-      int rowCount = rs3.getInt(1);
-      System.out.println("RowCount = " + rowCount);
+      rs4 = st.executeQuery("SELECT COUNT(*) FROM profiles");
+      rs4.next();
+      int rowCount = rs4.getInt(1);
+			
+			String paramHint = "For Pitch/Yaw, this parameter means rads rel. to the horizon (e.g Pitch 0.0 flies parallel to ground, Yaw 0.0 flies parallel to equator). For thrust, enter a % value.";
 
-      while (rs.next() && rs2.next()) {
+      while (rs.next() && rs2.next() && rs3.next()) {
         
         Double d;
 
@@ -84,9 +90,28 @@ public class Database {
 				tabs.append("                  <tr><td>Payload Mass    </td><td></td><td><input type=\"text\" size=\"15\" name=\"payload_mass\" value=\"").append(rs.getInt("Mass")).append("\"/>kg</td><td rowspan=\"3\"><input class=\"launch_button\" type=\"submit\" value=\"LAUNCH\"/></td></tr>\n");
         tabs.append("                  <tr><td>Landing Legs    </td><td></td><td><input type=\"text\" size=\"15\" name=\"legs\"         value=\"").append(rs.getBoolean("Legs")? "Yes" : "No").append("\"/></td></tr>\n");
         tabs.append("                </table>\n");
-				tabs.append("				  			 <h3>Second Stage Course Corrections</h3><a class=\"add_field_button\" href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i></a>");
-				tabs.append("			  				 <table class=\"table_bottom\">\n");
-				tabs.append("						  	 </table>\n");
+				tabs.append("                <h3>Second Stage Course Corrections</h3><a class=\"add_field_button\" href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i></a>\n");
+				tabs.append("                <table class=\"table_bottom\">\n");
+				
+				String corr = rs3.getString("correction");
+				if(null!=corr && !corr.isEmpty()) {
+					String[] corrs = corr.split(";");
+					for(String s : corrs) {
+						String[] params = s.split(":");
+						
+						switch(params[1]) {
+							case "pitch":    tabs.append("                  <tr>\n                    <td><select name=\"correction\" class=\"form-control\"><option value=\"\" disabled>Course Correction</option><option selected value=\"pitch\">Pitch</option><option value=\"yaw\">Yaw</option><option value=\"throttle\">Throttle</option></select></td>\n"); break;
+							case "yaw":      tabs.append("                  <tr>\n                    <td><select name=\"correction\" class=\"form-control\"><option value=\"\" disabled>Course Correction</option><option value=\"pitch\">Pitch</option><option selected value=\"yaw\">Yaw</option><option value=\"throttle\">Throttle</option></select></td>\n"); break;
+							case "throttle": tabs.append("                  <tr>\n                    <td><select name=\"correction\" class=\"form-control\"><option value=\"\" disabled>Course Correction</option><option value=\"pitch\">Pitch</option><option value=\"yaw\">Yaw</option><option selected value=\"throttle\">Throttle</option></select></td>\n"); break;
+						}
+            tabs.append("                    <td> @ T<input type=\"text\" size=\"10\" value=\"").append(params[0]).append("\" name=\"correction\"></td>\n");
+            tabs.append("                    <td><input title=\"").append(paramHint).append("\" type=\"text\" size=\"10\" value=\"").append(params[2]).append("\" name=\"correction\"></td>\n");
+						tabs.append("                    <td class=\"remove_field\"><a href=\"#\"><i class=\"glyphicon glyphicon-remove\"></a></td>\n                  </tr>\n");
+					
+					}
+				}
+				
+				tabs.append("                </table>\n");
 				tabs.append("              </div>\n");
         tabs.append("            </form>\n");
         tabs.append("          </div>\n");

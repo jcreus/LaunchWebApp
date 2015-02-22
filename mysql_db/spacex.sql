@@ -16,6 +16,49 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `corrections`
+--
+
+DROP TABLE IF EXISTS `corrections`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `corrections` (
+  `launch_id` int(11) DEFAULT NULL,
+  `correction` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `corrections`
+--
+
+LOCK TABLES `corrections` WRITE;
+/*!40000 ALTER TABLE `corrections` DISABLE KEYS */;
+INSERT INTO `corrections` VALUES (1,NULL);
+INSERT INTO `corrections` VALUES (2,NULL);
+INSERT INTO `corrections` VALUES (3,NULL);
+INSERT INTO `corrections` VALUES (4,NULL);
+INSERT INTO `corrections` VALUES (5,NULL);
+INSERT INTO `corrections` VALUES (6,NULL);
+INSERT INTO `corrections` VALUES (7,NULL);
+INSERT INTO `corrections` VALUES (8,NULL);
+INSERT INTO `corrections` VALUES (9,NULL);
+INSERT INTO `corrections` VALUES (10,NULL);
+INSERT INTO `corrections` VALUES (11,NULL);
+INSERT INTO `corrections` VALUES (12,'400:pitch:0.0;450:pitch:-0.1');
+INSERT INTO `corrections` VALUES (13,'300:pitch:0.0;350:pitch:-0.1;400:pitch:-0.2');
+INSERT INTO `corrections` VALUES (14,NULL);
+INSERT INTO `corrections` VALUES (15,NULL);
+INSERT INTO `corrections` VALUES (16,NULL);
+INSERT INTO `corrections` VALUES (17,NULL);
+INSERT INTO `corrections` VALUES (18,'310:pitch:-0.5;365:throttle:80;510:pitch:-0.3');
+INSERT INTO `corrections` VALUES (19,'300:pitch:0.1');
+INSERT INTO `corrections` VALUES (20,NULL);
+INSERT INTO `corrections` VALUES (21,NULL);
+/*!40000 ALTER TABLE `corrections` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `launches`
 --
 
@@ -130,4 +173,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-21 14:32:31
+-- Dump completed on 2015-02-22  1:11:44
