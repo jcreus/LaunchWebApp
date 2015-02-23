@@ -55,6 +55,8 @@ public class InterfaceServlet extends HttpServlet {
         }
 
         try {
+					
+					if(paramName.startsWith("correction")) paramName = "correction";
 
           switch (paramName) {
 
@@ -109,10 +111,14 @@ public class InterfaceServlet extends HttpServlet {
               mission.Profile().addEvent("landing_start", Double.parseDouble(paramValues[0]));
               break;
 						case "correction":
-								mission.Profile().addEvent("adjustCourse", Double.parseDouble(paramValues[1]))
-										.addExtraInfo("stage", 1)
-										.addExtraInfo(paramValues[0], Double.parseDouble(paramValues[2]));
+							try {
+								mission.Profile().addEvent("adjust"+paramValues[1], Double.parseDouble(paramValues[2]))
+									.addExtraInfo("stage", Integer.parseInt(paramValues[0]))
+									.addExtraInfo(paramValues[1], Double.parseDouble(paramValues[3]));
 								break;
+							} catch(ArrayIndexOutOfBoundsException e) {
+								
+							}
 							
             case "legs":
               mission.LaunchVehicle().setLegs(paramValues[0].equalsIgnoreCase("YES"));

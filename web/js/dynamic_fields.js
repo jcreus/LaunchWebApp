@@ -1,7 +1,7 @@
 
 
 $(document).ready(function() {
-    var max_fields  = 5;
+    var max_fields  = 10;
     var wrapper     = $(".table_bottom");
     var add_button  = $(".add_field_button");
     
@@ -9,18 +9,21 @@ $(document).ready(function() {
               + '(e.g Pitch 0.0 flies parallel to ground, Yaw 0.0 flies parallel '
               + 'to equator). For thrust, enter a % value.';
     
-    var x = 0;
+    var x = 5;
     $(add_button).click(function(e){
         e.preventDefault();
         if(x < max_fields){
             x++;
-            var row = '<tr><td>';
-            row += '<select name="correction" class="form-control">';
-            row += '<option value="" disabled selected>Course Correction</option>';
+            var row = '<tr>';
+            row += '<td><select name="correction1" class="form-control">';
+            row += '<option value="" selected disabled>Stage</option>';
+            row += '<option value="0">1</option>';
+            row += '<option value="1">2</option></select></td>';
+            row += '<td><select name="correction'+x+'" class="form-control">';
+            row += '<option value="" selected disabled>Correction Type</option>';
             row += '<option value="pitch">Pitch</option>';
             row += '<option value="yaw">Yaw</option>';
-            row += '<option value="throttle">Throttle</option>';
-            row += '</select></td>';
+            row += '<option value="throttle">Throttle</option></select></td>';
             row += '<td> @ T<input type="text" size="10" placeholder="Time" name="correction"></td>';
             row += '<td><input title="'+hint+'" type="text" size="10" placeholder="Parameter" name="correction"></td>';
             row += '<td class="remove_field"><a href="#"><i class="glyphicon glyphicon-remove"/></a></td></tr>\n';

@@ -90,24 +90,31 @@ public class Database {
 				tabs.append("                  <tr><td>Payload Mass    </td><td></td><td><input type=\"text\" size=\"15\" name=\"payload_mass\" value=\"").append(rs.getInt("Mass")).append("\"/>kg</td><td rowspan=\"3\"><input class=\"launch_button\" type=\"submit\" value=\"LAUNCH\"/></td></tr>\n");
         tabs.append("                  <tr><td>Landing Legs    </td><td></td><td><input type=\"text\" size=\"15\" name=\"legs\"         value=\"").append(rs.getBoolean("Legs")? "Yes" : "No").append("\"/></td></tr>\n");
         tabs.append("                </table>\n");
-				tabs.append("                <h3>Second Stage Course Corrections</h3><a class=\"add_field_button\" href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i></a>\n");
+				tabs.append("                <h3>In Flight Course Corrections</h3><a class=\"add_field_button\" href=\"#\"><i class=\"glyphicon glyphicon-plus\"></i></a>\n");
 				tabs.append("                <table class=\"table_bottom\">\n");
 				
 				String corr = rs3.getString("correction");
 				if(null!=corr && !corr.isEmpty()) {
+					int num = 0;
 					String[] corrs = corr.split(";");
 					for(String s : corrs) {
 						String[] params = s.split(":");
 						
 						switch(params[1]) {
-							case "pitch":    tabs.append("                  <tr>\n                    <td><select name=\"correction\" class=\"form-control\"><option value=\"\" disabled>Course Correction</option><option selected value=\"pitch\">Pitch</option><option value=\"yaw\">Yaw</option><option value=\"throttle\">Throttle</option></select></td>\n"); break;
-							case "yaw":      tabs.append("                  <tr>\n                    <td><select name=\"correction\" class=\"form-control\"><option value=\"\" disabled>Course Correction</option><option value=\"pitch\">Pitch</option><option selected value=\"yaw\">Yaw</option><option value=\"throttle\">Throttle</option></select></td>\n"); break;
-							case "throttle": tabs.append("                  <tr>\n                    <td><select name=\"correction\" class=\"form-control\"><option value=\"\" disabled>Course Correction</option><option value=\"pitch\">Pitch</option><option value=\"yaw\">Yaw</option><option selected value=\"throttle\">Throttle</option></select></td>\n"); break;
+							case "1": tabs.append("                  <tr>\n                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Stage</option><option selected value=\"0\">1</option><option value=\"1\">2</option></td>\n"); break;
+							case "2": tabs.append("                  <tr>\n                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Stage</option><option value=\"0\">1</option><option selected value=\"1\">2</option></td>\n"); break;
 						}
-            tabs.append("                    <td> @ T<input type=\"text\" size=\"10\" value=\"").append(params[0]).append("\" name=\"correction\"></td>\n");
-            tabs.append("                    <td><input title=\"").append(paramHint).append("\" type=\"text\" size=\"10\" value=\"").append(params[2]).append("\" name=\"correction\"></td>\n");
-						tabs.append("                    <td class=\"remove_field\"><a href=\"#\"><i class=\"glyphicon glyphicon-remove\"></a></td>\n                  </tr>\n");
+						
+						switch(params[2]) {
+							case "pitch":    tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option selected value=\"pitch\">Pitch</option><option value=\"yaw\">Yaw</option><option value=\"throttle\">Throttle</option></select></td>\n"); break;
+							case "yaw":      tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option value=\"pitch\">Pitch</option><option selected value=\"yaw\">Yaw</option><option value=\"throttle\">Throttle</option></select></td>\n"); break;
+							case "throttle": tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option value=\"pitch\">Pitch</option><option value=\"yaw\">Yaw</option><option selected value=\"throttle\">Throttle</option></select></td>\n"); break;
+						}
+            tabs.append("                    <td> @ T<input type=\"text\" size=\"10\" value=\"").append(params[0]).append("\" name=\"correction").append(num).append("\"></td>\n");
+            tabs.append("                    <td><input title=\"").append(paramHint).append("\" type=\"text\" size=\"10\" value=\"").append(params[3]).append("\" name=\"correction").append(num).append("\"></td>\n");
+						tabs.append("                    <td class=\"remove_field\"><a href=\"#\"><i class=\"glyphicon glyphicon-remove\"></i></a></td>\n                  </tr>\n");
 					
+						num++;
 					}
 				}
 				

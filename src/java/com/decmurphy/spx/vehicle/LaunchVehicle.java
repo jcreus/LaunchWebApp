@@ -97,11 +97,15 @@ public abstract class LaunchVehicle {
 
 	public void executeEvent(Event e) {
 
-		if(e.getName().startsWith("adjust")) {
-			Navigation.adjustPitch(mStage[(int)e.getValueOf("stage")], e.getValueOf("pitch"));
-		}
-		else if(e.getName().startsWith("thrust")) {
-			mStage[(int)e.getValueOf("stage")].setThrottle(e.getValueOf("throttle"));
+		switch(e.getName()) {
+			case "adjustpitch":
+				Navigation.adjustPitch(mStage[(int)e.getValueOf("stage")], e.getValueOf("pitch"));
+				break;
+			case "adjustyaw":
+				break;
+			case "adjustthrust":
+				mStage[(int)e.getValueOf("stage")].setThrottle(e.getValueOf("throttle"));
+				break;
 		}
 	}
   
