@@ -42,7 +42,7 @@ public class Database {
       pst = con.prepareStatement("SELECT * FROM profiles");
       rs = pst.executeQuery();
       pst = con.prepareStatement(
-              "SELECT launches.code FROM launches "
+              "SELECT * FROM launches "
               + "INNER JOIN profiles "
               + "ON launches.launch_id=profiles.launch_id");
       rs2 = pst.executeQuery();
@@ -65,7 +65,7 @@ public class Database {
 
         int id = rs.getInt("launch_id");
 
-        list.append("          <li").append(id == rowCount ? " class=\"active\"" : "").append("><a href=\"#tab").append(id).append("\" data-toggle=\"tab\">").append(rs2.getString("code")).append("</a></li>\n");
+        list.append("          <li").append(id == rowCount ? " class=\"active\"" : "").append("><a href=\"#tab").append(id).append("\" data-toggle=\"tab\">").append(rs2.getString("cargo")).append("</a></li>\n");
 
         tabs.append("          <div class=\"tab-pane").append(id == rowCount ? " in active" : "").append("\" id=\"tab").append(id).append("\">\n");
         tabs.append("            <form action=\"InterfaceServlet\" method=\"POST\">\n");
@@ -101,8 +101,8 @@ public class Database {
 						String[] params = s.split(":");
 						
 						switch(params[1]) {
-							case "1": tabs.append("                  <tr>\n                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Stage</option><option selected value=\"0\">1</option><option value=\"1\">2</option></td>\n"); break;
-							case "2": tabs.append("                  <tr>\n                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Stage</option><option value=\"0\">1</option><option selected value=\"1\">2</option></td>\n"); break;
+							case "1": tabs.append("                  <tr>\n                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Stage</option><option selected value=\"0\">1</option><option value=\"1\">2</option></select></td>\n"); break;
+							case "2": tabs.append("                  <tr>\n                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Stage</option><option value=\"0\">1</option><option selected value=\"1\">2</option></select></td>\n"); break;
 						}
 						
 						switch(params[2]) {
