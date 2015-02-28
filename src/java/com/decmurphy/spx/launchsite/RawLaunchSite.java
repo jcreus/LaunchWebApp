@@ -1,18 +1,16 @@
 package com.decmurphy.spx.launchsite;
 
-import static java.lang.Math.PI;
-
 /**
  *
  * @author declan
  */
-public abstract class LaunchSite {
+public abstract class RawLaunchSite {
 	
 	private double inclination;
 	private double longitude;
 	private String name;
 	
-	public LaunchSite() {}
+	public RawLaunchSite() {}
 	
 	public double getIncl() {
 		return inclination;

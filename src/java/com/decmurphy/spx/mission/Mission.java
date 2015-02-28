@@ -1,8 +1,8 @@
 package com.decmurphy.spx.mission;
 
 import com.decmurphy.spx.event.Event;
-import com.decmurphy.spx.launchsite.LaunchSite;
-import com.decmurphy.spx.payload.Payload;
+import com.decmurphy.spx.launchsite.RawLaunchSite;
+import com.decmurphy.spx.payload.RawPayload;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.vehicle.LaunchVehicle;
 import static com.decmurphy.utils.Globals.dt;
@@ -15,16 +15,16 @@ import static java.lang.Math.abs;
 public class Mission {
 
 	private LaunchVehicle LV;
-	private Payload payload;
+	private RawPayload payload;
 	private Profile profile;
-	private LaunchSite LS;
+	private RawLaunchSite LS;
   private String missionId; 
 
 	public void addLaunchVehicle(LaunchVehicle LV) {
 		this.LV = LV;
 	}
 
-	public void addPayload(Payload payload) {
+	public void addPayload(RawPayload payload) {
 		this.payload = payload;
 	}
 
@@ -32,7 +32,7 @@ public class Mission {
 		this.profile = profile;
 	}
 	
-	public void addLaunchSite(LaunchSite launchSite) {
+	public void addLaunchSite(RawLaunchSite launchSite) {
 		this.LS = launchSite;
 		LaunchVehicle().setLaunchSite(launchSite);
 	}
@@ -49,7 +49,7 @@ public class Mission {
 		return LV;
 	}
 
-	public Payload Payload() {
+	public RawPayload Payload() {
 		return payload;
 	}
 
@@ -57,7 +57,7 @@ public class Mission {
 		return profile;
 	}
 	
-	public LaunchSite LaunchSite() {
+	public RawLaunchSite LaunchSite() {
 		return LS;
 	}
   

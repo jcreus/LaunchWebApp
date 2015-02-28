@@ -1,13 +1,13 @@
 package com.decmurphy.spx.payload;
 
-public abstract class Payload
+public abstract class RawPayload
 {
 	protected double mMass;
 
-	public Payload() {
+	public RawPayload() {
 	}
 
-	public Payload(Payload p) {
+	public RawPayload(RawPayload p) {
 		this.mMass = p.mMass;
 	}
 

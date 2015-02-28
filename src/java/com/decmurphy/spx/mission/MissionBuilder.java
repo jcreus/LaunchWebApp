@@ -6,9 +6,9 @@ import com.decmurphy.spx.config.PayloadConfig;
 import com.decmurphy.spx.exceptions.LaunchSiteException;
 import com.decmurphy.spx.exceptions.LaunchVehicleException;
 import com.decmurphy.spx.exceptions.PayloadException;
-import com.decmurphy.spx.launchsite.LaunchSite;
+import com.decmurphy.spx.launchsite.RawLaunchSite;
 import com.decmurphy.spx.launchsite.SLC40;
-import com.decmurphy.spx.payload.Payload;
+import com.decmurphy.spx.payload.RawPayload;
 import com.decmurphy.spx.payload.Satellite;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.vehicle.Falcon9_1;
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class MissionBuilder {
 
-	public Mission createMission(LaunchVehicle LV, Payload pl, Profile pr, LaunchSite ls) {
+	public Mission createMission(LaunchVehicle LV, RawPayload pl, Profile pr, RawLaunchSite ls) {
 		Mission m = new Mission();
 		
 		m.addLaunchVehicle(LV);
@@ -41,10 +41,10 @@ public class MissionBuilder {
 		if(null==code || code.isEmpty())
 			throw new IllegalArgumentException("Trying to create Mission with invalid FlightCode");
 		
-		Payload payload = new Satellite(6000);
+		RawPayload payload = new Satellite(6000);
 		LaunchVehicle LV = new Falcon9_1();
 		Profile profile = Profile.getNew();
-		LaunchSite launchSite = SLC40.get();
+		RawLaunchSite launchSite = SLC40.get();
 
 		try {
 			LV = LaunchVehicleConfig.getLaunchVehicle(code);

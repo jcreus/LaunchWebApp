@@ -6,9 +6,9 @@ import static java.lang.Math.toRadians;
  *
  * @author declan
  */
-public class SLC40 extends LaunchSite {
+public class SLC40 extends RawLaunchSite {
 
-	private static final LaunchSite instance = new SLC40();
+	private static final RawLaunchSite instance = new SLC40();
 	private SLC40() {
 		setName("CCAFS SLC-40");
     // See http://en.wikipedia.org/wiki/Spherical_coordinate_system#mediaviewer/File:3D_Spherical.svg
@@ -16,7 +16,7 @@ public class SLC40 extends LaunchSite {
 		setCoordinates(new double[]{toRadians(61.44),toRadians(-80.57)});
 	}
 	
-	public static LaunchSite get() {
+	public static RawLaunchSite get() {
 		return instance;
 	}
 }
