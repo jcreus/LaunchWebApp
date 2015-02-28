@@ -5,7 +5,7 @@ import com.decmurphy.spx.space.Earth;
 import com.decmurphy.spx.space.Planet;
 import static com.decmurphy.utils.Globals.dt;
 
-public class Launch {
+public class ExecuteInternal {
 
 	public static void execute(Mission mission, String[] args) {
 

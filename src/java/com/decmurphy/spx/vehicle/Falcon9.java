@@ -3,7 +3,7 @@ package com.decmurphy.spx.vehicle;
 import com.decmurphy.spx.engine.Merlin1C;
 import com.decmurphy.spx.engine.Merlin1CVac;
 import com.decmurphy.spx.payload.DragonV1;
-import com.decmurphy.spx.payload.Payload;
+import com.decmurphy.spx.payload.RawPayload;
 
 /**
  *
@@ -11,7 +11,7 @@ import com.decmurphy.spx.payload.Payload;
  */
 public class Falcon9 extends TwoStageRocket {
 
-	public Falcon9(Payload payload) {
+	public Falcon9(RawPayload payload) {
 		this();
 		setPayload(payload);
 	}

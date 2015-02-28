@@ -1,6 +1,6 @@
 package com.decmurphy.spx.servlet;
 
-import com.decmurphy.spx.Launch;
+import com.decmurphy.spx.ExecuteInternal;
 import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.utils.Globals;
 import com.decmurphy.utils.GnuplotFileBuilder;
@@ -26,7 +26,7 @@ public class ExecuteLaunch extends HttpServlet {
 		if (mission != null) {
       String[] args = {};
       mission.setMissionId(ID);
-      Launch.execute(mission, args);
+      ExecuteInternal.execute(mission, args);
 		}
 
 		GnuplotFileBuilder gp_landing = null,
