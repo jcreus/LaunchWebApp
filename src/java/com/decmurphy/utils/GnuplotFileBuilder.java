@@ -148,7 +148,7 @@ public class GnuplotFileBuilder {
 
         pw.printf("set key off\n");
         pw.printf("set xlabel \"Stage 1 Downrange (km)\"\n");
-        pw.printf("set ylabel \"Stage 2 Altitude (km)\"\n");
+        pw.printf("set ylabel \"Stage 1 Altitude (km)\"\n");
         pw.printf("set term pngcairo\n");
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("p \"%s/%s_BoosterStage.dat\" u 7:5 w l, \\\n", outputPath, id);        
