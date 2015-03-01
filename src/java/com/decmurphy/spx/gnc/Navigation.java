@@ -1,5 +1,6 @@
 package com.decmurphy.spx.gnc;
 
+import com.decmurphy.spx.util.Correction;
 import com.decmurphy.spx.vehicle.Stage;
 import static com.decmurphy.utils.Globals.dt;
 import static com.decmurphy.utils.Globals.earthVel;
@@ -7,6 +8,7 @@ import static com.decmurphy.utils.Globals.radiusOfEarth;
 import com.decmurphy.utils.Maths.CartesianCoordinates;
 import com.decmurphy.utils.Maths.CartesianVelocity;
 import com.decmurphy.utils.Maths.SphericalCoordinates;
+import com.decmurphy.utils.Maths.SphericalVelocity;
 import static com.decmurphy.utils.Maths.magnitudeOf;
 import static com.decmurphy.utils.Physics.densityAtAltitude;
 import static com.decmurphy.utils.Physics.gravityAtRadius;
@@ -101,14 +103,22 @@ public class Navigation {
       s.absVel[2] += s.accel[2]*dt;
     }
     s.VA = magnitudeOf(s.absVel);
-	
-    s.relVel = new CartesianVelocity(s.absVel)
+		
+		s.baseVel = new CartesianVelocity(s.absVel)
 										.convertToSpherical(new CartesianCoordinates(s.pos))
 										.rotateEarth()
+				            .getValues();
+	
+    s.dragVel = new SphericalVelocity(s.baseVel)
+										.convertToCartesian(new CartesianCoordinates(s.pos).convertToSpherical())
+										.getValues();
+		
+    s.relVel = new SphericalVelocity(s.baseVel)
 										.convertToCartesian(new CartesianCoordinates(s.relPos).convertToSpherical())
 										.getValues();
 
     s.VR = magnitudeOf(s.relVel);
+    s.DVR = magnitudeOf(s.dragVel);
     
     updateVectors(s);
     removeMassFromSystem(s);
@@ -162,8 +172,8 @@ public class Navigation {
     
     int r;
     switch (dir) {
-      case BACKWARD: r = -1; newVector.rotateZ(r*incl); newVector.rotateY(r*lon); break;
-      case FORWARD: r = 1; newVector.rotateY(r*lon); newVector.rotateZ(r*incl); break;
+      case BACKWARD: r = -1; newVector.rotateZ(r*lon); newVector.rotateY(r*incl); break;
+      case FORWARD: r = 1; newVector.rotateY(r*incl); newVector.rotateZ(r*lon); break;
       default: throw new IllegalArgumentException("Invalid Transform direction");
     }
 
@@ -173,17 +183,34 @@ public class Navigation {
  
 	}
 
-	public static void adjustPitch(Stage s, double delP) {
+	public static void applyCorrection(Stage s, Correction c, double param) {
 
-    if(s.gamma[0]>0.0) {
-      vectorTransform(s, s.gamma, Transform.BACKWARD);
-      vectorTransform(s, s.beta, Transform.BACKWARD);
-    
-		  s.gamma[1] = (3*PI/2 - s.beta[1]) - delP;
+		if(s.gamma[0]>0.0) {
+			vectorTransform(s, s.gamma, Transform.BACKWARD);
+			vectorTransform(s, s.beta, Transform.BACKWARD);
+		}
 
-      vectorTransform(s, s.gamma, Transform.FORWARD);
-      vectorTransform(s, s.beta, Transform.FORWARD);
+		switch(c) {
+			case PITCH:
+				s.gamma[1] = (3*PI/2 - s.beta[1]) - param;
+				//pitchKick(s, PI/2 - param, 0.0);
+				break;
+			case YAW:
+				s.gamma[2] = (PI - s.beta[2]) - param;
+				//pitchKick(s, 0.0, param);
+				break;
+			case THROTTLE:
+				s.setThrottle(param/100.0);
+				break;
+			default:
+				break;
     }
+		
+		if(s.gamma[0]>0.0) {
+			vectorTransform(s, s.gamma, Transform.FORWARD);
+			vectorTransform(s, s.beta, Transform.FORWARD);
+		}
+
 	}
 
 	/*
@@ -203,7 +230,7 @@ public class Navigation {
   private static void executeBoundaryConditions(Stage s) {
     
 		try {
-			s.setQ(0.5*densityAtAltitude(s.alt())*s.VR*s.VR);
+			s.setQ(0.5*densityAtAltitude(s.alt())*s.DVR*s.DVR);
 			if (s.getPropMass() < 500) s.setThrottle(0.0);
 
 			if (s.isMoving) {
@@ -257,8 +284,8 @@ public class Navigation {
   
   private static void updateVectors(Stage s) {
     
-		s.alpha[1] = PI - atan2(sqrt(s.relVel[0]*s.relVel[0] + s.relVel[1]*s.relVel[1]), s.relVel[2]);
-		s.alpha[2] = PI + atan2(s.relVel[1], s.relVel[0]);
+		s.alpha[1] = PI - atan2(sqrt(s.dragVel[0]*s.dragVel[0] + s.dragVel[1]*s.dragVel[1]), s.dragVel[2]);
+		s.alpha[2] = PI + atan2(s.dragVel[1], s.dragVel[0]);
 
 		s.beta[1] = PI - atan2(sqrt(s.pos[0]*s.pos[0] + s.pos[1]*s.pos[1]), s.pos[2]);
 		s.beta[2] = PI + atan2(s.pos[1], s.pos[0]);

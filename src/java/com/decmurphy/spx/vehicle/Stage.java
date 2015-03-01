@@ -44,11 +44,13 @@ public class Stage {
 	public double[] pos,	  // cartesian position
                   relPos, // For looking at first stage landing with coriolis on
 									absVel, // absolute velocity	(Starts at earth velocity at launch pad. Gives a nice boost closer to equator)
+			            baseVel,//
+			            dragVel,//
 									relVel, // relative velocity	(relative to earth's surface. Starts at 0)
 									accel,	// acceleration
 									force;	// force
 
-	public double relS, S, VR, VA;	// magnitudes of position, relV, absV, acceleration
+	public double relS, S, VR, DVR, VA;	// magnitudes of position, relV, absV, acceleration
 	public String name;
 	public boolean isMoving;
 	public boolean beforeSep;
@@ -67,7 +69,7 @@ public class Stage {
 		this.dryMass = 0.0;
 		this.propMass = 0.0;
 
-		this.S = this.relS = this.VR = this.VA = 0.0;
+		this.S = this.relS = this.VR = this.DVR = this.VA = 0.0;
 
 		this.alpha = new double[3];
 		this.beta = new double[3];
@@ -76,6 +78,8 @@ public class Stage {
 		this.pos = new double[3];
 		this.relPos = new double[3];
 		this.absVel = new double[3];
+		this.baseVel = new double[3];
+		this.dragVel = new double[3];
 		this.relVel = new double[3];
 		this.accel = new double[3];
 		this.force = new double[3];
@@ -107,6 +111,7 @@ public class Stage {
 		this.S = s.S;
     this.relS = s.relS;
 		this.VR = s.VR;
+		this.DVR = s.DVR;
 		this.VA = s.VA;
 		
 		this.Cd = s.Cd;
@@ -120,6 +125,8 @@ public class Stage {
 		this.pos = new double[]{s.pos[0], s.pos[1], s.pos[2]};
 		this.relPos = new double[]{s.relPos[0], s.relPos[1], s.relPos[2]};
 		this.absVel = new double[]{s.absVel[0], s.absVel[1], s.absVel[2]};
+		this.baseVel = new double[]{s.baseVel[0], s.baseVel[1], s.baseVel[2]};
+		this.dragVel = new double[]{s.dragVel[0], s.dragVel[1], s.dragVel[2]};
 		this.relVel = new double[]{s.relVel[0], s.relVel[1], s.relVel[2]};
 		this.accel = new double[]{s.accel[0], s.accel[1], s.accel[2]};
 		this.force = new double[]{s.force[0], s.force[1], s.force[2]};
