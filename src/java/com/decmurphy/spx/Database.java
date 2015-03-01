@@ -106,9 +106,9 @@ public class Database {
 						}
 						
 						switch(params[2]) {
-							case "pitch":    tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option selected value=\"pitch\">Pitch</option><option value=\"yaw\">Yaw</option><option value=\"throttle\">Throttle</option></select></td>\n"); break;
-							case "yaw":      tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option value=\"pitch\">Pitch</option><option selected value=\"yaw\">Yaw</option><option value=\"throttle\">Throttle</option></select></td>\n"); break;
-							case "throttle": tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option value=\"pitch\">Pitch</option><option value=\"yaw\">Yaw</option><option selected value=\"throttle\">Throttle</option></select></td>\n"); break;
+							case "pitch":    tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option selected value=\"PITCH\">Pitch</option><option value=\"YAW\">Yaw</option><option value=\"THROTTLE\">Throttle</option></select></td>\n"); break;
+							case "yaw":      tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option value=\"pitch\">PITCH</option><option selected value=\"YAW\">Yaw</option><option value=\"THROTTLE\">Throttle</option></select></td>\n"); break;
+							case "throttle": tabs.append("                    <td><select name=\"correction").append(num).append("\" class=\"form-control\"><option value=\"\" disabled>Correction Type</option><option value=\"pitch\">PITCH</option><option value=\"YAW\">Yaw</option><option selected value=\"THROTTLE\">Throttle</option></select></td>\n"); break;
 						}
             tabs.append("                    <td> @ T<input type=\"text\" size=\"10\" value=\"").append(params[0]).append("\" name=\"correction").append(num).append("\"></td>\n");
             tabs.append("                    <td><input title=\"").append(paramHint).append("\" type=\"text\" size=\"10\" value=\"").append(params[3]).append("\" name=\"correction").append(num).append("\"></td>\n");

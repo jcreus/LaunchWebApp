@@ -21,9 +21,9 @@ $(document).ready(function() {
             row += '<option value="1">2</option></select></td>';
             row += '<td><select name="correction'+x+'" class="form-control">';
             row += '<option value="" selected disabled>Correction Type</option>';
-            row += '<option value="pitch">Pitch</option>';
-            row += '<option value="yaw">Yaw</option>';
-            row += '<option value="throttle">Throttle</option></select></td>';
+            row += '<option value="PITCH">Pitch</option>';
+            row += '<option value="YAW">Yaw</option>';
+            row += '<option value="THROTTLE">Throttle</option></select></td>';
             row += '<td> @ T<input type="text" size="10" placeholder="Time" name="correction"></td>';
             row += '<td><input title="'+hint+'" type="text" size="10" placeholder="Parameter" name="correction"></td>';
             row += '<td class="remove_field"><a href="#"><i class="glyphicon glyphicon-remove"/></a></td></tr>\n';

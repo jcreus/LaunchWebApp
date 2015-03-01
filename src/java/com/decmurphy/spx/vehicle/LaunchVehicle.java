@@ -2,10 +2,11 @@ package com.decmurphy.spx.vehicle;
 
 import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.gnc.Navigation;
-import com.decmurphy.spx.launchsite.LaunchSite;
+import com.decmurphy.spx.launchsite.RawLaunchSite;
 import com.decmurphy.spx.mission.Mission;
-import com.decmurphy.spx.payload.Payload;
+import com.decmurphy.spx.payload.RawPayload;
 import com.decmurphy.spx.profile.Profile;
+import com.decmurphy.spx.util.Correction;
 import static com.decmurphy.utils.Globals.dt;
 import static com.decmurphy.utils.Globals.gravConstant;
 import static com.decmurphy.utils.Globals.massOfEarth;
@@ -23,7 +24,7 @@ public abstract class LaunchVehicle {
 
   public int numStages;
   public Stage[] mStage;
-  protected Payload payload;
+  protected RawPayload payload;
   private Mission mission = null;
 
   protected double onBoardClock;
@@ -31,7 +32,7 @@ public abstract class LaunchVehicle {
   protected double gravTurnTime;
   boolean clampsReleased = false;
 
-  public void setPayload(Payload pl) {
+  public void setPayload(RawPayload pl) {
     payload = pl;
   }
 
@@ -97,14 +98,15 @@ public abstract class LaunchVehicle {
 
 	public void executeEvent(Event e) {
 
-		switch(e.getName()) {
-			case "adjustpitch":
-				Navigation.adjustPitch(mStage[(int)e.getValueOf("stage")], e.getValueOf("pitch"));
+		switch(e.getName().toLowerCase()) {
+			case "correction":
+				Navigation.applyCorrection(
+						mStage[(int)e.getValueOf("stage")],
+						e.getCorrection("type"),
+						e.getValueOf("param")
+				);
 				break;
-			case "adjustyaw":
-				break;
-			case "adjustthrust":
-				mStage[(int)e.getValueOf("stage")].setThrottle(e.getValueOf("throttle"));
+			default:
 				break;
 		}
 	}
@@ -135,7 +137,7 @@ public abstract class LaunchVehicle {
 		return mStage[numStages-1].alt();
 	}
 	
-	public void setLaunchSite(LaunchSite ls) {
+	public void setLaunchSite(RawLaunchSite ls) {
 		setCoordinates(ls.getIncl(), ls.getLong());
 	}
   

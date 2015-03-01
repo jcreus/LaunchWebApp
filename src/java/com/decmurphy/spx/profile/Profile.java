@@ -41,7 +41,7 @@ public class Profile {
 		Event current = null;
 		for (Event e : events) {
 			if (t > e.getTime()) {
-				if (e.getName().startsWith("adjust")) {
+				if (e.getName().equalsIgnoreCase("correction")) {
 					current = e;
 				}
 			}
