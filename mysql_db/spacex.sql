@@ -16,6 +16,35 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Table structure for table `LaunchSite`
+--
+
+DROP TABLE IF EXISTS `LaunchSite`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `LaunchSite` (
+  `launch_site_id` int(11) DEFAULT NULL,
+  `launch_site_name` varchar(50) DEFAULT NULL,
+  `launch_site_code` varchar(4) DEFAULT NULL,
+  `latitude` double DEFAULT NULL,
+  `longitude` double DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `LaunchSite`
+--
+
+LOCK TABLES `LaunchSite` WRITE;
+/*!40000 ALTER TABLE `LaunchSite` DISABLE KEYS */;
+INSERT INTO `LaunchSite` VALUES (1,'Omelek Island, Kwajalein Atoll','OMLK',9.05,-167.74);
+INSERT INTO `LaunchSite` VALUES (2,'CCAFS SLC-40','LC40',28.56,-80.57);
+INSERT INTO `LaunchSite` VALUES (3,'Vandenburg SLC-4E','LC4E',34.63,-120.61);
+INSERT INTO `LaunchSite` VALUES (4,'KSC 39-A','K39A',28.61,-80.6);
+/*!40000 ALTER TABLE `LaunchSite` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `corrections`
 --
 
@@ -45,16 +74,16 @@ INSERT INTO `corrections` VALUES (8,NULL);
 INSERT INTO `corrections` VALUES (9,NULL);
 INSERT INTO `corrections` VALUES (10,NULL);
 INSERT INTO `corrections` VALUES (11,NULL);
-INSERT INTO `corrections` VALUES (12,'400:pitch:0.0;450:pitch:-0.1');
-INSERT INTO `corrections` VALUES (13,'300:pitch:0.0;350:pitch:-0.1;400:pitch:-0.2');
+INSERT INTO `corrections` VALUES (12,'400:2:pitch:0.0;450:2:pitch:-0.1');
+INSERT INTO `corrections` VALUES (13,'300:2:pitch:0.0;350:2:pitch:-0.1;400:2:pitch:-0.2');
 INSERT INTO `corrections` VALUES (14,NULL);
 INSERT INTO `corrections` VALUES (15,NULL);
 INSERT INTO `corrections` VALUES (16,NULL);
 INSERT INTO `corrections` VALUES (17,NULL);
-INSERT INTO `corrections` VALUES (18,'310:pitch:-0.5;365:throttle:80;510:pitch:-0.3');
-INSERT INTO `corrections` VALUES (19,'275:pitch:0.1;350:pitch:0.0');
+INSERT INTO `corrections` VALUES (18,'310:2:pitch:-0.5;365:2:throttle:80;510:2:pitch:-0.3');
+INSERT INTO `corrections` VALUES (19,'275:2:pitch:0.1');
 INSERT INTO `corrections` VALUES (20,NULL);
-INSERT INTO `corrections` VALUES (21,NULL);
+INSERT INTO `corrections` VALUES (21,'200:2:pitch:0.0;300:2:pitch:-0.1;1250:2:throttle:100;1309:2:throttle:0');
 /*!40000 ALTER TABLE `corrections` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,27 +112,27 @@ CREATE TABLE `launches` (
 
 LOCK TABLES `launches` WRITE;
 /*!40000 ALTER TABLE `launches` DISABLE KEYS */;
-INSERT INTO `launches` VALUES (1,'2006-03-24','SpaceX',0,'Falcon1',0,'FalconSAT-2','FSAT-2');
+INSERT INTO `launches` VALUES (1,'2006-03-24','SpaceX',0,'Falcon1',0,'FalconSAT-2','FSAT');
 INSERT INTO `launches` VALUES (2,'2007-03-21','SpaceX',0,'Falcon1',0,'DemoSat','DEMO');
-INSERT INTO `launches` VALUES (3,'2008-08-03','SpaceX',0,'Falcon1',0,'Trailblazer','TBLZR');
-INSERT INTO `launches` VALUES (4,'2008-09-28','SpaceX',0,'Falcon1',0,'RatSat','RAT');
-INSERT INTO `launches` VALUES (5,'2009-07-14','SpaceX',0,'Falcon1',0,'RazakSAT','RAZ');
-INSERT INTO `launches` VALUES (6,'2010-06-04','SpaceX',0,'Falcon9',1,'Dragon','F9-1');
-INSERT INTO `launches` VALUES (7,'2010-12-08','SpaceX',0,'Falcon9',1,'COTS-1','COTS-1');
-INSERT INTO `launches` VALUES (8,'2012-05-22','SpaceX',0,'Falcon9',1,'COTS-2+','COTS-2');
-INSERT INTO `launches` VALUES (9,'2012-10-08','SpaceX',0,'Falcon9',1,'CRS-1','CRS-1');
-INSERT INTO `launches` VALUES (10,'2013-03-01','SpaceX',0,'Falcon9',1,'CRS-2','CRS-2');
+INSERT INTO `launches` VALUES (3,'2008-08-03','SpaceX',0,'Falcon1',0,'Trailblazer','TBZR');
+INSERT INTO `launches` VALUES (4,'2008-09-28','SpaceX',0,'Falcon1',0,'RatSat','RATS');
+INSERT INTO `launches` VALUES (5,'2009-07-14','SpaceX',0,'Falcon1',0,'RazakSAT','RAZS');
+INSERT INTO `launches` VALUES (6,'2010-06-04','SpaceX',0,'Falcon9',1,'Dragon','F9F1');
+INSERT INTO `launches` VALUES (7,'2010-12-08','SpaceX',0,'Falcon9',1,'COTS-1','COT1');
+INSERT INTO `launches` VALUES (8,'2012-05-22','SpaceX',0,'Falcon9',1,'COTS-2+','COT2');
+INSERT INTO `launches` VALUES (9,'2012-10-08','SpaceX',0,'Falcon9',1,'CRS-1','CRS1');
+INSERT INTO `launches` VALUES (10,'2013-03-01','SpaceX',0,'Falcon9',1,'CRS-2','CRS2');
 INSERT INTO `launches` VALUES (11,'2013-09-29','SpaceX',0,'Falcon9',2,'CASSIOPE','CASS');
-INSERT INTO `launches` VALUES (12,'2013-12-03','SpaceX',0,'Falcon9',2,'SES-8','SES-8');
-INSERT INTO `launches` VALUES (13,'2014-01-06','SpaceX',0,'Falcon9',2,'Thaicom-6','TH-6');
-INSERT INTO `launches` VALUES (14,'2014-04-18','SpaceX',0,'Falcon9',2,'CRS-3','CRS-3');
-INSERT INTO `launches` VALUES (15,'2014-07-14','SpaceX',0,'Falcon9',2,'OG2-1','OG2-1');
-INSERT INTO `launches` VALUES (16,'2014-08-05','SpaceX',0,'Falcon9',2,'AsiaSat-8','AS-8');
-INSERT INTO `launches` VALUES (17,'2014-09-07','SpaceX',0,'Falcon9',2,'AsiaSat-6','AS-6');
-INSERT INTO `launches` VALUES (18,'2014-09-21','SpaceX',0,'Falcon9',2,'CRS-4','CRS-4');
-INSERT INTO `launches` VALUES (19,'2015-01-10','SpaceX',0,'Falcon9',2,'CRS-5','CRS-5');
-INSERT INTO `launches` VALUES (20,'2015-02-09','SpaceX',0,'Falcon9',2,'DSCOVR','DSCOVR');
-INSERT INTO `launches` VALUES (21,'0000-00-00','SpaceX',0,'DragonV2',3,NULL,'PAD-ABORT');
+INSERT INTO `launches` VALUES (12,'2013-12-03','SpaceX',0,'Falcon9',2,'SES-8','SES8');
+INSERT INTO `launches` VALUES (13,'2014-01-06','SpaceX',0,'Falcon9',2,'Thaicom-6','THM6');
+INSERT INTO `launches` VALUES (14,'2014-04-18','SpaceX',0,'Falcon9',2,'CRS-3','CRS3');
+INSERT INTO `launches` VALUES (15,'2014-07-14','SpaceX',0,'Falcon9',2,'OG2-1','OG21');
+INSERT INTO `launches` VALUES (16,'2014-08-05','SpaceX',0,'Falcon9',2,'AsiaSat-8','AST8');
+INSERT INTO `launches` VALUES (17,'2014-09-07','SpaceX',0,'Falcon9',2,'AsiaSat-6','AST6');
+INSERT INTO `launches` VALUES (18,'2014-09-21','SpaceX',0,'Falcon9',2,'CRS-4','CRS4');
+INSERT INTO `launches` VALUES (19,'2015-01-10','SpaceX',0,'Falcon9',2,'CRS-5','CRS5');
+INSERT INTO `launches` VALUES (20,'2015-02-09','SpaceX',0,'Falcon9',2,'DSCOVR','DSCR');
+INSERT INTO `launches` VALUES (21,'2015-03-02','SpaceX',0,'Falcon9',2,'EutelSat/ABS','EUAB');
 /*!40000 ALTER TABLE `launches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -160,7 +189,7 @@ INSERT INTO `profiles` VALUES (17,4428,0,-2,180,0,0,0,0,7,0.027,-0.06,182,189,0,
 INSERT INTO `profiles` VALUES (18,6416,1,-2,167,276,291,439,461,7,0.063,0.78,169,177,0,0);
 INSERT INTO `profiles` VALUES (19,6517,1,-2,163,276,291,439,461,7,0.045,0.82,165,173,0,530);
 INSERT INTO `profiles` VALUES (20,570,1,-2,166,NULL,NULL,420,445,7,0.07,0.5,170,177,0,460);
-INSERT INTO `profiles` VALUES (21,0,0,-0.1,NULL,NULL,NULL,NULL,NULL,3,0.01,0,NULL,NULL,NULL,NULL);
+INSERT INTO `profiles` VALUES (21,4200,0,-2,180,0,0,0,0,7,0.045,0,182,189,0,0);
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -173,4 +202,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-02-22 23:39:45
+-- Dump completed on 2015-03-02 22:09:55
