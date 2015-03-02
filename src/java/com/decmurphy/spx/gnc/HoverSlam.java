@@ -68,28 +68,20 @@ public class HoverSlam {
 		copyStage.setThrottle(throttle);
 		copyStage.setThrottleTest(true);
 
-		double S = copyStage.alt();
-		double[] vel;
-
 		do {
 
 			leapfrogStep(copyStage);
 			gravityTurn(copyStage);
 
-			vel = new Maths.CartesianVelocity(copyStage.relVel)
-					.convertToSpherical(new Maths.CartesianCoordinates(copyStage.relPos))
-					.getValues();
-			
-			S = copyStage.alt();
-			
-			if(S <= 0) break;                          // If crash, S<0, started too late
-			if(copyStage.getPropMass() < 500.0) break; // If fuel runs out, S>0, started too soon
-			if(magnitudeOf(vel) < 6.0)	break;         // If stopped, S>0, started too soon
+			if(
+				copyStage.alt() <= 0 ||                                      // If crash, S<0, started too late
+				copyStage.getPropMass() < copyStage.getMinimumFuelLimit() || // If fuel runs out, S>0, started too soon
+				magnitudeOf(copyStage.relVel) < 6.0			                     // If stopped, S>0, started too soon
+			) break;
 
 		} while (true);
 
-		copyStage = null;
-		return S;
+		return copyStage.alt();
 
 	}
 

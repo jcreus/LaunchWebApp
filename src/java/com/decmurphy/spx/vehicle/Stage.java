@@ -94,19 +94,19 @@ public class Stage {
 	public Stage(Stage s) {
 
 		this.name = "CopyStage";
-		this.throttle = s.throttle;
-		this.hasLegs = s.hasLegs;
+		this.setThrottle(s.getThrottle());
+		this.setLegs(s.hasLegs());
 		this.isMoving = s.isMoving;
 		this.beforeSep = s.beforeSep;
-    this.landed = s.landed;
-		this.extraBurn = s.extraBurn;
-		this.landingBurn = s.landingBurn;
-		this.radius = s.radius;
-		this.dryMass = s.dryMass;
-		this.propMass = s.propMass;
+    this.setLanded(s.isLanded());
+		this.setExtraBurnIsUnderway(s.extraBurnIsUnderway());
+		this.setLandingBurnIsUnderway(s.landingBurnIsUnderway());
+		this.setAeroProperties(s.getAeroProp("r"), s.getAeroProp("Cd"));
+		this.setDryMass(s.getDryMass());
+		this.setPropMass(s.getPropMass());
+		this.setMinimumFuelLimit(s.getMinimumFuelLimit());
 
-		this.engine = s.engine;
-		this.numEngines = s.numEngines;
+		this.setEngines(s.getNumEngines(), s.getEngine());
 
 		this.S = s.S;
     this.relS = s.relS;
@@ -114,9 +114,7 @@ public class Stage {
 		this.DVR = s.DVR;
 		this.VA = s.VA;
 		
-		this.Cd = s.Cd;
-		this.XA = s.XA;
-		this.additionalMass = s.additionalMass;
+		this.setAdditionalMass(s.getAdditionalMass());
 
 		this.alpha = new double[]{s.alpha[0], s.alpha[1], s.alpha[2]};
 		this.beta = new double[]{s.beta[0], s.beta[1], s.beta[2]};
@@ -131,7 +129,7 @@ public class Stage {
 		this.accel = new double[]{s.accel[0], s.accel[1], s.accel[2]};
 		this.force = new double[]{s.force[0], s.force[1], s.force[2]};
 
-		this.parent = s.parent;
+		this.setParent(s.getParent());
 		this.completedOrbits = s.completedOrbits;
 		this.newtheta = s.newtheta;
 		this.oldtheta = s.oldtheta;
@@ -234,7 +232,7 @@ public class Stage {
 	}
 	
 	private boolean extraBurn;
-	public void setExtraBurnIsUnderway(boolean b) {
+	public final void setExtraBurnIsUnderway(boolean b) {
 		this.extraBurn = b;
 	}
 	public boolean extraBurnIsUnderway() {
@@ -242,7 +240,7 @@ public class Stage {
 	}
 	
 	private boolean landingBurn;
-	public void setLandingBurnIsUnderway(boolean b) {
+	public final void setLandingBurnIsUnderway(boolean b) {
 		this.extraBurn = b;
 		this.landingBurn = b;
 	}
@@ -251,7 +249,7 @@ public class Stage {
 	}
   
   public boolean landed;
-  public void setLanded(boolean b) {
+  public final void setLanded(boolean b) {
     landed = b;
   }
   public boolean isLanded() {
@@ -259,7 +257,7 @@ public class Stage {
   }
 
 	private LaunchVehicle parent;
-	public void setParent(LaunchVehicle lv) {
+	public final void setParent(LaunchVehicle lv) {
 		parent = lv;
 	}
 	public LaunchVehicle getParent() {
@@ -281,7 +279,7 @@ public class Stage {
 	}
 
 	private Engine engine;
-	public void setEngines(int numEngines, Engine engine) {
+	public final void setEngines(int numEngines, Engine engine) {
 		this.numEngines = numEngines;
 		this.engine = engine;
 	}
@@ -298,7 +296,7 @@ public class Stage {
 	}
 
 	private double throttle;
-	public void setThrottle(double throttle) {
+	public final void setThrottle(double throttle) {
 		this.throttle = throttle;
 	}
 	public double getThrottle() {
@@ -306,7 +304,7 @@ public class Stage {
 	}
 	
 	private double minimumFuelLimit;	// Cut engines when fuel level drops below this
-	public void setMinimumFuelLimit(double fl) {
+	public final void setMinimumFuelLimit(double fl) {
 		this.minimumFuelLimit = fl;
 	}
 	public double getMinimumFuelLimit() {
@@ -314,7 +312,7 @@ public class Stage {
 	}
 
 	private boolean hasLegs;
-	public void setLegs(boolean hasLegs) {
+	public final void setLegs(boolean hasLegs) {
 		this.hasLegs = hasLegs;
 		if (hasLegs) {
 			this.dryMass += 2000;
@@ -342,7 +340,7 @@ public class Stage {
 	}
 
 	private double radius, Cd, XA;
-	public void setAeroProperties(double radius, double dragCoefficient) {
+	public final void setAeroProperties(double radius, double dragCoefficient) {
 		this.Cd = dragCoefficient;
 		this.radius = radius;
 		this.XA = PI*radius*radius;
@@ -359,7 +357,7 @@ public class Stage {
 
 	
 	private double dryMass;
-	protected void setDryMass(double dryMass) {
+	protected final void setDryMass(double dryMass) {
 		this.dryMass = dryMass;
 	}
 	public double getDryMass() {
@@ -367,7 +365,7 @@ public class Stage {
 	}
 
 	private double propMass;	
-	public void setPropMass(double propMass) {
+	public final void setPropMass(double propMass) {
 		this.propMass = propMass;
 	}
 	public double getPropMass() {
@@ -379,9 +377,13 @@ public class Stage {
 	}
 
 	private double additionalMass;
-	public void setAdditionalMass(double mass) {
+	public final void setAdditionalMass(double mass) {
 		this.additionalMass = mass;
 	}
+	public double getAdditionalMass() {
+		return additionalMass;
+	}
+	
 	public double getEffectiveMass() {
 		return additionalMass + getMass();
 	}
