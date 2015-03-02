@@ -207,7 +207,7 @@ public class Stage {
 
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\n",
 				clock(), relPos[0]*1e-3, relPos[1]*1e-3, relPos[2]*1e-3, 
-				(S-radiusOfEarth)*1e-3, VR, getDownrangeDistance()*1e-3, Q*1e-3, getPropMass()*1e-3);
+				alt()*1e-3, relVel(), getDownrangeDistance()*1e-3, Q*1e-3, getPropMass()*1e-3);
 
       if(b) {
         File eventPointsFile = new File(outputPath, "/" + id + "_" + name + "_events.dat");
@@ -215,7 +215,7 @@ public class Stage {
 
         pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\n\n",
           clock(), relPos[0]*1e-3, relPos[1]*1e-3, relPos[2]*1e-3, 
-					(S-radiusOfEarth)*1e-3, VR, getDownrangeDistance()*1e-3, Q*1e-3, getPropMass()*1e-3);
+					alt()*1e-3, relVel(), getDownrangeDistance()*1e-3, Q*1e-3, getPropMass()*1e-3);
       }
 		} catch (IOException e) {
 		} finally {
@@ -387,11 +387,16 @@ public class Stage {
 	}
   
   public double getDownrangeDistance() {
+		
+		double[] tempBeta = new double[3];
+		tempBeta[1] = PI - atan2(sqrt(relPos[0]*relPos[0] + relPos[1]*relPos[1]), relPos[2]);
+		tempBeta[2] = PI + atan2(relPos[1], relPos[0]);
+		
     double theta1 = PI - getParent().getMission().LaunchSite().getIncl();
-    double theta2 = beta[1];
+    double theta2 = tempBeta[1];
 
     double psi1 = getParent().getMission().LaunchSite().getLong();
-    double psi2 = beta[2] - PI;
+    double psi2 = tempBeta[2] - PI;
 
     return radiusOfEarth*acos(cos(theta1)*cos(theta2) + sin(theta1)*sin(theta2)*cos(psi1-psi2));
   }

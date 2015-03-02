@@ -1,4 +1,4 @@
-package com.decmurphy.spx;
+package com.decmurphy.spx.util;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,13 +10,13 @@ import java.util.Properties;
  *
  * @author declan
  */
-public class Database {
+public class ProfileUtility {
 
   private Connection con = null;
   private ResultSet rs, rs2, rs3, rs4;
   private PreparedStatement pst = null;
 
-  public Database() {
+  public ProfileUtility() {
   }
 
   public String buildProfilesList(String pathToPropertiesFile) {

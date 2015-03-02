@@ -1,6 +1,6 @@
 package com.decmurphy.spx.servlet;
 
-import com.decmurphy.spx.Database;
+import com.decmurphy.spx.util.ProfileUtility;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -19,7 +19,7 @@ public class Home extends HttpServlet {
 					throws ServletException, IOException {
 
 		response.setContentType("text/html");
-		Database db = new Database();
+		ProfileUtility db = new ProfileUtility();
 
 		String dbPropsFile = getServletContext().getRealPath("/db.properties");
 

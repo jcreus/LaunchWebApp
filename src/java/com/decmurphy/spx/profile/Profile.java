@@ -1,6 +1,7 @@
 package com.decmurphy.spx.profile;
 
 import com.decmurphy.spx.event.Event;
+import com.decmurphy.spx.util.Correction;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,11 +38,11 @@ public class Profile {
 		return e;
 	}
 
-	public Event getEvent(double t) {
+	public Event getEvent(Correction c, double t) {
 		Event current = null;
 		for (Event e : events) {
 			if (t > e.getTime()) {
-				if (e.getName().equalsIgnoreCase("correction")) {
+				if (c.equals(e.getCorrection("type"))) {
 					current = e;
 				}
 			}

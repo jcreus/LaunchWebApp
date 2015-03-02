@@ -5,7 +5,7 @@ import com.decmurphy.spx.space.Earth;
 import com.decmurphy.spx.space.Planet;
 import static com.decmurphy.utils.Globals.dt;
 
-public class ExecuteInternal {
+public class ProcessLaunch {
 
 	public static void execute(Mission mission, String[] args) {
 
@@ -28,7 +28,7 @@ public class ExecuteInternal {
 
       if(SECO && mission.LaunchVehicle().isLanded()) dt = 0.1;      
       if(mission.LaunchVehicle().failedToReachOrbit()) break;
-      if(mission.LaunchVehicle().completedOrbits() >= 1) break;
+      if(mission.LaunchVehicle().completedOrbits() >= 5) break;
       
 		} while (true);
 

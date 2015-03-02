@@ -143,7 +143,7 @@ public class Navigation {
 		double incl = acos(s.pos[2]/radiusOfEarth);
 		double lon = atan2(s.pos[1], s.pos[0]);
 
-    SphericalCoordinates attitudeS = new SphericalCoordinates(radiusOfEarth, pitch, yaw);
+    SphericalCoordinates attitudeS = new SphericalCoordinates(s.S, pitch, yaw);
     CartesianCoordinates attitude = attitudeS.convertToCartesian();
     
     // Always start off pointing in the positive y-direction.
@@ -184,20 +184,20 @@ public class Navigation {
 	}
 
 	public static void applyCorrection(Stage s, Correction c, double param) {
-
+/*
 		if(s.gamma[0]>0.0) {
 			vectorTransform(s, s.gamma, Transform.BACKWARD);
 			vectorTransform(s, s.beta, Transform.BACKWARD);
 		}
-
+*/
 		switch(c) {
 			case PITCH:
-				s.gamma[1] = (3*PI/2 - s.beta[1]) - param;
-				//pitchKick(s, PI/2 - param, 0.0);
+				//s.gamma[1] = (3*PI/2 - s.beta[1]) - param;
+				pitchKick(s, PI/2 - param, 0.0);
 				break;
 			case YAW:
-				s.gamma[2] = (PI - s.beta[2]) - param;
-				//pitchKick(s, 0.0, param);
+				//s.gamma[2] = (PI - s.beta[2]) - param;
+				pitchKick(s, 0.0, param);
 				break;
 			case THROTTLE:
 				s.setThrottle(param/100.0);
@@ -205,12 +205,12 @@ public class Navigation {
 			default:
 				break;
     }
-		
+	/*	
 		if(s.gamma[0]>0.0) {
 			vectorTransform(s, s.gamma, Transform.FORWARD);
 			vectorTransform(s, s.beta, Transform.FORWARD);
 		}
-
+*/
 	}
 
 	/*

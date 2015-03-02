@@ -68,14 +68,16 @@ public abstract class LaunchVehicle {
 
   public void invoke(Profile p) {
     /*
-     Want to make sure any attitude changes keep effect permanently - not just 
+     Want to make sure any course corrections keep effect permanently - not just 
      for the moment they are initiated. By 'permanently', I of course mean until
-     it's replaced by the next attitude change.
+     it's replaced by the next correction of the same type.
      */
     Event event;
-    if ((event = p.getEvent(onBoardClock)) != null) {
-      executeEvent(event);
-    }
+		for(Correction c : Correction.values()) {
+			if ((event = p.getEvent(c, onBoardClock)) != null) {
+				executeEvent(event);
+			}
+		}
   }
 
   public void gravityTurn() {
