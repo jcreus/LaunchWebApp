@@ -231,11 +231,12 @@ public class Navigation {
     
 		try {
 			s.setQ(0.5*densityAtAltitude(s.alt())*s.DVR*s.DVR);
-			if (s.getPropMass() < 500) s.setThrottle(0.0);
+			if (s.getPropMass() < s.getMinimumFuelLimit())
+				s.setThrottle(0.0);
 
 			if (s.isMoving) {
 				s.alpha[0] = s.getQ()*s.getAeroProp("Cd")*s.getAeroProp("XA");
-				s.gamma[0] = s.getPropMass() > 500 ? s.getThrustAtAltitude(s.alt()) : 0.0;
+				s.gamma[0] = s.getThrustAtAltitude(s.alt());
 				s.beta[0] = s.getEffectiveMass()*gravityAtRadius(radiusOfEarth + s.alt());
 			} else {
 				s.alpha[0] = s.gamma[0] = s.beta[0] = 0.0;

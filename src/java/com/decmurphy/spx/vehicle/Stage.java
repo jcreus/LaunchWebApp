@@ -304,6 +304,14 @@ public class Stage {
 	public double getThrottle() {
 		return throttle;
 	}
+	
+	private double minimumFuelLimit;	// Cut engines when fuel level drops below this
+	public void setMinimumFuelLimit(double fl) {
+		this.minimumFuelLimit = fl;
+	}
+	public double getMinimumFuelLimit() {
+		return minimumFuelLimit;
+	}
 
 	private boolean hasLegs;
 	public void setLegs(boolean hasLegs) {

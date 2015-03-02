@@ -28,7 +28,7 @@ public class ProcessLaunch {
 
       if(SECO && mission.LaunchVehicle().isLanded()) dt = 0.1;      
       if(mission.LaunchVehicle().failedToReachOrbit()) break;
-      if(mission.LaunchVehicle().completedOrbits() >= 5) break;
+      if(mission.LaunchVehicle().completedOrbits() >= 1) break;
       
 		} while (true);
 
