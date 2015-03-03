@@ -17,15 +17,14 @@ import static java.lang.Math.sqrt;
 public class Stage {
 
 	/*
-	 *	All angles are given in spherical coordinates and hence are given by three parameters - the radius and the polar/azimuthal angles.
-	 *	The radius is the same for all angles at any given time since a stage can't be at two altitudes at once.
-	 *	So we only care about the two angles.
+	 *	All vectors are given in spherical coordinates and hence are given by three
+   *  parameters - the magnitude and the polar/azimuthal angles.
 	 *
-	 *	angle[0] is the polar angle - measured from the z-axis.
+	 *	angle[1] is the polar angle - measured from the z-axis.
 	 *	Range = [0:pi]
 	 *	 - i.e 	above the north pole = 0 ; above the equator = pi/2 ; above the south pole = pi
 	 *
-	 *	angle[1] is the azimuthal angle (longitude) going west from Greenwich.
+	 *	angle[2] is the azimuthal angle (longitude) going west from Greenwich.
 	 *	Range [-pi:pi) or [0:2pi) (just be consistent and keep 0 at Greenwich)
 	 *	 - i.e	Cape Canaveral = 85.5 degrees (whatever that is in radians) ; Hong Kong = -114.2 (or 245.8) degrees
 	 *
@@ -33,24 +32,24 @@ public class Stage {
 	 *	before going any further. It's gonna come up a lot and I'm not gonna be explaining it every time!
 	 *
 	 */
-	public double[] alpha,	// angle of attack 		(drag acts through this angle)
-									beta,		// angle of position	(gravity acts through this one - points towards earth's centre)
-									gamma;  // angle of thrust		(guess what acts through this one)
+	public double[] alpha,	// attitude vector  (drag acts through this angle)
+									beta,		// position	vector  (gravity acts through this one - points towards earth's centre)
+									gamma;  // thrust vector    (guess what acts through this one)
 	/*
 	 *	These ones are in cartesian coordinates. It's started off easier to visualize but I never thought
 	 *	about whether they should be cartesian or spherical. Should I put these in spherical coordinates too?
-	 *	I'll think about it. It would make the leapfrog	function a lot simpler, that's for sure.
+	 *	I think I'd need to transform my coordinate system every timestep which I am absolutely not doing
 	 */
-	public double[] pos,	  // cartesian position
-                  relPos, // For looking at first stage landing with coriolis on
+	public double[] pos,	  // Absolute position
+                  relPos, // Relative position for results plots
 									absVel, // absolute velocity	(Starts at earth velocity at launch pad. Gives a nice boost closer to equator)
 			            baseVel,//
-			            dragVel,//
+			            dragVel,// the velocity vector that should be used in the drag equation
 									relVel, // relative velocity	(relative to earth's surface. Starts at 0)
 									accel,	// acceleration
 									force;	// force
 
-	public double relS, S, VR, DVR, VA;	// magnitudes of position, relV, absV, acceleration
+	public double relS, S, VR, DVR, VA;	// magnitudes of vectors
 	public String name;
 	public boolean isMoving;
 	public boolean beforeSep;
@@ -86,7 +85,7 @@ public class Stage {
 
 		this.parent = null;
 		this.completedOrbits = 0;
-		this.newtheta = this.oldtheta = 0.0;
+		this.new_longitude = this.old_longitude = 0.0;
 
 		this.setCoordinates(0.0, 0.0);
 	}
@@ -131,8 +130,8 @@ public class Stage {
 
 		this.setParent(s.getParent());
 		this.completedOrbits = s.completedOrbits;
-		this.newtheta = s.newtheta;
-		this.oldtheta = s.oldtheta;
+		this.new_longitude = s.new_longitude;
+		this.old_longitude = s.old_longitude;
 	}
 
 	final void setCoordinates(double incl, double lon) {
@@ -196,25 +195,21 @@ public class Stage {
 	/*
 	 *	Output telemetry to file. Nothing interesting happens here.
 	 */
-	public void outputFile(String id, boolean b) {
+	public void outputFile(String id, boolean eventsFile) {
 		PrintWriter pw = null;
 
 		try {
-			File outputFile = new File(outputPath, "/" + id + "_" + name + ".dat");
+      String fileName = "/" + id + "_" + name + (eventsFile ? "_events.dat" : ".dat");
+			File outputFile = new File(outputPath, fileName);
 			pw = new PrintWriter(new FileWriter(outputFile, true));
 
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\n",
 				clock(), relPos[0]*1e-3, relPos[1]*1e-3, relPos[2]*1e-3, 
 				alt()*1e-3, relVel(), getDownrangeDistance()*1e-3, Q*1e-3, getPropMass()*1e-3);
 
-      if(b) {
-        File eventPointsFile = new File(outputPath, "/" + id + "_" + name + "_events.dat");
-        pw = new PrintWriter(new FileWriter(eventPointsFile, true));
-
-        pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\n\n",
-          clock(), relPos[0]*1e-3, relPos[1]*1e-3, relPos[2]*1e-3, 
-					alt()*1e-3, relVel(), getDownrangeDistance()*1e-3, Q*1e-3, getPropMass()*1e-3);
-      }
+      if(eventsFile)
+        pw.printf("\n");
+      
 		} catch (IOException e) {
 		} finally {
 			if (pw != null) {
@@ -265,15 +260,15 @@ public class Stage {
 	}
 
 	private int completedOrbits;
-	private double newtheta, oldtheta;
+	private double new_longitude, old_longitude;
 	public int completedOrbits() {
-		newtheta = atan2(this.pos[1], this.pos[0]);
+		new_longitude = atan2(this.pos[1], this.pos[0]);
 
-		if (oldtheta < parent.getMission().LaunchSite().getLong()
-						&& newtheta > parent.getMission().LaunchSite().getLong()) {
+		if (old_longitude < parent.getMission().LaunchSite().getLong()
+						&& new_longitude > parent.getMission().LaunchSite().getLong()) {
 			completedOrbits++;
 		}
-		oldtheta = newtheta;
+		old_longitude = new_longitude;
 
 		return completedOrbits;
 	}
@@ -330,7 +325,6 @@ public class Stage {
 		return throttleTest;
 	}
 
-	
 	private double Q;
 	public void setQ(double q) {
 		Q = q;
@@ -355,7 +349,6 @@ public class Stage {
 		}
 	}
 
-	
 	private double dryMass;
 	protected final void setDryMass(double dryMass) {
 		this.dryMass = dryMass;
@@ -398,17 +391,18 @@ public class Stage {
   
   public double getDownrangeDistance() {
 		
+    // tempBeta is just beta from relPos instead of pos
 		double[] tempBeta = new double[3];
 		tempBeta[1] = PI - atan2(sqrt(relPos[0]*relPos[0] + relPos[1]*relPos[1]), relPos[2]);
 		tempBeta[2] = PI + atan2(relPos[1], relPos[0]);
 		
-    double theta1 = PI - getParent().getMission().LaunchSite().getIncl();
-    double theta2 = tempBeta[1];
+    double _longitude1 = PI - getParent().getMission().LaunchSite().getIncl();
+    double _longitude2 = tempBeta[1];
 
     double psi1 = getParent().getMission().LaunchSite().getLong();
     double psi2 = tempBeta[2] - PI;
 
-    return radiusOfEarth*acos(cos(theta1)*cos(theta2) + sin(theta1)*sin(theta2)*cos(psi1-psi2));
+    return radiusOfEarth*acos(cos(_longitude1)*cos(_longitude2) + sin(_longitude1)*sin(_longitude2)*cos(psi1-psi2));
   }
 
 	//////////////////////////////////////////////////////////////////////////////

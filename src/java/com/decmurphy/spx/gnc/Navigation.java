@@ -92,6 +92,10 @@ public class Navigation {
 		s.accel[1] = s.force[1]/s.getEffectiveMass();
 		s.accel[2] = s.force[2]/s.getEffectiveMass();
 
+    /*
+      If vehicle hasn't launched, then the stage's velocity matches the Earth's
+      rotation.
+    */
     if(!s.getParent().hasLaunched()) {
       s.absVel[0] =  earthVel*sin(s.beta[1])*sin(s.beta[2]);
       s.absVel[1] = -earthVel*sin(s.beta[1])*cos(s.beta[2]);
@@ -104,6 +108,24 @@ public class Navigation {
     }
     s.VA = magnitudeOf(s.absVel);
 		
+    /*
+      Alright this is a bit weird. I want to find the velocity of the stage
+      relative to the Earth.
+    
+      I convert absVel to spherical coordinates first because it's easier to
+      correct for the Earth's rotation in spherical.
+    
+      baseVel is the spherical velocity of the stage corrected for the Earth's rotation.
+      But we want it in Cartesian coordinates. Converting back isn't so simple because
+      converting between cartesian and spherical velocity depends on the position.
+      So if we want the stage's velocity vector for applying a drag force, we use
+      the absolute position to convert back. If we want it for display purposes,
+      we use the relative position to convert back.
+    
+      You might need to think about this one a bit. Think about the case where the
+      absolute position is on the far side of the earth to the relative position
+      (which would happen if you sat at the launchpad for 12 hours before launching)
+    */
 		s.baseVel = new CartesianVelocity(s.absVel)
 										.convertToSpherical(new CartesianCoordinates(s.pos))
 										.rotateEarth()
@@ -127,10 +149,12 @@ public class Navigation {
 
 	/*
 	 *	3D is hard. Honestly it's like an order of magnitude harder than 2D.
-	 *	My current method for any kind of operation is to transform it into an 
-   *  easier-to-work-with coordinate system, do the operation, and then transform
-   *  back. For the pitch kick I can skip the first step. So rotate (pitch, yaw)
-   *  by theta degrees about the y-axis and then rotate by phi degrees about the z-axis.
+	 *	My current method for any kind of course correction is to transform the 
+   *  stage's orientation into an easier-to-work-with coordinate system, do
+   *  the operation, and then transform back. For the pitch kick I can skip the
+   *  first step cause I know I'm starting from vertical pitch. So rotate
+   *  (pitch, yaw) by theta degrees about the y-axis and then rotate by phi
+   *  degrees about the z-axis.
 	 *
 	 *	For Cape Canaveral, this is rotating (pitch, yaw) by 61.51 degrees about y,
    *  and then by -80.58 degrees about z.	Voila. That's your heading after pitch-kick.
@@ -184,20 +208,28 @@ public class Navigation {
 	}
 
 	public static void applyCorrection(Stage s, Correction c, double param) {
-/*
+
 		if(s.gamma[0]>0.0) {
 			vectorTransform(s, s.gamma, Transform.BACKWARD);
 			vectorTransform(s, s.beta, Transform.BACKWARD);
 		}
-*/
+    
+    /*
+      Doing pitch kick here doesn't work as it resets one of the parameters to zero.
+      It's an *absolute* change as opposed to a *relative* change
+      So I still need to figure out what to put for YAW case.
+      Figuring out why PITCH case is the way it is would help.
+      Good old throttle is giving me no grief.
+    */
+
 		switch(c) {
 			case PITCH:
-				//s.gamma[1] = (3*PI/2 - s.beta[1]) - param;
-				pitchKick(s, PI/2 - param, 0.0);
+				s.gamma[1] = (3*PI/2 - s.beta[1]) - param;
+				//pitchKick(s, PI/2 - param, 0.0);
 				break;
 			case YAW:
 				//s.gamma[2] = (PI - s.beta[2]) - param;
-				pitchKick(s, 0.0, param);
+				//pitchKick(s, 0.0, param);
 				break;
 			case THROTTLE:
 				s.setThrottle(param/100.0);
@@ -205,12 +237,12 @@ public class Navigation {
 			default:
 				break;
     }
-	/*	
+		
 		if(s.gamma[0]>0.0) {
 			vectorTransform(s, s.gamma, Transform.FORWARD);
 			vectorTransform(s, s.beta, Transform.FORWARD);
 		}
-*/
+
 	}
 
 	/*
@@ -251,7 +283,7 @@ public class Navigation {
      *  movement after this point.
 		 *
 		 *	I had to introduce the 'if(s.clock())' statement because for a split
-     *  second at the very start, the s falls before it rises. I'll find a
+     *  second at the very start, the stage falls before it rises. I'll find a
      *  more elegant solution to this problem soon.
 		 */
 		if(!s.isThrottleTest()) {
