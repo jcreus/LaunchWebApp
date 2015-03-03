@@ -185,7 +185,7 @@ public class Navigation {
 
 	private static void vectorTransform(Stage s, double[] arr, Transform dir) {
 
-    double incl = acos(s.pos[2]/radiusOfEarth);
+    double incl = atan2(sqrt(s.pos[0]*s.pos[0] + s.pos[1]*s.pos[1]), s.pos[2]);
     double lon = atan2(s.pos[1], s.pos[0]);
     
     // arr is in Spherical form already, but we create an explicit object here
@@ -211,36 +211,27 @@ public class Navigation {
 
 		if(s.gamma[0]>0.0) {
 			vectorTransform(s, s.gamma, Transform.BACKWARD);
-			vectorTransform(s, s.beta, Transform.BACKWARD);
-		}
     
-    /*
-      Doing pitch kick here doesn't work as it resets one of the parameters to zero.
-      It's an *absolute* change as opposed to a *relative* change
-      So I still need to figure out what to put for YAW case.
-      Figuring out why PITCH case is the way it is would help.
-      Good old throttle is giving me no grief.
-    */
+      /*
+        Doing pitch kick here doesn't work as it resets one of the parameters to zero.
+        It's an *absolute* change as opposed to a *relative* change.
+      */
 
-		switch(c) {
-			case PITCH:
-				s.gamma[1] = (3*PI/2 - s.beta[1]) - param;
-				//pitchKick(s, PI/2 - param, 0.0);
-				break;
-			case YAW:
-				//s.gamma[2] = (PI - s.beta[2]) - param;
-				//pitchKick(s, 0.0, param);
-				break;
-			case THROTTLE:
-				s.setThrottle(param/100.0);
-				break;
-			default:
-				break;
-    }
+		  switch(c) {
+			  case PITCH:
+				  s.gamma[1] = PI/2 - param;
+				  break;
+			  case YAW:
+				  s.gamma[2] = PI/2 + param;
+				  break;
+			  case THROTTLE:
+				  s.setThrottle(param/100.0);
+				  break;
+			  default:
+				  break;
+      }
 		
-		if(s.gamma[0]>0.0) {
 			vectorTransform(s, s.gamma, Transform.FORWARD);
-			vectorTransform(s, s.beta, Transform.FORWARD);
 		}
 
 	}
