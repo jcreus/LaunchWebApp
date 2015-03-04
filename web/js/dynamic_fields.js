@@ -13,8 +13,6 @@ $(document).ready(function() {
     var x = 5;
     $(add_button).click(function(e){
         e.preventDefault();
-        var count = $(this).closest('.table-right').children('.table_bottom').children('tr').length;
-        alert(count);
         if(x < max_fields){
             x++;
             var row = '<tr>';
@@ -31,11 +29,14 @@ $(document).ready(function() {
             row += '<td><input title="'+paramHint+'" type="text" size="10" placeholder="Parameter" name="correction'+x+'"></td>';
             row += '<td class="remove_field"><a href="#"><i class="glyphicon glyphicon-remove"/></a></td></tr>\n';
             
-            $(this).closest('.table-right').children('.table_bottom').append(row);
+            var table = $(this).closest('.table-right').children('.table_bottom');
+            $(table).append(row);
         }
     });
     
     $(wrapper).on("click",".remove_field", function(e){
-        e.preventDefault(); $(this).closest('tr').remove(); x--;
+        e.preventDefault();
+        $(this).closest('tr').remove();
+        x--;
     });
 });

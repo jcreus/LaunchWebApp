@@ -18,7 +18,7 @@ public enum ToolTip {
 	BBE("Boostback burn end time"),
 	RBS("Re-entry burn start time"),
 	RBE("Re-entry burn end time"),
-	LBS("Landing burn start time. (Note: burn may not start at exactly this time - but from this point onwards, the sim will continuously calculate optimal thrust for hoverslam. Slows down sim significantly!!!)"),
+	LBS("Landing burn start time. (Note: burn may not start at exactly this time - but from this point onwards, the sim will continuously calculate optimal thrust for hoverslam. Increases simulation run-time significantly!!!)"),
 	PLM("Mass of payload"),
 	LGS("Does this flight have legs? Important since this adds mass to the system."),
 	STG("Which stage to apply the correction."),
