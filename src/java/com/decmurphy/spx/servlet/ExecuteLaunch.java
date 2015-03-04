@@ -2,6 +2,7 @@ package com.decmurphy.spx.servlet;
 
 import com.decmurphy.spx.ProcessLaunch;
 import com.decmurphy.spx.mission.Mission;
+import com.decmurphy.spx.util.Payload;
 import com.decmurphy.utils.Globals;
 import com.decmurphy.utils.GnuplotFileBuilder;
 import java.io.IOException;
@@ -115,7 +116,7 @@ public class ExecuteLaunch extends HttpServlet {
 		StringBuilder sb = new StringBuilder("<!doctype html>\n");
 		sb.append("<html>\n"
 						+ " <head>\n"
-						+ "   <title>" + Globals.flightCode + " Results</title>\n"
+						+ "   <title>" + Payload.getPayloadType(Globals.flightCode).getPayloadName() + " Results</title>\n"
 						+ "   <meta charset=\"UTF-8\">\n"
 						+ "   <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n"
 						+ "   <link rel=\"stylesheet\" href=\"css/style.css\" type=\"text/css\"/>\n"
