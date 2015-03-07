@@ -86,6 +86,7 @@ public class Stage {
 		this.parent = null;
 		this.completedOrbits = 0;
 		this.new_longitude = this.old_longitude = 0.0;
+		this.new_inclination = this.old_inclination = 0.0;
 
 		this.setCoordinates(0.0, 0.0);
 	}
@@ -132,6 +133,8 @@ public class Stage {
 		this.completedOrbits = s.completedOrbits;
 		this.new_longitude = s.new_longitude;
 		this.old_longitude = s.old_longitude;
+		this.new_inclination = s.new_inclination;
+		this.old_inclination = s.old_inclination;
 	}
 
 	final void setCoordinates(double incl, double lon) {
@@ -206,9 +209,9 @@ public class Stage {
 			pw.printf("%6.2f\t%9.3f\t%9.3f\t%9.3f\t%8.3f\t%8.3f\t%5.3f\t%10.3f\t%10.3f\n",
 				clock(), relPos[0]*1e-3, relPos[1]*1e-3, relPos[2]*1e-3, 
 				alt()*1e-3, relVel(), getDownrangeDistance()*1e-3, Q*1e-3, getPropMass()*1e-3);
-
-      if(eventsFile)
-        pw.printf("\n");
+			
+			if(eventsFile)
+				pw.printf("\n");
       
 		} catch (IOException e) {
 		} finally {
@@ -260,16 +263,27 @@ public class Stage {
 	}
 
 	private int completedOrbits;
-	private double new_longitude, old_longitude;
-	public int completedOrbits() {
-		new_longitude = atan2(this.pos[1], this.pos[0]);
+	public double new_longitude, old_longitude;
+	public double new_inclination, old_inclination;
+	public int completedOrbits(boolean goingToPolarOrbit) {
+		if(goingToPolarOrbit) {
+			new_inclination = acos(this.pos[2]/this.S);
 
-		if (old_longitude < parent.getMission().LaunchSite().getLong()
-						&& new_longitude > parent.getMission().LaunchSite().getLong()) {
-			completedOrbits++;
+			if (isMoving && old_inclination < parent.getMission().LaunchSite().getIncl()
+						&& new_inclination > parent.getMission().LaunchSite().getIncl()) {
+				completedOrbits++;
+			}
+			old_inclination = new_inclination;
 		}
-		old_longitude = new_longitude;
+		else {
+			new_longitude = atan2(this.pos[1], this.pos[0]);
 
+			if (old_longitude < parent.getMission().LaunchSite().getLong()
+						&& new_longitude > parent.getMission().LaunchSite().getLong()) {
+				completedOrbits++;
+			}
+			old_longitude = new_longitude;
+		}
 		return completedOrbits;
 	}
 

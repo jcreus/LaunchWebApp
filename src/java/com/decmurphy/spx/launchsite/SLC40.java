@@ -1,5 +1,6 @@
 package com.decmurphy.spx.launchsite;
 
+import com.decmurphy.spx.util.LaunchSite;
 import static java.lang.Math.toRadians;
 
 /**
@@ -14,6 +15,7 @@ public class SLC40 extends RawLaunchSite {
     // See http://en.wikipedia.org/wiki/Spherical_coordinate_system#mediaviewer/File:3D_Spherical.svg
     // First coordinate is theta, second is phi. phi=0 is the prime meridian
 		setCoordinates(new double[]{toRadians(61.44),toRadians(-80.57)});
+		setLaunchSiteType(LaunchSite.LC40);
 	}
 	
 	public static RawLaunchSite get() {

@@ -4,6 +4,7 @@ import com.decmurphy.spx.mission.Mission;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import static com.decmurphy.spx.servlet.InterfaceServlet.imagePath;
 import static com.decmurphy.spx.servlet.InterfaceServlet.resourcePath;
+import static com.decmurphy.utils.Globals.radiusOfEarth;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -79,10 +80,11 @@ public class GnuplotFileBuilder {
         pw.printf("unset border\n");
         pw.printf("set view 90,0,1.3,1.4\n");
         pw.printf("set term pngcairo\n");
+				pw.printf("r = %g\n", radiusOfEarth*1e-3);
         pw.printf("set output \"%s\"\n", getImagePath());
         pw.printf("splot \"%s/%s_Earth.output.txt\" u 1:2:3 w l ls 5, ", outputPath, id);
         pw.printf("\"%s/coarsecoast.output.txt\" u 1:2:3 w l ls 9, ", resourcePath);
-        pw.printf("\"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:4 w l ls 7\n", outputPath, id, outputPath, id);
+        pw.printf("\"%s/%s_BoosterStage.dat\" u 2:3:4 w l ls 8, \"%s/%s_SecondStage.dat\" u 2:3:(($3 < 0 || sqrt($2*$2+$4*$4) > r) ? $4 : 1/0) w l ls 7\n", outputPath, id, outputPath, id);
 
       } else if (phase.equalsIgnoreCase("velocity1")) {
         

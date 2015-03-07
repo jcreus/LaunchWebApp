@@ -59,7 +59,7 @@ public abstract class LaunchVehicle {
   }
 
   public int completedOrbits() {
-    return mStage[numStages - 1].completedOrbits();
+    return mStage[numStages - 1].completedOrbits(mission.isGoingToPolarOrbit());
   }
 
   public void incrementClock() {

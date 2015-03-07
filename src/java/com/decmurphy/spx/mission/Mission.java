@@ -18,7 +18,8 @@ public class Mission {
 	private RawPayload payload;
 	private Profile profile;
 	private RawLaunchSite LS;
-  private String missionId; 
+  private String missionId;
+	private boolean isGoingToPolarOrbit;
 
 	public void addLaunchVehicle(LaunchVehicle LV) {
 		this.LV = LV;
@@ -35,6 +36,11 @@ public class Mission {
 	public void addLaunchSite(RawLaunchSite launchSite) {
 		this.LS = launchSite;
 		LaunchVehicle().setLaunchSite(launchSite);
+		
+		switch(launchSite.getLaunchSiteType()) {
+			case LC4E: setIsGoingToPolarOrbit(true); break;
+			default: setIsGoingToPolarOrbit(false); break;
+		}
 	}
   
   public void setMissionId(String id) {
@@ -99,6 +105,14 @@ public class Mission {
 		if (abs(clock())%5.0 < dt) {
 			this.LV.outputFile();
 		}
+	}
+	
+	public void setIsGoingToPolarOrbit(boolean b) {
+		this.isGoingToPolarOrbit = b;
+	}
+	
+	public boolean isGoingToPolarOrbit() {
+		return this.isGoingToPolarOrbit;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.decmurphy.spx.launchsite;
 
+import com.decmurphy.spx.util.LaunchSite;
+
 /**
  *
  * @author declan
@@ -9,6 +11,7 @@ public abstract class RawLaunchSite {
 	private double inclination;
 	private double longitude;
 	private String name;
+	private LaunchSite ls;
 	
 	public RawLaunchSite() {}
 	
@@ -43,6 +46,14 @@ public abstract class RawLaunchSite {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	public void setLaunchSiteType(LaunchSite ls) {
+		this.ls = ls;
+	}
+	
+	public LaunchSite getLaunchSiteType() {
+		return ls;
 	}
 	
 }

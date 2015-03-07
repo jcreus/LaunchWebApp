@@ -32,6 +32,9 @@ public class Navigation {
 	}
 
 	public static void leapfrogFirstStep(Stage s) {
+		
+		s.new_longitude = s.old_longitude = s.getParent().getMission().LaunchSite().getLong();
+		s.new_inclination = s.old_inclination = s.getParent().getMission().LaunchSite().getIncl();
 
 		s.beta[0] = 0.0;
 		s.gamma[0] = 0.0;
