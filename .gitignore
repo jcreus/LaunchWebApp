@@ -1,6 +1,6 @@
 build/*
 build.xml
-web/db.properties
+src/java/*properties
 web/output/*
 nbproject/
 dist/

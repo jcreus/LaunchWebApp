@@ -3,6 +3,7 @@ package com.decmurphy.spx.util;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
 
@@ -19,15 +20,15 @@ public class ProfileUtility {
   public ProfileUtility() {
   }
 
-  public String buildProfilesList(String pathToPropertiesFile) {
+  public String buildProfilesList() {
 
     StringBuilder list = new StringBuilder("        <ul id=\"tabs\" class=\"nav nav-tabs\">\n");
     StringBuilder tabs = new StringBuilder("        <div class=\"tab-content\">\n");
 
     try {
-
+			
 			Properties props;
-			try (FileInputStream in = new FileInputStream(pathToPropertiesFile)) {
+			try (InputStream in = Thread.currentThread().getContextClassLoader().getResourceAsStream("db.properties")) {
 				props = new Properties();
 				props.load(in);
 			}

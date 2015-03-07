@@ -21,8 +21,6 @@ public class Home extends HttpServlet {
 		response.setContentType("text/html");
 		ProfileUtility db = new ProfileUtility();
 
-		String dbPropsFile = getServletContext().getRealPath("/db.properties");
-
 		PrintWriter out = response.getWriter();
 		String title = "Launch Simulator";
 		String docType = "<!doctype html>\n";
@@ -50,7 +48,7 @@ public class Home extends HttpServlet {
 						+ "    </div>\n"
 						+ "    <div id=\"container\">\n"
 						+ "      <div class=\"tabbable\">\n"
-						+ db.buildProfilesList(dbPropsFile)
+						+          db.buildProfilesList()
 						+ "      </div>\n"
 						+ "    </div>\n"
 						+ "    <div id=\"footer\">\n"

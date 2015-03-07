@@ -1,6 +1,7 @@
 
 # To let the project access the MySQL data, you need to rename this file
-# to db.properties and fill in your MySQL login details here.
+# to db.properties and place it in the default package.
+# Fill in your MySQL login details here.
 # Git will ignore the properties file with your details
 
 dbUrl=jdbc:mysql://localhost:3306/spacex
