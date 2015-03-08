@@ -26,7 +26,8 @@ public enum Payload {
 	CRS4("CRS-4"),
 	CRS5("CRS-5"),
 	DSCR("DSCOVR"),
-	EUAB("EutelSat 115W B/ABS 3A");
+	EUAB("EutelSat 115W B/ABS 3A"),
+	TRK1("TurkmenSat-1");
 	
 	private final String payloadName;
 	

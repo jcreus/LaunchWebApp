@@ -39,6 +39,7 @@ public class LaunchSiteConfig {
 			case CRS5:
 			case DSCR:
       case EUAB:
+      case TRK1:
 				return SLC40.get();
 			case CASS:
 				return SLC4E.get();

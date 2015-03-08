@@ -29,6 +29,7 @@ public class LaunchVehicleConfig {
 			case CRS1:
 			case CRS2:
 				return new Falcon9();
+			case CASS:
 			case SES8:
 			case THM6:
 			case CRS3:
@@ -39,7 +40,7 @@ public class LaunchVehicleConfig {
 			case CRS5:
 			case DSCR:
       case EUAB:
-			case CASS:
+			case TRK1:
 				return new Falcon9_1();
 			default:
 				throw new LaunchVehicleException("No valid mission specified");

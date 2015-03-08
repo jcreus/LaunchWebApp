@@ -40,6 +40,7 @@ public class PayloadConfig {
 			case AST6:
 			case DSCR:
       case EUAB:
+			case TRK1:
 				p = new Satellite();
 				break;
 			default:
