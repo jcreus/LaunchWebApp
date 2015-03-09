@@ -4,21 +4,24 @@
       <welcome-file>Home</welcome-file>
       <!--<welcome-file>index.html</welcome-file>-->
     </welcome-file-list>
-    <servlet>
-        <servlet-name>InterfaceServlet</servlet-name>
-        <servlet-class>com.decmurphy.spx.servlet.InterfaceServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>ExecuteLaunch</servlet-name>
-        <servlet-class>com.decmurphy.spx.servlet.ExecuteLaunch</servlet-class>
-    </servlet>
+    <listener>
+      <listener-class>com.decmurphy.spx.InitialiseEnvironment</listener-class>
+    </listener>
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>com.decmurphy.spx.servlet.Home</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>InterfaceServlet</servlet-name>
+        <servlet-class>com.decmurphy.spx.servlet.InterfaceServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoadingPage</servlet-name>
         <servlet-class>com.decmurphy.spx.servlet.LoadingPage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ExecuteLaunch</servlet-name>
+        <servlet-class>com.decmurphy.spx.servlet.ExecuteLaunch</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DisplayResults</servlet-name>
