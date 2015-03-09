@@ -16,10 +16,14 @@ public class Mission {
 
 	private LaunchVehicle LV;
 	private RawPayload payload;
-	private Profile profile;
+	private final Profile profile;
 	private RawLaunchSite LS;
   private String missionId;
 	private boolean isGoingToPolarOrbit;
+  
+  public Mission() {
+    this.profile = Profile.getNew();
+  }
 
 	public void addLaunchVehicle(LaunchVehicle LV) {
 		this.LV = LV;
@@ -28,14 +32,10 @@ public class Mission {
 	public void addPayload(RawPayload payload) {
 		this.payload = payload;
 	}
-
-	public void addProfile(Profile profile) {
-		this.profile = profile;
-	}
 	
 	public void addLaunchSite(RawLaunchSite launchSite) {
 		this.LS = launchSite;
-		LaunchVehicle().setLaunchSite(launchSite);
+		getLaunchVehicle().setLaunchSite(launchSite);
 		
 		switch(launchSite.getLaunchSiteType()) {
 			case LC4E: setIsGoingToPolarOrbit(true); break;
@@ -51,19 +51,19 @@ public class Mission {
 		LV.setClock(t);
 	}
 	
-	public LaunchVehicle LaunchVehicle() {
+	public LaunchVehicle getLaunchVehicle() {
 		return LV;
 	}
 
-	public RawPayload Payload() {
+	public RawPayload getPayload() {
 		return payload;
 	}
 
-	public Profile Profile() {
+	public Profile getProfile() {
 		return profile;
 	}
 	
-	public RawLaunchSite LaunchSite() {
+	public RawLaunchSite getLaunchSite() {
 		return LS;
 	}
   

@@ -269,8 +269,8 @@ public class Stage {
 		if(goingToPolarOrbit) {
 			new_inclination = acos(this.pos[2]/this.S);
 
-			if (isMoving && old_inclination < parent.getMission().LaunchSite().getIncl()
-						&& new_inclination > parent.getMission().LaunchSite().getIncl()) {
+			if (isMoving && old_inclination < parent.getMission().getLaunchSite().getIncl()
+						&& new_inclination > parent.getMission().getLaunchSite().getIncl()) {
 				completedOrbits++;
 			}
 			old_inclination = new_inclination;
@@ -278,8 +278,8 @@ public class Stage {
 		else {
 			new_longitude = atan2(this.pos[1], this.pos[0]);
 
-			if (old_longitude < parent.getMission().LaunchSite().getLong()
-						&& new_longitude > parent.getMission().LaunchSite().getLong()) {
+			if (old_longitude < parent.getMission().getLaunchSite().getLong()
+						&& new_longitude > parent.getMission().getLaunchSite().getLong()) {
 				completedOrbits++;
 			}
 			old_longitude = new_longitude;
@@ -410,10 +410,10 @@ public class Stage {
 		tempBeta[1] = PI - atan2(sqrt(relPos[0]*relPos[0] + relPos[1]*relPos[1]), relPos[2]);
 		tempBeta[2] = PI + atan2(relPos[1], relPos[0]);
 		
-    double _longitude1 = PI - getParent().getMission().LaunchSite().getIncl();
+    double _longitude1 = PI - getParent().getMission().getLaunchSite().getIncl();
     double _longitude2 = tempBeta[1];
 
-    double psi1 = getParent().getMission().LaunchSite().getLong();
+    double psi1 = getParent().getMission().getLaunchSite().getLong();
     double psi2 = tempBeta[2] - PI;
 
     return radiusOfEarth*acos(cos(_longitude1)*cos(_longitude2) + sin(_longitude1)*sin(_longitude2)*cos(psi1-psi2));

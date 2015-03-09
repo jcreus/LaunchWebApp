@@ -22,47 +22,51 @@ import java.util.logging.Logger;
  */
 public class MissionBuilder {
 
-	public Mission createMission(LaunchVehicle LV, RawPayload pl, Profile pr, RawLaunchSite ls) {
+	public Mission createMission(LaunchVehicle LV, RawPayload pl, RawLaunchSite ls) {
 		Mission m = new Mission();
 		
 		m.addLaunchVehicle(LV);
 		m.addPayload(pl);
-		m.addProfile(pr);
 		m.addLaunchSite(ls);
 		
-		m.LaunchVehicle().setPayload(m.Payload());
-		m.LaunchVehicle().setMission(m);
+		m.getLaunchVehicle().setPayload(m.getPayload());
+		m.getLaunchVehicle().setMission(m);
 		
 		return m;
 	}
 
 	public Mission createMission(String code) {
+    
+    RawPayload payload = null;
+    LaunchVehicle LV = null;
+    RawLaunchSite launchSite = null;
 
-		if(null==code || code.isEmpty())
-			throw new IllegalArgumentException("Trying to create Mission with invalid FlightCode");
-		
-		RawPayload payload = new Satellite(6000);
-		LaunchVehicle LV = new Falcon9_1();
-		Profile profile = Profile.getNew();
-		RawLaunchSite launchSite = SLC40.get();
-
-		try {
-			LV = LaunchVehicleConfig.getLaunchVehicle(code);
-			payload = PayloadConfig.getPayload(code);
-			launchSite = LaunchSiteConfig.getLaunchSite(code);
-						
-		} catch (LaunchVehicleException | PayloadException | LaunchSiteException ex) {
-			Logger.getLogger(MissionBuilder.class.getName()).log(Level.SEVERE, null, ex);
-		}
+    if (null == code || code.isEmpty()) {
+      
+      payload = new Satellite(6000);
+      LV = new Falcon9_1();
+      launchSite = SLC40.get();
+      
+    } else {
+      
+      try {
+        LV = LaunchVehicleConfig.getLaunchVehicle(code);
+        payload = PayloadConfig.getPayload(code);
+        launchSite = LaunchSiteConfig.getLaunchSite(code);
+        
+      } catch (LaunchVehicleException | PayloadException | LaunchSiteException ex) {
+        Logger.getLogger(MissionBuilder.class.getName()).log(Level.SEVERE, null, ex);
+      }
+      
+    }
 
 		Mission m = new Mission();
 		m.addLaunchVehicle(LV);
 		m.addPayload(payload);
-		m.addProfile(profile);
 		
-		m.LaunchVehicle().setMission(m);
+		m.getLaunchVehicle().setMission(m);
 		m.addLaunchSite(launchSite);
-		m.LaunchVehicle().setPayload(m.Payload());
+		m.getLaunchVehicle().setPayload(m.getPayload());
 
 		return m;
 	}

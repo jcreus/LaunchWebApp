@@ -21,14 +21,15 @@ public class ProcessLaunch {
 			mission.leapfrogStep();
 			mission.outputFile();
 
-			if (!SECO && (mission.LaunchVehicle().reachesOrbitalVelocity() || mission.LaunchVehicle().depletesFuel())) {
+			if (!SECO && (mission.getLaunchVehicle().reachesOrbitalVelocity() || mission.getLaunchVehicle().depletesFuel())) {
 				mission.executeOverrideEvent(1, "SECO1");
 				SECO = true;
 			}
 
-      if(SECO && mission.LaunchVehicle().isLanded()) dt = 0.1;      
-      if(mission.LaunchVehicle().failedToReachOrbit()) break;
-      if(mission.LaunchVehicle().completedOrbits() >= 1) break;
+      if(SECO && mission.getLaunchVehicle().isLanded()) dt = 0.1;      
+      if(mission.getLaunchVehicle().failedToReachOrbit()) break;
+      if(mission.getLaunchVehicle().completedOrbits() >= 1) break;
+      if(mission.clock() > 6000) break;
       
 		} while (true);
 

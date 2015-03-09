@@ -34,7 +34,6 @@ public class InterfaceServlet extends HttpServlet {
       session.invalidate();
     }
 
-    String getId = UUID.randomUUID().toString();
     Mission mission = null;
 
     Enumeration paramNames = request.getParameterNames();
@@ -45,15 +44,12 @@ public class InterfaceServlet extends HttpServlet {
       if (!paramName.isEmpty()) {
 
         switch (paramName) {
-
-          case "flight_code":
-            Globals.flightCode = paramValues[0];
-            MissionBuilder mb = new MissionBuilder();
-            mission = mb.createMission(flightCode);
-            break;
-          default:
-            break;
+          case "flight_code": Globals.flightCode = paramValues[0];
+          default: break;
         }
+        
+        MissionBuilder mb = new MissionBuilder();
+        mission = mb.createMission(flightCode);
 
         try {
 					
@@ -63,88 +59,85 @@ public class InterfaceServlet extends HttpServlet {
 
             case "payload_mass":
               double m;
-              if ((m = Double.parseDouble(paramValues[0])) >= 0.0) {
-                mission.Payload().setMass(m);
-              }
-              else {
+              if ((m = Double.parseDouble(paramValues[0])) >= 0.0)
+                mission.getPayload().setMass(m);
+              else 
                 throw new IllegalArgumentException("Illegal value for Payload Mass. Must be non-negative");
-              }
               break;
 
             case "mei1_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("firstStageIgnition", Double.parseDouble(paramValues[0]))
 									.addExtraInfo("stage", 0);
               break;
             case "launch_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("releaseClamps", Double.parseDouble(paramValues[0]))
 									.addExtraInfo("stage", 0);
               break;
             case "pitch_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("pitchKick", Double.parseDouble(paramValues[0]))
 									.addExtraInfo("stage", 0);
               break;
             case "pitch":
-              mission.Profile()
+              mission.getProfile()
 									.getEvent("pitchKick")
 									.addExtraInfo("pitch", Double.parseDouble(paramValues[0]));
               break;
             case "yaw":
-              mission.Profile()
+              mission.getProfile()
 									.getEvent("pitchKick")
 									.addExtraInfo("yaw", Double.parseDouble(paramValues[0]));
               break;
             case "meco1_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("MECO1", Double.parseDouble(paramValues[0]))
 									.addExtraInfo("stage", 0);
               break;
             case "fss_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("firstStageSep", Double.parseDouble(paramValues[0]));
               break;
             case "sei1_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("secondStageIgnition", Double.parseDouble(paramValues[0]))
 									.addExtraInfo("stage", 1);
               break;
 
             case "mei2_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("boost_start", Double.parseDouble(paramValues[0]));
               break;
             case "meco2_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("boost_end", Double.parseDouble(paramValues[0]));
               break;
             case "mei3_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("entry_start", Double.parseDouble(paramValues[0]));
               break;
             case "meco3_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("entry_end", Double.parseDouble(paramValues[0]));
               break;
             case "mei4_time":
-              mission.Profile()
+              mission.getProfile()
 									.addEvent("landing_start", Double.parseDouble(paramValues[0]));
               break;
 						case "correction":
 							try {
-								mission.Profile()
+								mission.getProfile()
 										.addEvent("correction", Double.parseDouble(paramValues[2]))
 										.addExtraInfo("stage", Integer.parseInt(paramValues[0]))
 										.addCorrectionType("type", Correction.findCorrectionType(paramValues[1]))
 										.addExtraInfo("param", Double.parseDouble(paramValues[3]));
 								break;
 							} catch(ArrayIndexOutOfBoundsException e) {
-								
 							}
 							
             case "legs":
-              mission.LaunchVehicle()
+              mission.getLaunchVehicle()
 									.setLegs(paramValues[0].equalsIgnoreCase("YES"));
               break;
             default:
@@ -157,6 +150,7 @@ public class InterfaceServlet extends HttpServlet {
       }
     }
 
+    String getId = UUID.randomUUID().toString();
     request.getSession().setAttribute(getId, mission);
     response.sendRedirect("/LaunchWebApp/LoadingPage?id=" + getId);
   }
