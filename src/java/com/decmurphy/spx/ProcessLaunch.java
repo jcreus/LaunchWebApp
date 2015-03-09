@@ -9,7 +9,9 @@ public class ProcessLaunch {
 
 	public static void execute(Mission mission, String[] args) {
 
-		Planet Earth = new Earth(0, 0, 0, mission.getMissionId());
+		Planet earth = new Earth(0, 0, 0, mission.getMissionId());
+		earth.draw();
+		earth.drawHazardMap(mission);
 
 		boolean SECO = false;
 		mission.setClock(-60.0);

@@ -5,6 +5,7 @@ import com.decmurphy.spx.payload.DragonV1;
 import com.decmurphy.spx.payload.RawPayload;
 import com.decmurphy.spx.payload.Satellite;
 import com.decmurphy.spx.util.Payload;
+import static com.decmurphy.spx.util.Payload.getPayloadType;
 
 /**
  *
@@ -52,7 +53,8 @@ public class PayloadConfig {
 			throw new PayloadException("No Payload Assigned");
 		else if (p.getMass() < 0)
 			throw new PayloadException("Invalid Payload Mass");
-
+		
+		p.setPayloadType(getPayloadType(flightCode));
 		return p;
 	}
 

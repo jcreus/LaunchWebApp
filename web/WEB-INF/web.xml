@@ -4,9 +4,11 @@
       <welcome-file>Home</welcome-file>
       <!--<welcome-file>index.html</welcome-file>-->
     </welcome-file-list>
+    <!--
     <listener>
       <listener-class>com.decmurphy.spx.InitialiseEnvironment</listener-class>
     </listener>
+    -->
     <servlet>
         <servlet-name>Home</servlet-name>
         <servlet-class>com.decmurphy.spx.servlet.Home</servlet-class>

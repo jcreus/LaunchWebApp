@@ -254,11 +254,11 @@ public class Stage {
     return landed;
   }
 
-	private LaunchVehicle parent;
-	public final void setParent(LaunchVehicle lv) {
+	private RawLaunchVehicle parent;
+	public final void setParent(RawLaunchVehicle lv) {
 		parent = lv;
 	}
-	public LaunchVehicle getParent() {
+	public RawLaunchVehicle getParent() {
 		return parent;
 	}
 

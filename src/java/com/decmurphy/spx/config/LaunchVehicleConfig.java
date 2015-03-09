@@ -5,7 +5,7 @@ import com.decmurphy.spx.util.Payload;
 import com.decmurphy.spx.vehicle.Falcon1;
 import com.decmurphy.spx.vehicle.Falcon9;
 import com.decmurphy.spx.vehicle.Falcon9_1;
-import com.decmurphy.spx.vehicle.LaunchVehicle;
+import com.decmurphy.spx.vehicle.RawLaunchVehicle;
 
 /**
  *
@@ -13,7 +13,7 @@ import com.decmurphy.spx.vehicle.LaunchVehicle;
  */
 public class LaunchVehicleConfig {
 
-	public static LaunchVehicle getLaunchVehicle(String flightCode) throws LaunchVehicleException {
+	public static RawLaunchVehicle getLaunchVehicle(String flightCode) throws LaunchVehicleException {
 		
 		Payload launch = Payload.getPayloadType(flightCode);
 		switch(launch) {

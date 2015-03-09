@@ -1,5 +1,6 @@
 package com.decmurphy.spx.space;
 
+import com.decmurphy.spx.mission.Mission;
 import static com.decmurphy.spx.servlet.InterfaceServlet.outputPath;
 import static com.decmurphy.spx.servlet.InterfaceServlet.resourcePath;
 import com.decmurphy.utils.Globals;
@@ -31,12 +32,10 @@ public final class Earth extends Planet {
 	public Earth(double x, double y, double z, String id) {
 		super("Earth", x, y, z, id, radiusOfEarth, massOfEarth);
 		this.id = id;
-		draw();
-		drawHazard();
 	}
 
 	@Override
-	protected void draw() {
+	public void draw() {
 
 		PrintWriter pw = null;
 
@@ -66,7 +65,8 @@ public final class Earth extends Planet {
 		}
 	}
 
-	protected void drawHazard() {
+	@Override
+	public void drawHazardMap(Mission m) {
 		PrintWriter pw = null;
 		BufferedReader br;
 
@@ -78,7 +78,7 @@ public final class Earth extends Planet {
 			File outputFile = new File(outputPath, "/" + id + "_hazard.output.txt");
 			pw = new PrintWriter(new FileWriter(outputFile, false));
 
-			File hazardFile = new File(resourcePath, "/" + Globals.flightCode + ".hazard.txt");
+			File hazardFile = new File(resourcePath, "/" + String.valueOf(m.getPayload().getPayloadType()) + ".hazard.txt");
 			br = new BufferedReader(new FileReader(hazardFile));
 
 			while ((line = br.readLine()) != null) {

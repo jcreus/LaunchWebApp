@@ -24,7 +24,7 @@ public enum ToolTip {
 	STG("Which stage to apply the correction."),
 	TYP("What flight parameter do you want to change?"),
 	TME("Time (in seconds) after liftoff to begin invoking this correction"),
-	PRM("For pitch/yaw, this parameter is in radians. Pitch 0.0 flies parallel to ground, positive points up, etc. For yaw, a positive value turns you left, negative turns you right. (It's safe enough to assume the 2nd stage is always flying prograde). For thrust, enter a % value.")
+	PRM("For pitch/yaw, this parameter is in radians. Pitch 0.0 flies parallel to ground, positive points up, etc. For yaw, a positive value turns you left, negative turns you right. (It's safe enough to assume the 2nd stage is always flying prograde). For thrust, enter a % value."),
 	;
 	
 	private final String tip;

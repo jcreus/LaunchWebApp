@@ -4,7 +4,7 @@ import com.decmurphy.spx.event.Event;
 import com.decmurphy.spx.launchsite.RawLaunchSite;
 import com.decmurphy.spx.payload.RawPayload;
 import com.decmurphy.spx.profile.Profile;
-import com.decmurphy.spx.vehicle.LaunchVehicle;
+import com.decmurphy.spx.vehicle.RawLaunchVehicle;
 import static com.decmurphy.utils.Globals.dt;
 import static java.lang.Math.abs;
 
@@ -14,7 +14,7 @@ import static java.lang.Math.abs;
  */
 public class Mission {
 
-	private LaunchVehicle LV;
+	private RawLaunchVehicle LV;
 	private RawPayload payload;
 	private final Profile profile;
 	private RawLaunchSite LS;
@@ -25,7 +25,7 @@ public class Mission {
     this.profile = Profile.getNew();
   }
 
-	public void addLaunchVehicle(LaunchVehicle LV) {
+	public void addLaunchVehicle(RawLaunchVehicle LV) {
 		this.LV = LV;
 	}
 
@@ -51,7 +51,7 @@ public class Mission {
 		LV.setClock(t);
 	}
 	
-	public LaunchVehicle getLaunchVehicle() {
+	public RawLaunchVehicle getLaunchVehicle() {
 		return LV;
 	}
 

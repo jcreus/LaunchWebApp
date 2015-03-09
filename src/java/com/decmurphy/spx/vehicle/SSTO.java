@@ -7,7 +7,7 @@ import com.decmurphy.spx.gnc.Navigation;
  *
  * @author dmurphy
  */
-public class SSTO extends LaunchVehicle {
+public class SSTO extends RawLaunchVehicle {
   
   public SSTO() {
     numStages = 1;

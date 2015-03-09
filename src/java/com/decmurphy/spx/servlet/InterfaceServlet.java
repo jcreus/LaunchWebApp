@@ -3,8 +3,6 @@ package com.decmurphy.spx.servlet;
 import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.mission.MissionBuilder;
 import com.decmurphy.spx.util.Correction;
-import com.decmurphy.utils.Globals;
-import static com.decmurphy.utils.Globals.flightCode;
 import java.io.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -26,15 +24,16 @@ public class InterfaceServlet extends HttpServlet {
 
     resourcePath = getServletContext().getRealPath("/resource");
     outputPath = getServletContext().getRealPath("/output");
-    imagePath = "/var/lib/tomcat8/webapps/LaunchWebApp/output";
-		//imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
+    //imagePath = "/var/lib/tomcat8/webapps/LaunchWebApp/output";
+		imagePath = "/home/declan/NetBeansProjects/LaunchWebApp/web/output";
 
     HttpSession session = request.getSession(false);
     if (session != null) {
       session.invalidate();
     }
 
-    Mission mission = null;
+		MissionBuilder mb = new MissionBuilder();
+    Mission mission = mb.createMission("");
 
     Enumeration paramNames = request.getParameterNames();
     while (paramNames.hasMoreElements()) {
@@ -43,15 +42,14 @@ public class InterfaceServlet extends HttpServlet {
 
       if (!paramName.isEmpty()) {
 
-        switch (paramName) {
-          case "flight_code": Globals.flightCode = paramValues[0];
-          default: break;
-        }
-        
-        MissionBuilder mb = new MissionBuilder();
-        mission = mb.createMission(flightCode);
+				switch (paramName) {
+					case "flight_code":
+						mission = mb.createMission(paramValues[0]);
+					default:
+						break;
+				}
 
-        try {
+				try {
 					
 					if(paramName.startsWith("correction")) paramName = "correction";
 

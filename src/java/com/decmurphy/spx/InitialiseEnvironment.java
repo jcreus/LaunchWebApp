@@ -1,16 +1,16 @@
 package com.decmurphy.spx;
 
+import com.decmurphy.spx.config.LaunchVehicleConfig;
+import com.decmurphy.spx.exceptions.LaunchVehicleException;
+import com.decmurphy.spx.util.LaunchVehicle;
 import com.decmurphy.spx.util.Payload;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
@@ -44,27 +44,38 @@ public class InitialiseEnvironment implements ServletContextListener {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT EXISTS(SELECT 1 FROM launches WHERE code='");
         sql.append(String.valueOf(p));
-        sql.append("')");
+        sql.append("');");
 
         rs = con.prepareStatement(sql.toString()).executeQuery();
         if(/*rs exists*/true) continue;
         
         sql.setLength(0);
+				
+				LaunchVehicle lv = LaunchVehicleConfig
+						.getLaunchVehicle(String.valueOf(p))
+						.getLaunchVehicleType();
         
         sql.append("INSERT INTO launches VALUES (");
-        sql.append("1");
-        sql.append(",'2006-03-24'");
-        sql.append(",'SpaceX'");
-        sql.append(",0");
-        sql.append(",'Falcon1'");
-        sql.append(",0");
-        sql.append(",'FalconSAT-2'");
-        sql.append(",'FSAT'");
+        sql.append(p.ordinal());
+        sql.append(", ''"); // Date
+        sql.append(", 'SpaceX'"); // Provider
+        sql.append(", 0"); // Provider ID
+        sql.append(", '").append(lv.getLaunchVehicleName()).append("'"); // Launch vehicle
+        sql.append(", ").append(lv.ordinal()); // Launch vehicle ID
+        sql.append(", '").append(p.getPayloadName()).append("'");  // FalconSat-2
+        sql.append(", '").append(String.valueOf(p)).append("'");   // FSAT
         sql.append(");");
-        
+
+        rs = con.prepareStatement(sql.toString()).executeQuery();
+				
+				sql.setLength(0);
+				
+				sql.append("INSERT INTO profiles VALUES (");
+
       }
     } catch (IOException | ClassNotFoundException | SQLException e) {
-    }
+    } catch (LaunchVehicleException e) {
+		}
   }
 
   @Override

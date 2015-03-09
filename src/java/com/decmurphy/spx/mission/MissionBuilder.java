@@ -12,7 +12,7 @@ import com.decmurphy.spx.payload.RawPayload;
 import com.decmurphy.spx.payload.Satellite;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.vehicle.Falcon9_1;
-import com.decmurphy.spx.vehicle.LaunchVehicle;
+import com.decmurphy.spx.vehicle.RawLaunchVehicle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +22,7 @@ import java.util.logging.Logger;
  */
 public class MissionBuilder {
 
-	public Mission createMission(LaunchVehicle LV, RawPayload pl, RawLaunchSite ls) {
+	public Mission createMission(RawLaunchVehicle LV, RawPayload pl, RawLaunchSite ls) {
 		Mission m = new Mission();
 		
 		m.addLaunchVehicle(LV);
@@ -38,7 +38,7 @@ public class MissionBuilder {
 	public Mission createMission(String code) {
     
     RawPayload payload = null;
-    LaunchVehicle LV = null;
+    RawLaunchVehicle LV = null;
     RawLaunchSite launchSite = null;
 
     if (null == code || code.isEmpty()) {

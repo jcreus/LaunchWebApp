@@ -9,6 +9,7 @@ import com.decmurphy.spx.engine.Merlin1D;
 import com.decmurphy.spx.engine.Merlin1DVac;
 import com.decmurphy.spx.payload.DragonV1;
 import com.decmurphy.spx.payload.RawPayload;
+import com.decmurphy.spx.util.LaunchVehicle;
 
 /**
  *
@@ -19,6 +20,7 @@ public class FalconHeavy extends ThreeStageRocket {
 	public FalconHeavy(RawPayload payload) {
 		this();
 		setPayload(payload);
+		setLaunchVehicleType(LaunchVehicle.FNH);
 	}
 	
 	public FalconHeavy() {

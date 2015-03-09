@@ -4,12 +4,14 @@ import com.decmurphy.spx.engine.Merlin1D;
 import com.decmurphy.spx.engine.Merlin1DVac;
 import com.decmurphy.spx.payload.DragonV1;
 import com.decmurphy.spx.payload.RawPayload;
+import com.decmurphy.spx.util.LaunchVehicle;
 
 public class Falcon9_1 extends TwoStageRocket {
 
 	public Falcon9_1(RawPayload payload) {
 		this();
 		setPayload(payload);
+		setLaunchVehicleType(LaunchVehicle.F91);
 	}
 	
 	public Falcon9_1() {

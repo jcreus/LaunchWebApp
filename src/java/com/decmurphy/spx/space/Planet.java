@@ -1,5 +1,6 @@
 package com.decmurphy.spx.space;
 
+import com.decmurphy.spx.mission.Mission;
 import java.io.*;
 
 public abstract class Planet {
@@ -23,7 +24,7 @@ public abstract class Planet {
 
 	}
 
-	protected void draw() {
+	public void draw() {
 		PrintWriter pw = null;
 
 		try {
@@ -55,4 +56,6 @@ public abstract class Planet {
 			}
 		}
 	}
+	
+	public abstract void drawHazardMap(Mission m);
 }

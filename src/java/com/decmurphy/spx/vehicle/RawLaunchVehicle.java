@@ -7,6 +7,7 @@ import com.decmurphy.spx.mission.Mission;
 import com.decmurphy.spx.payload.RawPayload;
 import com.decmurphy.spx.profile.Profile;
 import com.decmurphy.spx.util.Correction;
+import com.decmurphy.spx.util.LaunchVehicle;
 import static com.decmurphy.utils.Globals.dt;
 import static com.decmurphy.utils.Globals.gravConstant;
 import static com.decmurphy.utils.Globals.massOfEarth;
@@ -17,7 +18,7 @@ import static java.lang.Math.sqrt;
  *
  * @author dmurphy
  */
-public abstract class LaunchVehicle {
+public abstract class RawLaunchVehicle {
   
   public abstract void leapfrogFirstStep();
   public abstract void leapfrogStep();
@@ -26,11 +27,20 @@ public abstract class LaunchVehicle {
   public Stage[] mStage;
   protected RawPayload payload;
   private Mission mission = null;
+	private LaunchVehicle lv;
 
   protected double onBoardClock;
   protected double pitchKickTime;
   protected double gravTurnTime;
   boolean clampsReleased = false;
+	
+	public void setLaunchVehicleType(LaunchVehicle lv) {
+		this.lv = lv;
+	}
+	
+	public LaunchVehicle getLaunchVehicleType() {
+		return lv;
+	}
 
   public void setPayload(RawPayload pl) {
     payload = pl;

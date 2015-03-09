@@ -7,7 +7,7 @@ import com.decmurphy.spx.gnc.Navigation;
  *
  * @author dmurphy
  */
-public class SubOrbitalVehicle extends LaunchVehicle {
+public class SubOrbitalVehicle extends RawLaunchVehicle {
   
   public SubOrbitalVehicle() {
     numStages = 1;
